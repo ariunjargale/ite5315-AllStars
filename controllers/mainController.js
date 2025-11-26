@@ -3,5 +3,5 @@ const { validationResult } = require("express-validator");
 
 // Home Page
 exports.home = (req, res) => {
-  res.render("index", { title: "CMS - Rick and Morty" });
+  res.render("index", { title: "Showrunner's CMS - Rick and Morty" });
 };
