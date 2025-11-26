@@ -54,9 +54,10 @@ process.on("SIGINT", async () => {
 // Load routes
 const mainRoutes = require("./routes/mainRoutes");
 // const characterRoutes = require("./routes/characterRoutes");
-// const episodeRoutes = require("./routes/episodeRoutes");
+const episodeRoutes = require("./routes/episodeRoutes");
 // const locationRoutes = require("./routes/locationRoutes");
 app.use("/", mainRoutes);
+app.use("/episodes", episodeRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err);

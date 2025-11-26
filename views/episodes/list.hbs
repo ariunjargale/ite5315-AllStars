@@ -1,0 +1,120 @@
+<div class="episodes-container">
+  <h1>{{title}}</h1>
+  
+  <div class="episodes-stats">
+    <p>Total Episodes: <strong>{{episodes.length}}</strong></p>
+  </div>
+
+  <div class="episodes-list">
+    {{#each episodes}}
+      <div class="episode-card">
+        <div class="episode-header">
+          <h2>{{this.name}}</h2>
+          <span class="episode-code">{{this.episode}}</span>
+        </div>
+        <div class="episode-details">
+          <p><strong>Air Date:</strong> {{this.air_date}}</p>
+          <p><strong>Characters:</strong> {{this.characters.length}}</p>
+          <p><strong>Episode ID:</strong> {{this.episodeId}}</p>
+        </div>
+        <div class="episode-actions">
+          <a href="/episodes/{{this.episodeId}}" class="btn-view">View Details</a>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+</div>
+
+<style>
+  .episodes-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  h1 {
+    color: #00b5cc;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .episodes-stats {
+    background: #f4f4f4;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+
+  .episodes-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .episode-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .episode-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 181, 204, 0.2);
+  }
+
+  .episode-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #00b5cc;
+  }
+
+  .episode-header h2 {
+    margin: 0;
+    font-size: 1.2em;
+    color: #333;
+    flex: 1;
+  }
+
+  .episode-code {
+    background: #00b5cc;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    font-weight: bold;
+    margin-left: 10px;
+  }
+
+  .episode-details {
+    margin-bottom: 15px;
+  }
+
+  .episode-details p {
+    margin: 8px 0;
+    color: #666;
+  }
+
+  .episode-actions {
+    text-align: right;
+  }
+
+  .btn-view {
+    display: inline-block;
+    background: #00b5cc;
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background 0.2s;
+  }
+
+  .btn-view:hover {
+    background: #009aad;
+  }
+</style>
