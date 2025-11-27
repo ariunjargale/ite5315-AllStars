@@ -1,0 +1,43 @@
+<div class="episode-detail-container">
+  <div class="episode-detail-header">
+    <h1>{{location.name}}</h1>
+    <span class="episode-code-large">{{location.type}}</span>
+  </div>
+
+  <div class="episode-info">
+    <div class="info-row">
+      <span class="info-label">Dimension:</span>
+      <span class="info-value">{{location.dimension}}</span>
+    </div>
+
+    <div class="info-row">
+      <span class="info-label">Location ID:</span>
+      <span class="info-value">{{location.locationId}}</span>
+    </div>
+
+    <div class="info-row">
+      <span class="info-label">Total Residents:</span>
+      <span class="info-value">{{residents.length}}</span>
+    </div>
+  </div>
+
+  <div class="characters-section">
+    <h2>Residents</h2>
+
+    <div class="character-ids">
+      {{#if residents.length}}
+        {{#each residents}}
+        <span class="character-id-badge">
+          <a href="/characters/{{this.characterId}}">{{this.name}}</a>
+        </span>
+        {{/each}}
+      {{else}}
+        <p>No known residents.</p>
+      {{/if}}
+    </div>
+  </div>
+
+  <div class="episode-actions">
+    <a href="/locations" class="btn-back">← Back to Locations</a>
+  </div>
+</div>

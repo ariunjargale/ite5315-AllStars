@@ -1,0 +1,28 @@
+<div class="episodes-container">
+  <h1>{{title}}</h1>
+
+  <div class="episodes-stats">
+    <p>Total Locations: <strong>{{locations.length}}</strong></p>
+  </div>
+
+  <div class="episodes-list">
+    {{#each locations}}
+    <div class="episode-card">
+      <div class="episode-header">
+        <h2>{{this.name}}</h2>
+        <span class="episode-code">{{this.type}}</span>
+      </div>
+
+      <div class="episode-details">
+        <p><strong>Dimension:</strong> {{this.dimension}}</p>
+        <p><strong>Residents:</strong> {{this.residents.length}}</p>
+        <p><strong>Location ID:</strong> {{this.locationId}}</p>
+      </div>
+
+      <div class="episode-actions">
+        <a href="/locations/{{this.locationId}}" class="btn-view">View Details</a>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</div>
