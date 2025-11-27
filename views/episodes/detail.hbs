@@ -1,34 +1,34 @@
-<div class="episode-detail-container">
-    <div class="episode-detail-header">
-        <h1>{{episode.name}}</h1>
-        <span class="episode-code-large">{{episode.episode}}</span>
-    </div>
+<div class="detail-container">
+  <div class="detail-header">
+    <h1>{{episode.name}}</h1>
+    <span class="code-large">{{episode.episode}}</span>
+  </div>
 
-    <div class="episode-info">
-        <div class="info-row">
-            <span class="info-label">Air Date:</span>
-            <span class="info-value">{{episode.air_date}}</span>
-        </div>
-        <div class="info-row">
-            <span class="info-label">Episode ID:</span>
-            <span class="info-value">{{episode.episodeId}}</span>
-        </div>
-        <div class="info-row">
-            <span class="info-label">Total Characters:</span>
-            <span class="info-value">{{episode.characters.length}}</span>
-        </div>
+  <div class="info">
+    <div class="info-row">
+      <span class="info-label">Air Date:</span>
+      <span class="info-value">{{episode.air_date}}</span>
     </div>
+    <div class="info-row">
+      <span class="info-label">Episode ID:</span>
+      <span class="info-value">{{episode.episodeId}}</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Total Characters:</span>
+      <span class="info-value">{{episode.characters.length}}</span>
+    </div>
+  </div>
 
-    <div class="characters-section">
-        <h2>Characters in this Episode</h2>
-        <div class="character-ids">
-            {{#each episode.characters}}
-            <span class="character-id-badge">{{this}}</span>
-            {{/each}}
-        </div>
+  <div class="sub-section">
+    <h2>Characters in this Episode</h2>
+    <div class="sub-ids">
+      {{#each episode.characters}}
+        <span class="sub-id-badge">{{this}}</span>
+      {{/each}}
     </div>
+  </div>
 
-    <div class="episode-actions">
-        <a href="/episodes" class="btn-back">← Back to Episodes</a>
-    </div>
+  <div class="detail-actions">
+    <a href="/episodes" class="btn-back">← Back to Episodes</a>
+  </div>
 </div>

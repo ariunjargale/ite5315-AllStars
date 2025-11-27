@@ -1,10 +1,10 @@
-<div class="episode-detail-container">
-  <div class="episode-detail-header">
+<div class="detail-container">
+  <div class="detail-header">
     <h1>{{location.name}}</h1>
-    <span class="episode-code-large">{{location.type}}</span>
+    <span class="code-large">{{location.type}}</span>
   </div>
 
-  <div class="episode-info">
+  <div class="info">
     <div class="info-row">
       <span class="info-label">Dimension:</span>
       <span class="info-value">{{location.dimension}}</span>
@@ -21,15 +21,15 @@
     </div>
   </div>
 
-  <div class="characters-section">
+  <div class="sub-section">
     <h2>Residents</h2>
 
-    <div class="character-ids">
+    <div class="sub-ids">
       {{#if residents.length}}
         {{#each residents}}
-        <span class="character-id-badge">
-          <a href="/characters/{{this.characterId}}">{{this.name}}</a>
-        </span>
+          <a href="/characters/{{this.characterId}}"><span
+              class="sub-id-badge"
+            >{{this.name}}</span></a>
         {{/each}}
       {{else}}
         <p>No known residents.</p>
@@ -37,7 +37,7 @@
     </div>
   </div>
 
-  <div class="episode-actions">
+  <div class="detail-actions">
     <a href="/locations" class="btn-back">← Back to Locations</a>
   </div>
 </div>

@@ -1,6 +1,18 @@
-<header>
-  <nav>
-    <a href="/">Home</a>
-  </nav>
-  <h1>Showrunner's CMS - Rick and Morty</h1>
+<header class="main-header">
+  <div class="header-content">
+    <div class="logo-section">
+      <a href="/" class="title">Showrunner's CMS</a>
+    </div>
+    <nav class="main-nav">
+      <ul>
+        {{! <li><a href="/" class="nav-link">Dashboard</a></li> }}
+        <li><a href="/characters" class="nav-link">Casting</a></li>
+        <li><a href="/locations" class="nav-link">World Building</a></li>
+        <li><a href="/episodes" class="nav-link">Storyline</a></li>
+      </ul>
+    </nav>
+    {{! <div class="auth-nav">
+      <a href="/login" class="btn-login">Login</a>
+    </div> }}
+  </div>
 </header>
