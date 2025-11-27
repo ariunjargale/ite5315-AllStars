@@ -1,0 +1,35 @@
+<div class="list-container">
+  <h1>{{title}}</h1>
+
+  <div class="list-stats">
+    <p>Total Characters: <strong>{{count}}</strong></p>
+  </div>
+
+  <div class="list">
+    {{#each characters}}
+      <div class="list-card">
+        
+        <div style="text-align: center; margin-bottom: 15px;">
+            <img src="{{this.image}}" alt="{{this.name}}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; border: 2px solid #44d62c;">
+        </div>
+
+        <div class="list-header">
+          <h2 style="font-size: 1.1em;">{{this.name}}</h2>
+          <span class="list-code" style="{{#if this.isAlive}}background: linear-gradient(135deg, #44d62c, #97ce4c);{{else}}background: linear-gradient(135deg, #e91e63, #c0392b); color: white;{{/if}}">
+            {{#if this.isAlive}}Alive{{else}}Dead{{/if}}
+          </span>
+        </div>
+
+        <div class="list-details">
+          <p><strong>Species:</strong> {{this.species}}</p>
+          <p><strong>Gender:</strong> {{this.gender}}</p>
+          <p><strong>Location:</strong> {{this.location.name}}</p>
+        </div>
+
+        <div class="list-actions">
+          <a href="/characters/{{this.characterId}}" class="btn-view">View Profile</a>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+</div>

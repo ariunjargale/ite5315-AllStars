@@ -1,0 +1,51 @@
+<div class="detail-container">
+  <div class="detail-header">
+    <img class="detail-image" src="{{character.image}}" alt="{{character.name}}">
+    
+    <h1>{{character.name}}</h1>
+    
+    <span class="code-large" style="{{#if character.isAlive}}color: #44d62c;{{else}}color: #e91e63;{{/if}}">
+      {{#if character.isAlive}}ALIVE{{else}}DEAD{{/if}}
+    </span>
+  </div>
+
+  <div class="info">
+    <div class="info-row">
+      <span class="info-label">Species:</span>
+      <span class="info-value">{{character.species}}</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Gender:</span>
+      <span class="info-value">{{character.gender}}</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Origin:</span>
+      <span class="info-value">{{character.origin.name}}</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Last Location:</span>
+      <span class="info-value">{{character.location.name}}</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Database ID:</span>
+      <span class="info-value">{{character.characterId}}</span>
+    </div>
+  </div>
+
+  <div class="sub-section">
+    <h2>Episodes Appeared In</h2>
+    <div class="sub-ids">
+      {{#each character.episode}}
+        <a href="/episodes/{{this}}">
+            <span class="sub-id-badge">Ep: {{this}}</span>
+        </a>
+      {{else}}
+        <p> No episodes recorded.</p>
+      {{/each}}
+    </div>
+  </div>
+
+  <div class="detail-actions">
+    <a href="/characters" class="btn-back">← Back to Casting</a>
+    </div>
+</div>
