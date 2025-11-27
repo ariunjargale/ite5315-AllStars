@@ -7,7 +7,7 @@ exports.getAllCharacters = async (req, res) => {
     const totalCharacters = await Character.countDocuments();
     const characters = await Character.find()
       .sort({ characterId: 1 })
-      .limit(10);
+      .limit(20);
     res.render("characters/list", {
       title: "All Characters - Rick and Morty",
       characters: characters,
