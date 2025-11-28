@@ -83,3 +83,110 @@ exports.getLocationById = async (req, res) => {
     });
   }
 };
+
+const { validationResult } = require("express-validator");
+
+// Show create form
+exports.showCreateForm = (req, res) => {
+  res.render("locations/create", {
+    title: "Create New Location",
+  });
+};
+
+// Create
+exports.createLocation = async (req, res) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.render("locations/create", {
+      title: "Create New Location",
+      errors: errors.array(),
+      form: req.body,
+    });
+  }
+
+  try {
+    const newLocation = new Location({
+      locationId: req.body.locationId,
+      name: req.body.name,
+      type: req.body.type,
+      dimension: req.body.dimension,
+      residents: [],
+      created: new Date(),
+      updated: new Date(),
+    });
+
+    await newLocation.save();
+
+    res.redirect("/locations");
+  } catch (err) {
+    console.error(err);
+    res.render("locations/create", {
+      title: "Create New Location",
+      error: "Location ID already exists or invalid input",
+      form: req.body,
+    });
+  }
+};
+
+// Show edit form
+exports.showEditForm = async (req, res) => {
+  const location = await Location.findOne({ locationId: req.params.id });
+
+  if (!location) {
+    return res.status(404).render("error", {
+      title: "Not Found",
+      message: "Location not found",
+    });
+  }
+
+  res.render("locations/edit", {
+    title: "Edit Location",
+    location,
+  });
+};
+
+// Update
+exports.updateLocation = async (req, res) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    const location = await Location.findOne({
+      locationId: req.params.id,
+    });
+
+    return res.render("locations/edit", {
+      title: "Edit Location",
+      errors: errors.array(),
+      location,
+    });
+  }
+
+  try {
+    await Location.findOneAndUpdate(
+      { locationId: req.params.id },
+      {
+        name: req.body.name,
+        type: req.body.type,
+        dimension: req.body.dimension,
+        updated: new Date(),
+      }
+    );
+
+    res.redirect(`/locations/${req.params.id}`);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Failed to update location");
+  }
+};
+
+// Delete
+exports.deleteLocation = async (req, res) => {
+  try {
+    await Location.findOneAndDelete({ locationId: req.params.id });
+    res.redirect("/locations");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Failed to delete location");
+  }
+};

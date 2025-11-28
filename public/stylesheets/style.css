@@ -626,3 +626,35 @@ footer h2 {
     align-items: stretch;
   }
 }
+
+/* --- Location Form Button Row Fix --- */
+.button-row {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 25px;
+}
+
+/* Make Create & Cancel same height/width */
+.btn-create,
+.btn-cancel {
+  min-width: 120px;
+  text-align: center;
+}
+
+/* Cancel button match theme */
+.btn-cancel {
+  background: linear-gradient(135deg, #555, #777);
+  padding: 12px 25px;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  border: 2px solid #888;
+  transition: 0.3s ease;
+}
+
+.btn-cancel:hover {
+  background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+  border-color: var(--accent-purple);
+  transform: scale(1.05);
+}

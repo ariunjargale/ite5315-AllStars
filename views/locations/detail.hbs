@@ -37,7 +37,20 @@
     </div>
   </div>
 
-  <div class="detail-actions">
-    <a href="/locations" class="btn-back">← Back to Locations</a>
-  </div>
+<div class="detail-actions">
+
+  <a href="/locations" class="btn-back">← Back to Locations</a>
+
+  <a href="/locations/edit/{{location.locationId}}" class="btn-view">
+    ✏️ Edit
+  </a>
+
+  <form action="/locations/delete/{{location.locationId}}" 
+        method="POST" 
+        style="display:inline-block;"
+        onsubmit="return confirm('Are you sure you want to delete this location? This action cannot be undone.')">
+
+    <button class="btn-delete">🗑 Delete</button>
+  </form>
+
 </div>
