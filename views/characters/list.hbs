@@ -7,7 +7,7 @@
 
   <form action="/characters" method="GET" class="advanced-filter-box">
 
-    <div class="filter-grid">
+    <div class="character-filter-grid">
       <div class="filter-item">
         <label>Name</label>
         <input
@@ -80,42 +80,40 @@
     </div>
 
     <div class="filter-actions">
-      <button type="submit" class="btn-filter">Apply Filters</button>
-      <a href="/characters" class="btn-clear">Clear</a>
+      <button type="submit" class="character-filter-apply-btn">Apply Filters</button>
+      <a href="/characters" class="character-filter-clear-btn">Clear</a>
     </div>
   </form>
+  {{#if characters.length}}
+    <div class="list">
+      {{#each characters}}
+        <div class="list-card">
 
-  <div class="list">
-    {{#each characters}}
-      <div class="list-card">
+          <div class="card-image-wrapper">
+            <img src="{{this.image}}" alt="{{this.name}}" class="card-image" />
+          </div>
 
-        <div class="card-image-wrapper">
-          <img src="{{this.image}}" alt="{{this.name}}" class="card-image" />
+              <div class="list-header">
+            <h2 >{{this.name}}</h2>
+            <span class="list-code {{#if this.isAlive}} status-alive {{else}} status-dead {{/if}}">
+              {{#if this.isAlive}}Alive{{else}}Dead{{/if}}
+            </span>
+          </div>
+
+          <div class="list-details">
+            <p><strong>Species:</strong> {{this.species}}</p>
+            <p><strong>Gender:</strong> {{this.gender}}</p>
+            <p><strong>Location:</strong> {{this.location.name}}</p>
+          </div>
+
+          <div class="list-actions">
+            <a href="/characters/{{this.characterId}}" class="btn-view">View
+              Profile</a>
+          </div>
         </div>
-
-        <div class="list-header">
-          <h2>{{this.name}}</h2>
-          <span class="list-code {{isStatusAlive this.isAlive}}">
-            {{#if this.isAlive}}Alive{{else}}Dead{{/if}}
-          </span>
-        </div>
-
-        <div class="list-details">
-          <p><strong>Species:</strong> {{this.species}}</p>
-          <p><strong>Gender:</strong> {{this.gender}}</p>
-          <p><strong>Last known location:</strong> {{this.location.name}}</p>
-        </div>
-
-        <div class="list-actions">
-          <a href="/characters/{{this.characterId}}" class="btn-view">View
-            Profile</a>
-        </div>
-      </div>
-    {{/each}}
-  </div>
-</div>
-
-<div class="pagination-container">
+      {{/each}}
+    </div>
+    <div class="pagination-container">
 
   {{! FIRST PAGE }}
   {{#if (gt currentPage 1)}}
@@ -163,4 +161,14 @@
     >Last »</a>
   {{/if}}
 
+</div>
+  {{else}}
+    <div class="no-data-container">
+      <div class="no-data-content">
+        <h2>Wubba Lubba Dub Dub!</h2>
+        <p>No characters found...</p>
+        <p class="sub-text">Try adjusting your filters or search for someone else.</p>
+      </div>
+    </div>
+  {{/if}}
 </div>

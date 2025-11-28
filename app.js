@@ -37,7 +37,7 @@ app.engine(
       lt: (a, b) => a < b,
       // for select options
       isSelected: function (a, b) {
-        return a === b ? "selected" : "";
+        return a == b ? "selected" : "";
       },
       isStatusAlive: function (status) {
         return status ? "status-alive" : "status-dead";

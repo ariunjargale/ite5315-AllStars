@@ -143,7 +143,7 @@ main {
 .list-container {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 20px;
 }
 
 .list-container h1,
@@ -198,6 +198,9 @@ footer h2 {
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .list-card::before {
@@ -257,6 +260,7 @@ footer h2 {
 
 .list-details {
   margin-bottom: 20px;
+  flex: 1;
 }
 
 .list-details p {
@@ -270,6 +274,8 @@ footer h2 {
 }
 
 .list-actions {
+  text-align: right;
+  margin-top: auto;
   text-align: right;
 }
 
@@ -482,14 +488,10 @@ footer h2 {
 
 .main-footer {
   background-color: #111;
-  /* Header-тэй ижил хар өнгө */
   border-top: 3px solid var(--portal-green);
-  /* Дээд талдаа ногоон зураас */
   padding: 30px 0;
   margin-top: auto;
-  /* Main content бага байсан ч доошоо шахах */
   box-shadow: 0 -4px 20px rgba(68, 214, 44, 0.15);
-  /* Дээшээ бүдэг ногоон туяа */
   text-align: center;
 }
 
@@ -657,4 +659,178 @@ footer h2 {
   background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
   border-color: var(--accent-purple);
   transform: scale(1.05);
+}
+
+/* Character - Filter  */
+.advanced-filter-box {
+  background: rgba(30, 30, 30, 0.8);
+  border: 2px solid var(--portal-green);
+  padding: 25px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.character-filter-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px 30px;
+  margin-bottom: 25px;
+}
+
+.filter-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-item label {
+  font-size: 0.9em;
+  color: var(--primary-blue);
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.filter-item input,
+.filter-item select {
+  padding: 10px;
+  background: #1a1a1a;
+  border: 1px solid #444;
+  color: white;
+  border-radius: 6px;
+  font-size: 0.95em;
+}
+
+.filter-item input:focus,
+.filter-item select:focus {
+  border-color: var(--portal-green);
+  outline: none;
+}
+
+.filter-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  border-top: 1px solid #333;
+  padding-top: 15px;
+}
+
+/* Character - list page css */
+.card-image-wrapper {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.card-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid var(--portal-green);
+  transition: transform 0.3s ease;
+}
+
+.status-alive {
+  background: linear-gradient(135deg, #44d62c, #97ce4c);
+  color: #1a1a1a;
+}
+
+.status-dead {
+  background: linear-gradient(135deg, #e91e63, #c0392b);
+  color: white;
+}
+
+.character-filter-apply-btn {
+  height: 40px;
+  padding: 12px 22px;
+  background: linear-gradient(
+    135deg,
+    var(--primary-blue),
+    var(--accent-purple)
+  );
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.character-filter-apply-btn:hover {
+  background: linear-gradient(
+    135deg,
+    var(--portal-green),
+    var(--primary-green)
+  );
+  color: var(--dark-bg);
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(68, 214, 44, 0.6);
+}
+
+.character-filter-clear-btn {
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  padding: 12px 22px;
+  background: #444;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s ease;
+  text-decoration: none;
+}
+
+.character-filter-clear-btn:hover {
+  background: #555;
+  transform: scale(1.05);
+}
+
+@media (max-width: 900px) {
+  .filter-grid,
+  .character-filter-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .filter-grid,
+  .character-filter-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-actions {
+    flex-direction: column;
+  }
+
+  .character-filter-apply-btn,
+  .character-filter-clear-btn {
+    width: 100%;
+  }
+}
+
+/* --- No Data Found State --- */
+.no-data-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.no-data-content h2 {
+  font-family: "Creepster", cursive;
+  color: var(--accent-pink);
+  font-size: 2.5em;
+  margin-block: 15px;
+  text-shadow: 0 0 10px rgba(233, 30, 99, 0.4);
+}
+
+.no-data-content p {
+  color: var(--text-light);
+  font-size: 1.2em;
+}
+
+.no-data-content .sub-text {
+  color: #888;
+  font-size: 0.9em;
 }
