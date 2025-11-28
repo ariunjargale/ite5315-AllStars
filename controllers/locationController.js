@@ -4,17 +4,30 @@ const Character = require("../models/Character");
 // Get all locations (with pagination)
 exports.getAllLocations = async (req, res) => {
   try {
-    const perPage = 12; // number of locations per page
+    const perPage = 12;
     const page = parseInt(req.query.page) || 1;
 
-    // Count total locations
-    const totalLocations = await Location.countDocuments();
+    // Build filters
+    const filter = {};
 
-    // Fetch paginated results
-    const locations = await Location.find()
+    if (req.query.type && req.query.type !== "all") {
+      filter.type = req.query.type;
+    }
+
+    if (req.query.dimension && req.query.dimension !== "all") {
+      filter.dimension = req.query.dimension;
+    }
+
+    const totalLocations = await Location.countDocuments(filter);
+
+    const locations = await Location.find(filter)
       .sort({ locationId: 1 })
       .skip((page - 1) * perPage)
       .limit(perPage);
+
+    // For blob filters
+    const allTypes = await Location.distinct("type");
+    const allDimensions = await Location.distinct("dimension");
 
     res.render("locations/list", {
       title: "All Locations - Rick and Morty",
@@ -22,6 +35,12 @@ exports.getAllLocations = async (req, res) => {
       totalLocations,
       currentPage: page,
       totalPages: Math.ceil(totalLocations / perPage),
+
+      allTypes,
+      allDimensions,
+
+      selectedType: req.query.type || "all",
+      selectedDimension: req.query.dimension || "all",
     });
   } catch (error) {
     console.error("Error fetching locations:", error);
@@ -32,7 +51,7 @@ exports.getAllLocations = async (req, res) => {
   }
 };
 
-// Get location by ID
+// Get location by ID (with residents)
 exports.getLocationById = async (req, res) => {
   try {
     const location = await Location.findOne({
