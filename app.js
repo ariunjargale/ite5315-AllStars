@@ -35,9 +35,6 @@ app.engine(
       subtract: (a, b) => a - b,
       gt: (a, b) => a > b,
       lt: (a, b) => a < b,
-      eq: function (a, b) {
-        return a === b;
-      },
       // for select options
       isSelected: function (a, b) {
         return a === b ? "selected" : "";
@@ -45,9 +42,11 @@ app.engine(
       isStatusAlive: function (status) {
         return status ? "status-alive" : "status-dead";
       },
+      eq: (a, b) => a == b,
     },
   })
 );
+
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "views"));
 
@@ -68,11 +67,13 @@ const characterRoutes = require("./routes/characterRoutes");
 const episodeRoutes = require("./routes/episodeRoutes");
 const locationRoutes = require("./routes/locationRoutes");
 
+// CORRECT ROUTING ORDER
+app.use("/characters", characterRoutes);
 app.use("/episodes", episodeRoutes);
 app.use("/locations", locationRoutes);
-app.use("/characters", characterRoutes);
-app.use("/", characterRoutes);
+app.use("/", mainRoutes); // "/" → redirects to /characters
 
+// Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err);
   if (err.name === "ValidationError") {

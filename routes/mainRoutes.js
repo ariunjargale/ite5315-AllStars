@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const controller = require("../controllers/mainController.js");
-const { body } = require("express-validator");
 
-router.get("/", controller.home);
+// Redirect home page to characters page
+router.get("/", (req, res) => {
+  res.redirect("/characters");
+});
 
 module.exports = router;

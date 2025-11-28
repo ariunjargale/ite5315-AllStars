@@ -198,9 +198,6 @@ footer h2 {
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 }
 
 .list-card::before {
@@ -260,7 +257,6 @@ footer h2 {
 
 .list-details {
   margin-bottom: 20px;
-  flex: 1;
 }
 
 .list-details p {
@@ -274,8 +270,6 @@ footer h2 {
 }
 
 .list-actions {
-  text-align: right;
-  margin-top: auto;
   text-align: right;
 }
 
@@ -557,124 +551,110 @@ footer h2 {
   text-shadow: 0 0 10px rgba(68, 214, 44, 0.5);
 }
 
-/* Advanced Filter Box */
-.advanced-filter-box {
-  background: #222;
-  border: 1px solid var(--primary-blue);
+/* FILTER UI */
+.filter-form {
+  display: flex;
+  align-items: flex-end;
+  gap: 25px;
   padding: 20px;
+  background: rgba(30, 30, 30, 0.6);
+  border: 2px solid var(--portal-green);
   border-radius: 12px;
-  margin-bottom: 30px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  margin-bottom: 35px;
 }
 
-.filter-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  /* Responsive Grid */
-  gap: 15px;
-  margin-bottom: 20px;
-}
-
-.filter-item {
+.filter-group {
   display: flex;
   flex-direction: column;
 }
 
-.filter-item label {
-  font-size: 0.9em;
-  color: var(--primary-blue);
+.filter-group label {
+  font-family: "Creepster", cursive;
+  color: var(--portal-green);
+  font-size: 1.3em;
+  text-shadow: 0 0 10px var(--portal-green);
   margin-bottom: 5px;
-  font-weight: bold;
 }
 
-.filter-item input,
-.filter-item select {
-  padding: 10px;
-  background: #1a1a1a;
-  border: 1px solid #444;
-  color: white;
-  border-radius: 6px;
-  font-size: 0.95em;
-}
-
-.filter-item input:focus,
-.filter-item select:focus {
-  border-color: var(--portal-green);
-  outline: none;
-}
-
-.filter-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  border-top: 1px solid #333;
-  padding-top: 15px;
-}
-
-.btn-filter {
-  background: var(--portal-green);
-  color: #1a1a1a;
-  border: none;
-  padding: 10px 25px;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-
-.btn-filter:hover {
-  transform: scale(1.05);
-}
-
-.btn-clear {
-  background: #444;
-  color: white;
-  text-decoration: none;
-  padding: 10px 20px;
-  border-radius: 6px;
-  font-weight: bold;
-}
-
-.btn-clear:hover {
-  background: #555;
-}
-
-/* Character - list page css */
-.card-image-wrapper {
-  text-align: center;
-  margin-bottom: 15px;
-}
-
-.card-image {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
+.filter-select {
+  padding: 10px 15px;
   border-radius: 8px;
-  border: 2px solid var(--portal-green);
-  transition: transform 0.3s ease;
+  background: var(--card-bg);
+  border: 2px solid var(--primary-blue);
+  color: var(--text-light);
+  font-size: 1em;
+  cursor: pointer;
+  transition: 0.2s ease;
 }
 
-.list-card:hover .card-image {
-  transform: scale(1.02);
+.filter-select:hover {
+  border-color: var(--portal-green);
+  box-shadow: 0 0 10px rgba(68, 214, 44, 0.5);
 }
 
-.status-alive {
-  background: linear-gradient(135deg, #44d62c, #97ce4c);
-  color: #1a1a1a;
-}
-
-.status-dead {
-  background: linear-gradient(135deg, #e91e63, #c0392b);
+.filter-apply-btn {
+  padding: 12px 22px;
+  background: linear-gradient(
+    135deg,
+    var(--primary-blue),
+    var(--accent-purple)
+  );
   color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s ease;
+  margin-top: 22px;
 }
 
-.list-code {
-  padding: 6px 14px;
-  border-radius: 6px;
-  font-size: 0.85em;
-  font-weight: bold;
-  margin-left: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  white-space: nowrap;
-  display: inline-block;
+.filter-apply-btn:hover {
+  background: linear-gradient(
+    135deg,
+    var(--portal-green),
+    var(--primary-green)
+  );
+  color: var(--dark-bg);
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(68, 214, 44, 0.6);
+}
+
+/* For mobile */
+@media (max-width: 768px) {
+  .filter-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+/* --- Location Form Button Row Fix --- */
+.button-row {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 25px;
+}
+
+/* Make Create & Cancel same height/width */
+.btn-create,
+.btn-cancel {
+  min-width: 120px;
+  text-align: center;
+}
+
+/* Cancel button match theme */
+.btn-cancel {
+  background: linear-gradient(135deg, #555, #777);
+  padding: 12px 25px;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  border: 2px solid #888;
+  transition: 0.3s ease;
+}
+
+.btn-cancel:hover {
+  background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+  border-color: var(--accent-purple);
+  transform: scale(1.05);
 }

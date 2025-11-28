@@ -1,0 +1,30 @@
+<div class="form-container">
+  <h1>Edit Location</h1>
+
+  {{#if errors}}
+    <ul class="error-list">
+      {{#each errors}}
+        <li class="error">{{this.msg}}</li>
+      {{/each}}
+    </ul>
+  {{/if}}
+
+  <form action="/locations/edit/{{location.locationId}}" method="POST">
+
+    <label>Name</label>
+    <input type="text" name="name" value="{{location.name}}" required>
+
+    <label>Type</label>
+    <input type="text" name="type" value="{{location.type}}">
+
+    <label>Dimension</label>
+    <input type="text" name="dimension" value="{{location.dimension}}">
+
+    <button type="submit" class="btn-view">Save Changes</button>
+  </form>
+
+  <form action="/locations/delete/{{location.locationId}}" method="POST" style="margin-top:20px;">
+    <button class="btn-delete">Delete</button>
+  </form>
+
+</div>

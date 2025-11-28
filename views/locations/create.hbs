@@ -1,0 +1,51 @@
+<div class="detail-container">
+
+  <div class="detail-header">
+    <h1>Create New Location</h1>
+  </div>
+
+  {{#if errors}}
+    <div class="sub-section">
+      <h2>Errors</h2>
+      <ul class="error-list">
+        {{#each errors}}
+          <li class="error">{{this.msg}}</li>
+        {{/each}}
+      </ul>
+    </div>
+  {{/if}}
+
+  {{#if error}}
+    <p class="error">{{error}}</p>
+  {{/if}}
+
+  <form action="/locations/create" method="POST" class="info">
+
+    <div class="info-row">
+      <span class="info-label">Location ID:</span>
+      <input type="number" name="locationId" value="{{form.locationId}}" required>
+    </div>
+
+    <div class="info-row">
+      <span class="info-label">Name:</span>
+      <input type="text" name="name" value="{{form.name}}" required>
+    </div>
+
+    <div class="info-row">
+      <span class="info-label">Type:</span>
+      <input type="text" name="type" value="{{form.type}}">
+    </div>
+
+    <div class="info-row">
+      <span class="info-label">Dimension:</span>
+      <input type="text" name="dimension" value="{{form.dimension}}">
+    </div>
+
+    <div class="detail-actions button-row">
+      <button type="submit" class="btn-view btn-create">Create</button>
+      <a href="/locations" class="btn-back btn-cancel">Cancel</a>
+    </div>
+
+  </form>
+
+</div>

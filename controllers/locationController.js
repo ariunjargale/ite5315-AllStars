@@ -4,17 +4,30 @@ const Character = require("../models/Character");
 // Get all locations (with pagination)
 exports.getAllLocations = async (req, res) => {
   try {
-    const perPage = 12; // number of locations per page
+    const perPage = 12;
     const page = parseInt(req.query.page) || 1;
 
-    // Count total locations
-    const totalLocations = await Location.countDocuments();
+    // Build filters
+    const filter = {};
 
-    // Fetch paginated results
-    const locations = await Location.find()
+    if (req.query.type && req.query.type !== "all") {
+      filter.type = req.query.type;
+    }
+
+    if (req.query.dimension && req.query.dimension !== "all") {
+      filter.dimension = req.query.dimension;
+    }
+
+    const totalLocations = await Location.countDocuments(filter);
+
+    const locations = await Location.find(filter)
       .sort({ locationId: 1 })
       .skip((page - 1) * perPage)
       .limit(perPage);
+
+    // For blob filters
+    const allTypes = await Location.distinct("type");
+    const allDimensions = await Location.distinct("dimension");
 
     res.render("locations/list", {
       title: "All Locations - Rick and Morty",
@@ -22,6 +35,12 @@ exports.getAllLocations = async (req, res) => {
       totalLocations,
       currentPage: page,
       totalPages: Math.ceil(totalLocations / perPage),
+
+      allTypes,
+      allDimensions,
+
+      selectedType: req.query.type || "all",
+      selectedDimension: req.query.dimension || "all",
     });
   } catch (error) {
     console.error("Error fetching locations:", error);
@@ -32,7 +51,7 @@ exports.getAllLocations = async (req, res) => {
   }
 };
 
-// Get location by ID
+// Get location by ID (with residents)
 exports.getLocationById = async (req, res) => {
   try {
     const location = await Location.findOne({
@@ -62,5 +81,112 @@ exports.getLocationById = async (req, res) => {
       title: "Error",
       message: "Failed to fetch location details",
     });
+  }
+};
+
+const { validationResult } = require("express-validator");
+
+// Show create form
+exports.showCreateForm = (req, res) => {
+  res.render("locations/create", {
+    title: "Create New Location",
+  });
+};
+
+// Create
+exports.createLocation = async (req, res) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.render("locations/create", {
+      title: "Create New Location",
+      errors: errors.array(),
+      form: req.body,
+    });
+  }
+
+  try {
+    const newLocation = new Location({
+      locationId: req.body.locationId,
+      name: req.body.name,
+      type: req.body.type,
+      dimension: req.body.dimension,
+      residents: [],
+      created: new Date(),
+      updated: new Date(),
+    });
+
+    await newLocation.save();
+
+    res.redirect("/locations");
+  } catch (err) {
+    console.error(err);
+    res.render("locations/create", {
+      title: "Create New Location",
+      error: "Location ID already exists or invalid input",
+      form: req.body,
+    });
+  }
+};
+
+// Show edit form
+exports.showEditForm = async (req, res) => {
+  const location = await Location.findOne({ locationId: req.params.id });
+
+  if (!location) {
+    return res.status(404).render("error", {
+      title: "Not Found",
+      message: "Location not found",
+    });
+  }
+
+  res.render("locations/edit", {
+    title: "Edit Location",
+    location,
+  });
+};
+
+// Update
+exports.updateLocation = async (req, res) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    const location = await Location.findOne({
+      locationId: req.params.id,
+    });
+
+    return res.render("locations/edit", {
+      title: "Edit Location",
+      errors: errors.array(),
+      location,
+    });
+  }
+
+  try {
+    await Location.findOneAndUpdate(
+      { locationId: req.params.id },
+      {
+        name: req.body.name,
+        type: req.body.type,
+        dimension: req.body.dimension,
+        updated: new Date(),
+      }
+    );
+
+    res.redirect(`/locations/${req.params.id}`);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Failed to update location");
+  }
+};
+
+// Delete
+exports.deleteLocation = async (req, res) => {
+  try {
+    await Location.findOneAndDelete({ locationId: req.params.id });
+    res.redirect("/locations");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Failed to delete location");
   }
 };
