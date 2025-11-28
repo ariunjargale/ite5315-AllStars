@@ -35,6 +35,16 @@ app.engine(
       subtract: (a, b) => a - b,
       gt: (a, b) => a > b,
       lt: (a, b) => a < b,
+      eq: function (a, b) {
+        return a === b;
+      },
+      // for select options
+      isSelected: function (a, b) {
+        return a === b ? "selected" : "";
+      },
+      isStatusAlive: function (status) {
+        return status ? "status-alive" : "status-dead";
+      },
     },
   })
 );
