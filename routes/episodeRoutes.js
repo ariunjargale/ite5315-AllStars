@@ -24,7 +24,9 @@ const validateEpisode = [
     body("episode")
         .trim()
         .notEmpty()
-        .withMessage("Episode code is required (e.g., S01E01)"),
+        .withMessage("Episode code is required (e.g., S01E01)")
+        .matches(/^S\d{2}E\d{2}$/)
+        .withMessage("Episode code must follow the pattern S##E## (e.g., S01E01, S02E10)"),
 
     body("characters")
         .optional()

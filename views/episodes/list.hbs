@@ -1,5 +1,8 @@
 <div class="list-container">
-  <h1>{{title}}</h1>
+  <div class="list-header-row">
+    <h1>{{title}}</h1>
+    <a href="/episodes/create" class="btn-create">+ Create New Episode</a>
+  </div>
 
   <div class="list-stats">
     <p>Total Episodes: <strong>{{episodes.length}}</strong></p>
@@ -7,20 +10,25 @@
 
   <div class="list">
     {{#each episodes}}
-      <div class="list-card">
-        <div class="list-header">
-          <h2>{{this.name}}</h2>
-          <span class="list-code">{{this.episode}}</span>
-        </div>
-        <div class="list-details">
-          <p><strong>Air Date:</strong> {{this.air_date}}</p>
-          <p><strong>Characters:</strong> {{this.characters.length}}</p>
-          <p><strong>Episode ID:</strong> {{this.episodeId}}</p>
-        </div>
-        <div class="list-actions">
-          <a href="/episodes/{{this.episodeId}}" class="btn-view">View Details</a>
-        </div>
+    <div class="list-card">
+      <div class="list-header">
+        <h2>{{this.name}}</h2>
+        <span class="list-code">{{this.episode}}</span>
       </div>
+      <div class="list-details">
+        <p><strong>Air Date:</strong> {{this.air_date}}</p>
+        <p><strong>Characters:</strong> {{this.characters.length}}</p>
+        <p><strong>Episode ID:</strong> {{this.episodeId}}</p>
+      </div>
+      <div class="list-actions">
+        <a href="/episodes/{{this.episodeId}}" class="btn-view">View Details</a>
+        <a href="/episodes/edit/{{this.episodeId}}" class="btn-edit">Edit</a>
+        <form action="/episodes/delete/{{this.episodeId}}" method="POST" style="display: inline;">
+          <button type="submit" class="btn-delete"
+            onclick="return confirm('Are you sure you want to delete this episode?')">Delete</button>
+        </form>
+      </div>
+    </div>
     {{/each}}
   </div>
 </div>
