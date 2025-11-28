@@ -1,0 +1,160 @@
+<div class="detail-container">
+  <div class="detail-header">
+    <h1>{{title}}</h1>
+  </div>
+
+  {{! Validation Errors }}
+  {{#if errors}}
+    <div class="character-error-box">
+      <ul>
+        {{#each errors}}
+          <li>{{this.msg}}</li>
+        {{/each}}
+      </ul>
+    </div>
+  {{/if}}
+
+  <form action="{{action}}" method="POST" class="info character-form-stack">
+
+    <div class="character-form-group">
+      <label class="info-label">Name:</label>
+      <input
+        type="text"
+        name="name"
+        value="{{character.name}}"
+        class="filter-select"
+        required
+      />
+    </div>
+
+    <div class="character-form-group">
+      <label class="info-label">Status:</label>
+      <select name="isAlive" class="filter-select" required>
+        <option value="" disabled {{selectIfEmpty character.isAlive}}>-- Select
+          Status --</option>
+        <option
+          value="true"
+          {{isSelected character.isAlive true}}
+        >Alive</option>
+        <option
+          value="false"
+          {{isSelected character.isAlive false}}
+        >Dead</option>
+      </select>
+    </div>
+
+    <div class="character-form-group">
+      <label class="info-label">Species:</label>
+      <input
+        type="text"
+        name="species"
+        value="{{character.species}}"
+        class="filter-select"
+        required
+      />
+    </div>
+
+    <div class="character-form-group">
+      <label class="info-label">Type (Optional):</label>
+      <input
+        type="text"
+        name="type"
+        value="{{character.type}}"
+        class="filter-select"
+      />
+    </div>
+
+    <div class="character-form-group">
+      <label class="info-label">Gender:</label>
+      <select name="gender" class="filter-select" required>
+        <option value="" disabled {{selectIfEmpty character.gender}}>-- Select
+          Gender --</option>
+        <option
+          value="Female"
+          {{isSelected character.gender "Female"}}
+        >Female</option>
+        <option
+          value="Male"
+          {{isSelected character.gender "Male"}}
+        >Male</option>
+        <option
+          value="Genderless"
+          {{isSelected character.gender "Genderless"}}
+        >Genderless</option>
+        <option
+          value="unknown"
+          {{isSelected character.gender "unknown"}}
+        >unknown</option>
+      </select>
+    </div>
+
+    <div class="character-form-group">
+      <label class="info-label">Last Known Location:</label>
+      <select name="locationId" class="filter-select" required>
+        <option
+          value=""
+          disabled
+          {{selectIfEmpty @root.character.location.id}}
+        >-- Select Location --</option>
+
+        {{#each locations}}
+          <option
+            value="{{this.locationId}}"
+            {{isSelected @root.character.location.id this.locationId}}
+          >
+            {{this.name}}
+          </option>
+        {{/each}}
+      </select>
+    </div>
+    <div class="character-form-group">
+      <label class="info-label">Origin:</label>
+      <select name="originId" class="filter-select">
+        <option value="" disabled {{selectIfEmpty @root.character.origin.id}}>--
+          Select Origin --</option>
+
+        {{#each locations}}
+          <option
+            value="{{this.locationId}}"
+            {{isSelected @root.character.origin.id this.locationId}}
+          >
+            {{this.name}}
+          </option>
+        {{/each}}
+      </select>
+    </div>
+
+    <div class="character-form-group">
+      <label class="info-label">Image URL:</label>
+      <input
+        type="url"
+        name="image"
+        value="{{character.image}}"
+        class="filter-select"
+        placeholder="https://..."
+        required
+      />
+    </div>
+
+    <div class="character-form-group">
+      <label class="info-label">Episodes (IDs separated by comma):</label>
+      <input
+        type="text"
+        name="episode"
+        value="{{character.episode}}"
+        class="filter-select"
+        placeholder="e.g. 1, 2, 5"
+      />
+    </div>
+
+    <div class="detail-actions button-row">
+      <button type="submit" class="filter-apply-btn btn-create">
+        {{#if isEdit}}Update{{else}}Create{{/if}}
+        Character
+      </button>
+
+      <a href="/characters" class="btn-cancel">Cancel</a>
+    </div>
+
+  </form>
+</div>

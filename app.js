@@ -43,6 +43,12 @@ app.engine(
         return status ? "status-alive" : "status-dead";
       },
       eq: (a, b) => a == b,
+      // for empty select option
+      selectIfEmpty: function (val) {
+        return val === undefined || val === null || val === ""
+          ? "selected"
+          : "";
+      },
     },
   })
 );

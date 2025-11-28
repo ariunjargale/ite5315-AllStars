@@ -210,10 +210,12 @@ footer h2 {
   left: 0;
   width: 100%;
   height: 4px;
-  background: linear-gradient(90deg,
-      var(--portal-green),
-      var(--primary-blue),
-      var(--accent-purple));
+  background: linear-gradient(
+    90deg,
+    var(--portal-green),
+    var(--primary-blue),
+    var(--accent-purple)
+  );
 }
 
 .list-card:hover {
@@ -241,9 +243,11 @@ footer h2 {
 }
 
 .list-code {
-  background: linear-gradient(135deg,
-      var(--portal-green),
-      var(--primary-green));
+  background: linear-gradient(
+    135deg,
+    var(--portal-green),
+    var(--primary-green)
+  );
   color: var(--dark-bg);
   padding: 6px 14px;
   border-radius: 6px;
@@ -277,9 +281,11 @@ footer h2 {
 
 .btn-view {
   display: inline-block;
-  background: linear-gradient(135deg,
-      var(--primary-blue),
-      var(--accent-purple));
+  background: linear-gradient(
+    135deg,
+    var(--primary-blue),
+    var(--accent-purple)
+  );
   color: white;
   padding: 10px 20px;
   text-decoration: none;
@@ -290,9 +296,11 @@ footer h2 {
 }
 
 .btn-view:hover {
-  background: linear-gradient(135deg,
-      var(--portal-green),
-      var(--primary-green));
+  background: linear-gradient(
+    135deg,
+    var(--portal-green),
+    var(--primary-green)
+  );
   color: var(--dark-bg);
   transform: scale(1.05);
   box-shadow: 0 6px 20px rgba(68, 214, 44, 0.5);
@@ -306,9 +314,11 @@ footer h2 {
 }
 
 .detail-header {
-  background: linear-gradient(135deg,
-      var(--portal-green),
-      var(--primary-green));
+  background: linear-gradient(
+    135deg,
+    var(--portal-green),
+    var(--primary-green)
+  );
   color: var(--dark-bg);
   padding: 40px;
   border-radius: 16px;
@@ -440,9 +450,11 @@ footer h2 {
 }
 
 .sub-id-badge:hover {
-  background: linear-gradient(135deg,
-      var(--portal-green),
-      var(--primary-green));
+  background: linear-gradient(
+    135deg,
+    var(--portal-green),
+    var(--primary-green)
+  );
   color: var(--dark-bg);
   border-color: var(--portal-green);
   transform: scale(1.1);
@@ -539,9 +551,11 @@ footer h2 {
 }
 
 .pagination-btn {
-  background: linear-gradient(135deg,
-      var(--primary-blue),
-      var(--accent-purple));
+  background: linear-gradient(
+    135deg,
+    var(--primary-blue),
+    var(--accent-purple)
+  );
   color: white;
   padding: 10px 22px;
   border-radius: 8px;
@@ -552,9 +566,11 @@ footer h2 {
 }
 
 .pagination-btn:hover {
-  background: linear-gradient(135deg,
-      var(--portal-green),
-      var(--primary-green));
+  background: linear-gradient(
+    135deg,
+    var(--portal-green),
+    var(--primary-green)
+  );
   color: var(--dark-bg);
   transform: scale(1.07);
   box-shadow: 0 6px 20px rgba(68, 214, 44, 0.5);
@@ -614,9 +630,11 @@ footer h2 {
 
 .filter-apply-btn {
   padding: 12px 22px;
-  background: linear-gradient(135deg,
-      var(--primary-blue),
-      var(--accent-purple));
+  background: linear-gradient(
+    135deg,
+    var(--primary-blue),
+    var(--accent-purple)
+  );
   color: white;
   font-weight: bold;
   border-radius: 8px;
@@ -627,9 +645,11 @@ footer h2 {
 }
 
 .filter-apply-btn:hover {
-  background: linear-gradient(135deg,
-      var(--portal-green),
-      var(--primary-green));
+  background: linear-gradient(
+    135deg,
+    var(--portal-green),
+    var(--primary-green)
+  );
   color: var(--dark-bg);
   transform: scale(1.05);
   box-shadow: 0 0 15px rgba(68, 214, 44, 0.6);
@@ -756,9 +776,11 @@ footer h2 {
 .character-filter-apply-btn {
   height: 40px;
   padding: 12px 22px;
-  background: linear-gradient(135deg,
-      var(--primary-blue),
-      var(--accent-purple));
+  background: linear-gradient(
+    135deg,
+    var(--primary-blue),
+    var(--accent-purple)
+  );
   color: white;
   font-weight: bold;
   border-radius: 8px;
@@ -768,9 +790,11 @@ footer h2 {
 }
 
 .character-filter-apply-btn:hover {
-  background: linear-gradient(135deg,
-      var(--portal-green),
-      var(--primary-green));
+  background: linear-gradient(
+    135deg,
+    var(--portal-green),
+    var(--primary-green)
+  );
   color: var(--dark-bg);
   transform: scale(1.05);
   box-shadow: 0 0 15px rgba(68, 214, 44, 0.6);
@@ -797,7 +821,6 @@ footer h2 {
 }
 
 @media (max-width: 900px) {
-
   .filter-grid,
   .character-filter-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -805,7 +828,6 @@ footer h2 {
 }
 
 @media (max-width: 600px) {
-
   .filter-grid,
   .character-filter-grid {
     grid-template-columns: 1fr;
@@ -862,9 +884,11 @@ footer h2 {
 /* --- Action Buttons --- */
 .btn-create {
   display: inline-block;
-  background: linear-gradient(135deg,
-      var(--portal-green),
-      var(--primary-green));
+  background: linear-gradient(
+    135deg,
+    var(--portal-green),
+    var(--primary-green)
+  );
   color: var(--dark-bg);
   padding: 12px 25px;
   text-decoration: none;
@@ -877,9 +901,11 @@ footer h2 {
 }
 
 .btn-create:hover {
-  background: linear-gradient(135deg,
-      var(--primary-blue),
-      var(--accent-purple));
+  background: linear-gradient(
+    135deg,
+    var(--primary-blue),
+    var(--accent-purple)
+  );
   color: white;
   transform: scale(1.05);
   box-shadow: 0 6px 20px rgba(0, 181, 204, 0.5);
@@ -1062,10 +1088,12 @@ footer h2 {
   left: 0;
   width: 100%;
   height: 3px;
-  background: linear-gradient(90deg,
-      var(--portal-green),
-      var(--primary-blue),
-      var(--accent-purple));
+  background: linear-gradient(
+    90deg,
+    var(--portal-green),
+    var(--primary-blue),
+    var(--accent-purple)
+  );
 }
 
 .character-thumbnail-card:hover {
@@ -1174,9 +1202,11 @@ footer h2 {
 }
 
 .carousel-btn {
-  background: linear-gradient(135deg,
-      var(--primary-blue),
-      var(--accent-purple));
+  background: linear-gradient(
+    135deg,
+    var(--primary-blue),
+    var(--accent-purple)
+  );
   color: white;
   border: none;
   width: 50px;
@@ -1194,9 +1224,11 @@ footer h2 {
 }
 
 .carousel-btn:hover:not(:disabled) {
-  background: linear-gradient(135deg,
-      var(--portal-green),
-      var(--primary-green));
+  background: linear-gradient(
+    135deg,
+    var(--portal-green),
+    var(--primary-green)
+  );
   transform: scale(1.1);
   box-shadow: 0 6px 20px rgba(68, 214, 44, 0.5);
 }
@@ -1310,4 +1342,79 @@ footer h2 {
   .carousel-page {
     min-height: 300px;
   }
+}
+
+/* --- Character Form Styles --- */
+.character-error-box {
+  background: rgba(220, 53, 69, 0.9);
+  color: white;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 25px;
+  border: 1px solid #ff6b6b;
+}
+
+.character-error-box ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.character-form-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.character-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* --- Action Buttons (Create & Edit) --- */
+.character-page-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.character-btn-create {
+  display: inline-block;
+  background: linear-gradient(135deg, #44d62c, #97ce4c);
+  color: #1a1a1a;
+  padding: 10px 25px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1em;
+  box-shadow: 0 0 15px rgba(68, 214, 44, 0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 2px solid #33a822;
+}
+
+.character-btn-create:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(68, 214, 44, 0.6);
+  color: #000;
+}
+
+.character-btn-edit {
+  display: inline-block;
+  background: linear-gradient(135deg, #607d8b, #455a64);
+  color: white;
+  padding: 8px 18px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  margin-right: 8px;
+  box-shadow: 0 4px 10px rgba(255, 152, 0, 0.3);
+  transition: transform 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.character-btn-edit:hover {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #78909c, #546e7a);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }

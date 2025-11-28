@@ -1,9 +1,8 @@
 <div class="list-container">
+ <div class="character-page-actions">
   <h1>{{title}}</h1>
-
-  <div class="list-stats">
-    <p>Total Characters: <strong>{{totalCount}}</strong></p>
-  </div>
+  <a href="/characters/create" class="character-btn-create">+ New Character</a>
+</div>
 
   <form action="/characters" method="GET" class="advanced-filter-box">
 
@@ -84,6 +83,9 @@
       <a href="/characters" class="character-filter-clear-btn">Clear</a>
     </div>
   </form>
+    <div class="list-stats">
+    <p>Total Characters: <strong>{{totalCount}}</strong></p>
+  </div>
   {{#if characters.length}}
     <div class="list">
       {{#each characters}}
@@ -107,9 +109,9 @@
           </div>
 
           <div class="list-actions">
-            <a href="/characters/{{this.characterId}}" class="btn-view">View
-              Profile</a>
-          </div>
+            <a href="/characters/edit/{{this.characterId}}" class="character-btn-edit">Edit</a>
+            <a href="/characters/{{this.characterId}}" class="btn-view">View Profile</a>
+          </div>          
         </div>
       {{/each}}
     </div>

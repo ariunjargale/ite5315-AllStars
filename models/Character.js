@@ -8,8 +8,8 @@ const CharacterSchema = new mongoose.Schema({
   type: { type: String },
   gender: {
     type: String,
-    enum: ["Female", "Male", "Genderless", "unknown"],
-    default: "unknown",
+    enum: ["Female", "Male", "Genderless", "Unknown"],
+    default: "Unknown",
   },
   location: {
     name: { type: String },
