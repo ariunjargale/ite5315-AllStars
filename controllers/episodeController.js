@@ -1,13 +1,48 @@
 const Episode = require("../models/Episode");
 const { validationResult } = require("express-validator");
 
-// Get all episodes
+// Get all episodes (with pagination and filters)
 exports.getAllEpisodes = async (req, res) => {
     try {
-        const episodes = await Episode.find().sort({ episodeId: 1 });
+        const perPage = 12;
+        const page = parseInt(req.query.page) || 1;
+
+        // Build filters
+        const filter = {};
+
+        // Filter by season (extract from episode code like S01E01)
+        if (req.query.season && req.query.season !== "all") {
+            // Match episodes that start with the selected season (e.g., S01)
+            filter.episode = new RegExp(`^${req.query.season}`, "i");
+        }
+
+        const totalEpisodes = await Episode.countDocuments(filter);
+
+        const episodes = await Episode.find(filter)
+            .sort({ episodeId: 1 })
+            .skip((page - 1) * perPage)
+            .limit(perPage);
+
+        // Get all unique seasons from episode codes
+        const allEpisodes = await Episode.find({}).select("episode");
+        const allSeasons = [
+            ...new Set(
+                allEpisodes.map((ep) => {
+                    // Extract season from episode code (e.g., S01E01 -> S01)
+                    const match = ep.episode.match(/^S\d{2}/);
+                    return match ? match[0] : null;
+                }).filter(Boolean)
+            ),
+        ].sort();
+
         res.render("episodes/list", {
             title: "All Episodes - Rick and Morty",
-            episodes: episodes,
+            episodes,
+            totalEpisodes,
+            currentPage: page,
+            totalPages: Math.ceil(totalEpisodes / perPage),
+            allSeasons,
+            selectedSeason: req.query.season || "all",
         });
     } catch (error) {
         console.error("Error fetching episodes:", error);

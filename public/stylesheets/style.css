@@ -568,6 +568,10 @@ footer h2 {
 }
 
 /* FILTER UI */
+.filter-section {
+  margin-bottom: 20px;
+}
+
 .filter-form {
   display: flex;
   align-items: flex-end;

@@ -5,9 +5,31 @@
   </div>
 
   <div class="list-stats">
-    <p>Total Episodes: <strong>{{episodes.length}}</strong></p>
+    <p>Total Episodes: <strong>{{totalEpisodes}}</strong></p>
   </div>
 
+  {{!-- FILTER SECTION --}}
+  <div class="filter-section">
+    <form method="GET" action="/episodes" class="filter-form">
+
+      <div class="filter-group">
+        <label for="season">SEASON</label>
+        <select name="season" id="season" class="filter-select">
+          <option value="all" {{#if (eq selectedSeason "all" )}}selected{{/if}}>All</option>
+          {{#each allSeasons}}
+          <option value="{{this}}" {{#if (eq ../selectedSeason this)}}selected{{/if}}>
+            {{this}}
+          </option>
+          {{/each}}
+        </select>
+      </div>
+
+      <button type="submit" class="filter-apply-btn">Apply</button>
+
+    </form>
+  </div>
+
+  {{!-- EPISODE CARDS --}}
   <div class="list">
     {{#each episodes}}
     <div class="list-card">
@@ -31,4 +53,23 @@
     </div>
     {{/each}}
   </div>
+</div>
+
+{{!-- PAGINATION --}}
+<div class="pagination-container">
+
+  {{#if (gt currentPage 1)}}
+  <a href="/episodes?season={{selectedSeason}}&page=1" class="pagination-btn">« First</a>
+  <a href="/episodes?season={{selectedSeason}}&page={{subtract currentPage 1}}" class="pagination-btn">‹ Prev</a>
+  {{/if}}
+
+  <span class="pagination-info">
+    Page {{currentPage}} of {{totalPages}}
+  </span>
+
+  {{#if (lt currentPage totalPages)}}
+  <a href="/episodes?season={{selectedSeason}}&page={{add currentPage 1}}" class="pagination-btn">Next ›</a>
+  <a href="/episodes?season={{selectedSeason}}&page={{totalPages}}" class="pagination-btn">Last »</a>
+  {{/if}}
+
 </div>
