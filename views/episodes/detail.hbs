@@ -21,10 +21,22 @@
 
   <div class="sub-section">
     <h2>Characters in this Episode</h2>
-    <div class="sub-ids">
-      {{#each episode.characters}}
-        <span class="sub-id-badge">{{this}}</span>
+    <div class="character-grid">
+      {{#if characters.length}}
+      {{#each characters}}
+      <a href="/characters/{{this.characterId}}" class="character-thumbnail-card">
+        <div class="character-thumbnail-image-wrapper">
+          <img src="{{this.image}}" alt="{{this.name}}" class="character-thumbnail-image">
+        </div>
+        <div class="character-thumbnail-info">
+          <h3 class="character-thumbnail-name">{{this.name}}</h3>
+          <p class="character-thumbnail-species">{{this.species}}</p>
+        </div>
+      </a>
       {{/each}}
+      {{else}}
+      <p>No character data available.</p>
+      {{/if}}
     </div>
   </div>
 

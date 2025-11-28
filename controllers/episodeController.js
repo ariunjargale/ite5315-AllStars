@@ -1,4 +1,5 @@
 const Episode = require("../models/Episode");
+const Character = require("../models/Character");
 const { validationResult } = require("express-validator");
 
 // Get all episodes (with pagination and filters)
@@ -65,9 +66,16 @@ exports.getEpisodeById = async (req, res) => {
                 message: "Episode not found",
             });
         }
+
+        // Fetch all characters that appear in this episode
+        const characters = await Character.find({
+            characterId: { $in: episode.characters },
+        }).sort({ characterId: 1 });
+
         res.render("episodes/detail", {
             title: `${episode.name} - Rick and Morty`,
             episode: episode,
+            characters: characters,
         });
     } catch (error) {
         console.error("Error fetching episode:", error);

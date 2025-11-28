@@ -1033,3 +1033,123 @@ footer h2 {
     margin-left: 0;
   }
 }
+
+/* --- Character Thumbnail Grid --- */
+.character-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 20px;
+  margin-top: 25px;
+}
+
+.character-thumbnail-card {
+  background: var(--card-bg);
+  border: 2px solid var(--primary-blue);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  position: relative;
+}
+
+.character-thumbnail-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg,
+      var(--portal-green),
+      var(--primary-blue),
+      var(--accent-purple));
+}
+
+.character-thumbnail-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--portal-green);
+  box-shadow: 0 10px 30px rgba(68, 214, 44, 0.4),
+    0 0 20px rgba(0, 181, 204, 0.3);
+}
+
+.character-thumbnail-image-wrapper {
+  width: 100%;
+  height: 160px;
+  overflow: hidden;
+  background: #1a1a1a;
+}
+
+.character-thumbnail-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.character-thumbnail-card:hover .character-thumbnail-image {
+  transform: scale(1.1);
+}
+
+.character-thumbnail-info {
+  padding: 12px;
+  text-align: center;
+}
+
+.character-thumbnail-name {
+  margin: 0 0 5px 0;
+  font-size: 0.95em;
+  color: var(--text-light);
+  font-weight: bold;
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.character-thumbnail-species {
+  margin: 0;
+  font-size: 0.85em;
+  color: var(--primary-blue);
+  font-weight: 500;
+}
+
+/* Responsive character thumbnails */
+@media (max-width: 768px) {
+  .character-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 15px;
+  }
+
+  .character-thumbnail-image-wrapper {
+    height: 140px;
+  }
+}
+
+@media (max-width: 480px) {
+  .character-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .character-thumbnail-image-wrapper {
+    height: 120px;
+  }
+
+  .character-thumbnail-info {
+    padding: 8px;
+  }
+
+  .character-thumbnail-name {
+    font-size: 0.85em;
+  }
+
+  .character-thumbnail-species {
+    font-size: 0.75em;
+  }
+}
