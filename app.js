@@ -19,11 +19,7 @@ db.on("connected", () => console.log("Mongoose connected"));
 db.on("error", (err) => console.error("Mongoose error:", err));
 db.on("disconnected", () => console.log("Mongoose disconnected"));
 
-// Event logs
-db.on("connected", () => console.log("Mongoose connected"));
-db.on("error", (err) => console.error("Mongoose error:", err));
-db.on("disconnected", () => console.log("Mongoose disconnected"));
-
+// Handlebars setup with helpers
 app.engine(
   ".hbs",
   exphbs.engine({
@@ -34,7 +30,12 @@ app.engine(
       allowProtoPropertiesByDefault: true,
       allowProtoMethodsByDefault: true,
     },
-    helpers: {},
+    helpers: {
+      add: (a, b) => a + b,
+      subtract: (a, b) => a - b,
+      gt: (a, b) => a > b,
+      lt: (a, b) => a < b,
+    },
   })
 );
 app.set("view engine", "hbs");
@@ -56,6 +57,7 @@ const mainRoutes = require("./routes/mainRoutes");
 const characterRoutes = require("./routes/characterRoutes");
 const episodeRoutes = require("./routes/episodeRoutes");
 const locationRoutes = require("./routes/locationRoutes");
+
 app.use("/episodes", episodeRoutes);
 app.use("/locations", locationRoutes);
 app.use("/characters", characterRoutes);
@@ -72,10 +74,9 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: "Internal Server Error" });
 });
 
-// // Start server
+// Start server
 app.listen(config.port, () => {
   console.log(`Server running on port ${config.port}`);
 });
 
-// For Vercel deployment
 module.exports = app;

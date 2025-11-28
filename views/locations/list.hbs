@@ -26,3 +26,32 @@
     {{/each}}
   </div>
 </div>
+
+<div class="pagination-container">
+
+  {{!-- FIRST PAGE --}}
+  {{#if (gt currentPage 1)}}
+    <a href="/locations?page=1" class="pagination-btn">« First</a>
+  {{/if}}
+
+  {{!-- PREVIOUS PAGE --}}
+  {{#if (gt currentPage 1)}}
+    <a href="/locations?page={{subtract currentPage 1}}" class="pagination-btn">‹ Prev</a>
+  {{/if}}
+
+  <span class="pagination-info">
+    Page {{currentPage}} of {{totalPages}}
+  </span>
+
+  {{!-- NEXT PAGE --}}
+  {{#if (lt currentPage totalPages)}}
+    <a href="/locations?page={{add currentPage 1}}" class="pagination-btn">Next ›</a>
+  {{/if}}
+
+  {{!-- LAST PAGE --}}
+  {{#if (lt currentPage totalPages)}}
+    <a href="/locations?page={{totalPages}}" class="pagination-btn">Last »</a>
+  {{/if}}
+
+</div>
+

@@ -1,13 +1,27 @@
 const Location = require("../models/Location");
 const Character = require("../models/Character");
 
-// Get all locations
+// Get all locations (with pagination)
 exports.getAllLocations = async (req, res) => {
   try {
-    const locations = await Location.find().sort({ locationId: 1 });
+    const perPage = 12; // number of locations per page
+    const page = parseInt(req.query.page) || 1;
+
+    // Count total locations
+    const totalLocations = await Location.countDocuments();
+
+    // Fetch paginated results
+    const locations = await Location.find()
+      .sort({ locationId: 1 })
+      .skip((page - 1) * perPage)
+      .limit(perPage);
+
     res.render("locations/list", {
       title: "All Locations - Rick and Morty",
-      locations: locations,
+      locations,
+      totalLocations,
+      currentPage: page,
+      totalPages: Math.ceil(totalLocations / perPage),
     });
   } catch (error) {
     console.error("Error fetching locations:", error);
@@ -39,8 +53,8 @@ exports.getLocationById = async (req, res) => {
 
     res.render("locations/detail", {
       title: `${location.name} - Location Details`,
-      location: location,
-      residents: residents,
+      location,
+      residents,
     });
   } catch (error) {
     console.error("Error fetching location:", error);
