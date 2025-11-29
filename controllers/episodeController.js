@@ -2,6 +2,17 @@ const Episode = require("../models/Episode");
 const Character = require("../models/Character");
 const { validationResult } = require("express-validator");
 
+// Helper function to determine if request expects JSON response
+const expectsJson = (req) => {
+    // Check if Accept header prefers JSON
+    const acceptHeader = req.get("Accept") || "";
+    // Check if it's an explicit JSON request or not a browser form submission
+    return (
+        acceptHeader.includes("application/json") ||
+        (!acceptHeader.includes("text/html") && req.method === "POST")
+    );
+};
+
 // Get all episodes (with pagination and filters)
 exports.getAllEpisodes = async (req, res) => {
     try {
@@ -98,6 +109,20 @@ exports.createEpisode = async (req, res) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
+        // Return JSON error for API requests
+        if (expectsJson(req)) {
+            return res.status(400).json({
+                success: false,
+                error: "Validation failed",
+                errors: errors.array().map(err => ({
+                    field: err.path || err.param,
+                    message: err.msg,
+                    value: err.value
+                }))
+            });
+        }
+
+        // Return HTML for browser requests
         return res.render("episodes/create", {
             title: "Create New Episode",
             errors: errors.array(),
@@ -117,12 +142,41 @@ exports.createEpisode = async (req, res) => {
         });
 
         await newEpisode.save();
+
+        // Return JSON success for API requests
+        if (expectsJson(req)) {
+            return res.status(201).json({
+                success: true,
+                message: "Episode created successfully",
+                data: newEpisode
+            });
+        }
+
+        // Redirect for browser requests
         res.redirect("/episodes");
     } catch (err) {
         console.error(err);
+
+        // Determine error type
+        const isDuplicateError = err.code === 11000 || err.message.includes("duplicate");
+        const statusCode = isDuplicateError ? 409 : 400;
+        const errorMessage = isDuplicateError
+            ? "Episode ID already exists"
+            : "Invalid input data";
+
+        // Return JSON error for API requests
+        if (expectsJson(req)) {
+            return res.status(statusCode).json({
+                success: false,
+                error: errorMessage,
+                details: err.message
+            });
+        }
+
+        // Return HTML for browser requests
         res.render("episodes/create", {
             title: "Create New Episode",
-            error: "Episode ID already exists or invalid input",
+            error: errorMessage,
             form: req.body,
         });
     }
@@ -158,6 +212,20 @@ exports.updateEpisode = async (req, res) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
+        // Return JSON error for API requests
+        if (expectsJson(req)) {
+            return res.status(400).json({
+                success: false,
+                error: "Validation failed",
+                errors: errors.array().map(err => ({
+                    field: err.path || err.param,
+                    message: err.msg,
+                    value: err.value
+                }))
+            });
+        }
+
+        // Return HTML for browser requests
         const episode = await Episode.findOne({
             episodeId: req.params.id,
         });
@@ -170,7 +238,7 @@ exports.updateEpisode = async (req, res) => {
     }
 
     try {
-        await Episode.findOneAndUpdate(
+        const updatedEpisode = await Episode.findOneAndUpdate(
             { episodeId: req.params.id },
             {
                 name: req.body.name,
@@ -178,12 +246,44 @@ exports.updateEpisode = async (req, res) => {
                 episode: req.body.episode,
                 characters: req.body.characters || [],
                 updated: new Date(),
-            }
+            },
+            { new: true } // Return the updated document
         );
+
+        if (!updatedEpisode) {
+            if (expectsJson(req)) {
+                return res.status(404).json({
+                    success: false,
+                    error: "Episode not found"
+                });
+            }
+            return res.status(404).render("error", {
+                title: "Not Found",
+                message: "Episode not found",
+            });
+        }
+
+        // Return JSON success for API requests
+        if (expectsJson(req)) {
+            return res.status(200).json({
+                success: true,
+                message: "Episode updated successfully",
+                data: updatedEpisode
+            });
+        }
 
         res.redirect(`/episodes/${req.params.id}`);
     } catch (err) {
         console.error(err);
+
+        if (expectsJson(req)) {
+            return res.status(500).json({
+                success: false,
+                error: "Failed to update episode",
+                details: err.message
+            });
+        }
+
         res.status(500).send("Failed to update episode");
     }
 };
@@ -191,10 +291,42 @@ exports.updateEpisode = async (req, res) => {
 // Delete episode
 exports.deleteEpisode = async (req, res) => {
     try {
-        await Episode.findOneAndDelete({ episodeId: req.params.id });
+        const deletedEpisode = await Episode.findOneAndDelete({ episodeId: req.params.id });
+
+        if (!deletedEpisode) {
+            if (expectsJson(req)) {
+                return res.status(404).json({
+                    success: false,
+                    error: "Episode not found"
+                });
+            }
+            return res.status(404).render("error", {
+                title: "Not Found",
+                message: "Episode not found",
+            });
+        }
+
+        // Return JSON success for API requests
+        if (expectsJson(req)) {
+            return res.status(200).json({
+                success: true,
+                message: "Episode deleted successfully",
+                data: deletedEpisode
+            });
+        }
+
         res.redirect("/episodes");
     } catch (err) {
         console.error(err);
+
+        if (expectsJson(req)) {
+            return res.status(500).json({
+                success: false,
+                error: "Failed to delete episode",
+                details: err.message
+            });
+        }
+
         res.status(500).send("Failed to delete episode");
     }
 };
