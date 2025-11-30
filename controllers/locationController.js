@@ -44,10 +44,7 @@ exports.getAllLocations = async (req, res) => {
     });
   } catch (error) {
     console.error("Error fetching locations:", error);
-    res.status(500).render("error", {
-      title: "Error",
-      message: "Failed to fetch locations",
-    });
+    res.status(500).send("Failed to fetch locations");
   }
 };
 
@@ -59,10 +56,7 @@ exports.getLocationById = async (req, res) => {
     });
 
     if (!location) {
-      return res.status(404).render("error", {
-        title: "Not Found",
-        message: "Location not found",
-      });
+      return res.status(404).send("Location not found");
     }
 
     // Find all characters whose location.id matches this locationId
@@ -77,10 +71,7 @@ exports.getLocationById = async (req, res) => {
     });
   } catch (error) {
     console.error("Error fetching location:", error);
-    res.status(500).render("error", {
-      title: "Error",
-      message: "Failed to fetch location details",
-    });
+    res.status(500).send("Failed to fetch location details");
   }
 };
 
@@ -98,7 +89,7 @@ exports.createLocation = async (req, res) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    return res.render("locations/create", {
+    return res.status(400).render("locations/create", {
       title: "Create New Location",
       errors: errors.array(),
       form: req.body,
@@ -121,7 +112,7 @@ exports.createLocation = async (req, res) => {
     res.redirect("/locations");
   } catch (err) {
     console.error(err);
-    res.render("locations/create", {
+    res.status(400).render("locations/create", {
       title: "Create New Location",
       error: "Location ID already exists or invalid input",
       form: req.body,
@@ -131,38 +122,45 @@ exports.createLocation = async (req, res) => {
 
 // Show edit form
 exports.showEditForm = async (req, res) => {
-  const location = await Location.findOne({ locationId: req.params.id });
+  try {
+    const location = await Location.findOne({ locationId: req.params.id });
 
-  if (!location) {
-    return res.status(404).render("error", {
-      title: "Not Found",
-      message: "Location not found",
+    if (!location) {
+      return res.status(404).send("Location not found");
+    }
+
+    res.render("locations/edit", {
+      title: "Edit Location",
+      location,
     });
+  } catch (error) {
+    console.error("Error fetching location:", error);
+    res.status(500).send("Failed to fetch location");
   }
-
-  res.render("locations/edit", {
-    title: "Edit Location",
-    location,
-  });
 };
 
 // Update
 exports.updateLocation = async (req, res) => {
-  const errors = validationResult(req);
+  try {
+    const errors = validationResult(req);
 
-  if (!errors.isEmpty()) {
+    // First, check if location exists
     const location = await Location.findOne({
       locationId: req.params.id,
     });
 
-    return res.render("locations/edit", {
-      title: "Edit Location",
-      errors: errors.array(),
-      location,
-    });
-  }
+    if (!location) {
+      return res.status(404).send("Location not found");
+    }
 
-  try {
+    if (!errors.isEmpty()) {
+      return res.status(400).render("locations/edit", {
+        title: "Edit Location",
+        errors: errors.array(),
+        location,
+      });
+    }
+
     await Location.findOneAndUpdate(
       { locationId: req.params.id },
       {
@@ -183,7 +181,14 @@ exports.updateLocation = async (req, res) => {
 // Delete
 exports.deleteLocation = async (req, res) => {
   try {
-    await Location.findOneAndDelete({ locationId: req.params.id });
+    const deletedLocation = await Location.findOneAndDelete({
+      locationId: req.params.id,
+    });
+
+    if (!deletedLocation) {
+      return res.status(404).send("Location not found");
+    }
+
     res.redirect("/locations");
   } catch (err) {
     console.error(err);
