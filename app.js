@@ -1,9 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const exphbs = require("express-handlebars");
+const session = require("express-session");
 const config = require("./config/database");
 const path = require("path");
-
 const app = express();
 
 // MongoDB connection
@@ -55,10 +55,22 @@ app.engine(
 
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "views"));
-
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Session middleware
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: false, // set to true in production with HTTPS
+      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+    },
+  })
+);
 
 // Graceful shutdown
 process.on("SIGINT", async () => {
@@ -72,8 +84,10 @@ const mainRoutes = require("./routes/mainRoutes");
 const characterRoutes = require("./routes/characterRoutes");
 const episodeRoutes = require("./routes/episodeRoutes");
 const locationRoutes = require("./routes/locationRoutes");
+const authRoutes = require("./routes/authRoutes");
 
 // CORRECT ROUTING ORDER
+app.use("/auth", authRoutes);
 app.use("/characters", characterRoutes);
 app.use("/episodes", episodeRoutes);
 app.use("/locations", locationRoutes);

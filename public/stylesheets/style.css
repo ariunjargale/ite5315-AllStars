@@ -1418,3 +1418,30 @@ footer h2 {
   background: linear-gradient(135deg, #78909c, #546e7a);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
+
+.btn-register-header {
+  background: linear-gradient(
+    135deg,
+    var(--portal-green),
+    var(--primary-green)
+  );
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  color: #111;
+  text-decoration: none;
+  margin-left: 15px;
+  transition: 0.3s ease;
+  box-shadow: 0 0 10px rgba(68, 214, 44, 0.4);
+}
+
+.btn-register-header:hover {
+  background: linear-gradient(
+    135deg,
+    var(--primary-blue),
+    var(--accent-purple)
+  );
+  color: white;
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(0, 181, 204, 0.5);
+}

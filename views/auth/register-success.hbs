@@ -1,0 +1,15 @@
+<div class="form-container">
+  <h1>Account Created!</h1>
+
+  <p class="success-message">
+    Welcome, {{username}} — your account has been successfully created!
+  </p>
+
+  <p>You will be redirected to the login page shortly...</p>
+
+  <script>
+    setTimeout(() => {
+      window.location.href = "/auth/login";
+    }, 2000);
+  </script>
+</div>
