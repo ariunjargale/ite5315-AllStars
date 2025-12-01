@@ -1,0 +1,35 @@
+<div class="form-container">
+    <h1>Edit Episode</h1>
+
+    {{#if errors}}
+    <ul class="error-list">
+        {{#each errors}}
+        <li class="error">{{this.msg}}</li>
+        {{/each}}
+    </ul>
+    {{/if}}
+
+    <form action="/episodes/edit/{{episode.episodeId}}" method="POST">
+
+        <label>Name</label>
+        <input type="text" name="name" value="{{episode.name}}" required>
+
+        <label>Air Date</label>
+        <input type="text" name="air_date" value="{{episode.air_date}}" required>
+
+        <label>Episode Code</label>
+        <input type="text" name="episode" value="{{episode.episode}}" pattern="^S\d{2}E\d{2}$" required>
+        <small style="display: block; margin-bottom: 15px; color: #888;">Format: S##E## (e.g., S01E01)</small>
+
+        <label>Character IDs</label>
+        <input type="text" name="characters" value="{{episode.characters}}" placeholder="e.g., 1, 2, 3">
+        <small style="display: block; margin-bottom: 15px; color: #888;">Comma-separated character IDs</small>
+
+        <button type="submit" class="btn-view">Save Changes</button>
+    </form>
+
+    <form action="/episodes/delete/{{episode.episodeId}}" method="POST" style="margin-top:20px;">
+        <button class="btn-delete">Delete</button>
+    </form>
+
+</div>

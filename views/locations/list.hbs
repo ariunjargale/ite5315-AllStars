@@ -1,10 +1,49 @@
 <div class="list-container">
-  <h1>{{title}}</h1>
-
-  <div class="list-stats">
-    <p>Total Locations: <strong>{{locations.length}}</strong></p>
+  <div class="list-header-row">
+    <h1>{{title}}</h1>
+    <a href="/locations/create" class="btn-create">+ Create New Location</a>
   </div>
 
+  <div class="list-stats">
+    <p>Total Locations: <strong>{{totalLocations}}</strong></p>
+  </div>
+
+  {{!-- FILTER SECTION --}}
+  <div class="filter-section">
+
+    <form method="GET" action="/locations" class="filter-form">
+
+      <div class="filter-group">
+        <label for="type">TYPE</label>
+        <select name="type" id="type" class="filter-select">
+          <option value="all" {{#if (eq selectedType "all")}}selected{{/if}}>All</option>
+          {{#each allTypes}}
+            <option value="{{this}}" {{#if (eq ../selectedType this)}}selected{{/if}}>
+              {{this}}
+            </option>
+          {{/each}}
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="dimension">DIMENSION</label>
+        <select name="dimension" id="dimension" class="filter-select">
+          <option value="all" {{#if (eq selectedDimension "all")}}selected{{/if}}>All</option>
+          {{#each allDimensions}}
+            <option value="{{this}}" {{#if (eq ../selectedDimension this)}}selected{{/if}}>
+              {{this}}
+            </option>
+          {{/each}}
+        </select>
+      </div>
+
+      <button type="submit" class="filter-apply-btn">Apply</button>
+
+    </form>
+
+  </div>
+
+  {{!-- LOCATION CARDS --}}
   <div class="list">
     {{#each locations}}
       <div class="list-card">
@@ -25,4 +64,28 @@
       </div>
     {{/each}}
   </div>
+
+</div>
+
+{{!-- PAGINATION --}}
+<div class="pagination-container">
+
+  {{#if (gt currentPage 1)}}
+    <a href="/locations?type={{selectedType}}&dimension={{selectedDimension}}&page=1" 
+       class="pagination-btn">« First</a>
+    <a href="/locations?type={{selectedType}}&dimension={{selectedDimension}}&page={{subtract currentPage 1}}" 
+       class="pagination-btn">‹ Prev</a>
+  {{/if}}
+
+  <span class="pagination-info">
+    Page {{currentPage}} of {{totalPages}}
+  </span>
+
+  {{#if (lt currentPage totalPages)}}
+    <a href="/locations?type={{selectedType}}&dimension={{selectedDimension}}&page={{add currentPage 1}}" 
+       class="pagination-btn">Next ›</a>
+    <a href="/locations?type={{selectedType}}&dimension={{selectedDimension}}&page={{totalPages}}" 
+       class="pagination-btn">Last »</a>
+  {{/if}}
+
 </div>

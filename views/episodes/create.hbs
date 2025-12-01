@@ -1,0 +1,58 @@
+<div class="detail-container">
+
+  <div class="detail-header">
+    <h1>Create New Episode</h1>
+  </div>
+
+  {{#if errors}}
+    <div class="sub-section">
+      <h2>Errors</h2>
+      <ul class="error-list">
+        {{#each errors}}
+          <li class="error">{{this.msg}}</li>
+        {{/each}}
+      </ul>
+    </div>
+  {{/if}}
+
+  {{#if error}}
+    <p class="error">{{error}}</p>
+  {{/if}}
+
+  <form action="/episodes/create" method="POST" class="info">
+
+    <div class="info-row">
+      <span class="info-label">Episode ID:</span>
+      <input type="number" name="episodeId" value="{{form.episodeId}}" required>
+    </div>
+
+    <div class="info-row">
+      <span class="info-label">Name:</span>
+      <input type="text" name="name" value="{{form.name}}" required>
+    </div>
+
+    <div class="info-row">
+      <span class="info-label">Air Date:</span>
+      <input type="text" name="air_date" value="{{form.air_date}}" placeholder="e.g., December 2, 2013" required>
+    </div>
+
+    <div class="info-row">
+      <span class="info-label">Episode Code:</span>
+      <input type="text" name="episode" value="{{form.episode}}" placeholder="e.g., S01E01" pattern="^S\d{2}E\d{2}$" required>
+      <small style="display: block; margin-top: 5px; color: #888;">Format: S##E## (e.g., S01E01, S02E10)</small>
+    </div>
+
+    <div class="info-row">
+      <span class="info-label">Character IDs:</span>
+      <input type="text" name="characters" value="{{form.characters}}" placeholder="e.g., 1, 2, 3, 4">
+      <small style="display: block; margin-top: 5px; color: #888;">Comma-separated character IDs (optional)</small>
+    </div>
+
+    <div class="detail-actions button-row">
+      <button type="submit" class="btn-view btn-create">Create</button>
+      <a href="/episodes" class="btn-back btn-cancel">Cancel</a>
+    </div>
+
+  </form>
+
+</div>

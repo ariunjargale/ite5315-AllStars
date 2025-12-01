@@ -1,0 +1,25 @@
+<div class="form-container">
+  <h1>Create an Account</h1>
+
+  {{#if errors}}
+    <ul class="error-list">
+      {{#each errors}}
+        <li>{{this.msg}}</li>
+      {{/each}}
+    </ul>
+  {{/if}}
+
+  <form method="POST" action="/auth/register">
+
+    <label for="username">Username</label>
+    <input type="text" name="username" id="username" required>
+
+    <label for="email">Email</label>
+    <input type="email" name="email" id="email" required>
+
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password" required>
+
+    <button class="btn-create" type="submit">Register</button>
+  </form>
+</div>

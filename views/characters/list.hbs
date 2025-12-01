@@ -1,35 +1,195 @@
 <div class="list-container">
+ <div class="character-page-actions">
   <h1>{{title}}</h1>
+  {{#if session.userId}}
+    <a href="/characters/create" class="character-btn-create">+ New Character</a>
+  {{/if}}
+</div>
 
-  <div class="list-stats">
-    <p>Total Characters: <strong>{{count}}</strong></p>
-  </div>
+  <form action="/characters" method="GET" class="advanced-filter-box">
 
-  <div class="list">
-    {{#each characters}}
-      <div class="list-card">
-        
-        <div style="text-align: center; margin-bottom: 15px;">
-            <img src="{{this.image}}" alt="{{this.name}}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; border: 2px solid #44d62c;">
-        </div>
-
-        <div class="list-header">
-          <h2 style="font-size: 1.1em;">{{this.name}}</h2>
-          <span class="list-code" style="{{#if this.isAlive}}background: linear-gradient(135deg, #44d62c, #97ce4c);{{else}}background: linear-gradient(135deg, #e91e63, #c0392b); color: white;{{/if}}">
-            {{#if this.isAlive}}Alive{{else}}Dead{{/if}}
-          </span>
-        </div>
-
-        <div class="list-details">
-          <p><strong>Species:</strong> {{this.species}}</p>
-          <p><strong>Gender:</strong> {{this.gender}}</p>
-          <p><strong>Location:</strong> {{this.location.name}}</p>
-        </div>
-
-        <div class="list-actions">
-          <a href="/characters/{{this.characterId}}" class="btn-view">View Profile</a>
-        </div>
+    <div class="character-filter-grid">
+      <div class="filter-item">
+        <label>Name</label>
+        <input
+          type="text"
+          name="name"
+          value="{{query.name}}"
+          placeholder="Search by name..."
+        />
       </div>
-    {{/each}}
+
+      <div class="filter-item">
+        <label>Species</label>
+        <input
+          type="text"
+          name="species"
+          value="{{query.species}}"
+          placeholder="Human, Alien..."
+        />
+      </div>
+
+      <div class="filter-item">
+        <label>Last Known Location</label>
+        <input
+          type="text"
+          name="location"
+          value="{{query.location}}"
+          placeholder="Earth, Citadel..."
+        />
+      </div>
+
+      <div class="filter-item">
+        <label>Origin</label>
+        <input
+          type="text"
+          name="origin"
+          value="{{query.origin}}"
+          placeholder="Origin name..."
+        />
+      </div>
+      <div class="filter-item">
+        <label>Status</label>
+        <select name="status">
+          <option value="">All Statuses</option>
+          <option
+            value="alive"
+            {{isSelected query.status "alive"}}
+          >Alive</option>
+          <option value="dead" {{isSelected query.status "dead"}}>Dead</option>
+        </select>
+      </div>
+      <div class="filter-item">
+        <label>Gender</label>
+        <select name="gender">
+          <option value="">All Genders</option>
+          <option
+            value="Female"
+            {{isSelected query.gender "Female"}}
+          >Female</option>
+          <option value="Male" {{isSelected query.gender "Male"}}>Male</option>
+          <option
+            value="Genderless"
+            {{isSelected query.gender "Genderless"}}
+          >Genderless</option>
+          <option
+            value="unknown"
+            {{isSelected query.gender "unknown"}}
+          >unknown</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="filter-actions">
+      <button type="submit" class="character-filter-apply-btn">Apply Filters</button>
+      <a href="/characters" class="character-filter-clear-btn">Clear</a>
+    </div>
+  </form>
+    <div class="list-stats">
+    <p>Total Characters: <strong>{{totalCount}}</strong></p>
   </div>
+  {{#if characters.length}}
+    <div class="list">
+      {{#each characters}}
+        <div class="list-card">
+
+          <div class="card-image-wrapper">
+            <img src="{{this.image}}" alt="{{this.name}}" class="card-image" />
+          </div>
+
+              <div class="list-header">
+            <h2 >{{this.name}}</h2>
+            <span class="list-code {{#if this.isAlive}} status-alive {{else}} status-dead {{/if}}">
+              {{#if this.isAlive}}Alive{{else}}Dead{{/if}}
+            </span>
+          </div>
+
+          <div class="list-details">
+            <p><strong>Species:</strong> {{this.species}}</p>
+            <p><strong>Gender:</strong> {{this.gender}}</p>
+            <p><strong>Location:</strong> {{this.location.name}}</p>
+          </div>
+
+          <div class="list-actions">
+            {{#if ../session.userId}}
+              <a href="/characters/edit/{{this.characterId}}" class="character-btn-edit">Edit</a>
+            {{/if}}
+            <a href="/characters/{{this.characterId}}" class="btn-view">View Profile</a>
+
+            {{#if ../session.userId}}
+              <form 
+                action="/characters/delete/{{this.characterId}}" 
+                method="POST" 
+                onsubmit="return confirm('Are you sure you want to delete this character?')"
+              >
+                <button class="character-delete-btn">
+                  <svg width="16" height="16" fill="white" viewBox="0 0 16 16">
+                    <path d="M5.5 5.5v7h1v-7h-1zm3 0v7h1v-7h-1z"/>
+                    <path fill-rule="evenodd" d="M14 3h-3V2H5v1H2v1h12V3zM4.118 4L4 4.059V14h8V4.059L11.882 4H4.118z"/>
+                  </svg>
+                </button>
+              </form>
+            {{/if}}
+          </div>          
+        </div>
+      {{/each}}
+    </div>
+    <div class="pagination-container">
+
+  {{! FIRST PAGE }}
+  {{#if (gt currentPage 1)}}
+    <a
+      href="/characters?page=1&name={{query.name}}&species={{query.species}}&status={{query.status}}&gender={{query.gender}}&location={{query.location}}&origin={{query.origin}}"
+      class="pagination-btn"
+    >« First</a>
+  {{/if}}
+
+  {{! PREVIOUS PAGE }}
+  {{#if (gt currentPage 1)}}
+    <a
+      href="/characters?page={{subtract
+        currentPage
+        1
+      }}&name={{query.name}}&species={{query.species}}&status={{query.status}}&gender={{query.gender}}&location={{query.location}}&origin={{query.origin}}"
+      class="pagination-btn"
+    >‹ Prev</a>
+  {{/if}}
+
+  {{! PAGE INFO }}
+  <span class="pagination-info">
+    Page
+    {{currentPage}}
+    of
+    {{totalPages}}
+  </span>
+
+  {{! NEXT PAGE }}
+  {{#if (lt currentPage totalPages)}}
+    <a
+      href="/characters?page={{add
+        currentPage
+        1
+      }}&name={{query.name}}&species={{query.species}}&status={{query.status}}&gender={{query.gender}}&location={{query.location}}&origin={{query.origin}}"
+      class="pagination-btn"
+    >Next ›</a>
+  {{/if}}
+
+  {{! LAST PAGE }}
+  {{#if (lt currentPage totalPages)}}
+    <a
+      href="/characters?page={{totalPages}}&name={{query.name}}&species={{query.species}}&status={{query.status}}&gender={{query.gender}}&location={{query.location}}&origin={{query.origin}}"
+      class="pagination-btn"
+    >Last »</a>
+  {{/if}}
+
+</div>
+  {{else}}
+    <div class="no-data-container">
+      <div class="no-data-content">
+        <h2>Wubba Lubba Dub Dub!</h2>
+        <p>No characters found...</p>
+        <p class="sub-text">Try adjusting your filters or search for someone else.</p>
+      </div>
+    </div>
+  {{/if}}
 </div>

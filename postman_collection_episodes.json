@@ -1,0 +1,460 @@
+{
+    "info": {
+        "name": "Rick and Morty - Episode API (CRUD)",
+        "description": "Complete CRUD operations for Episode management",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "version": "2.0.0"
+    },
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "http://localhost:8000",
+            "type": "string"
+        }
+    ],
+    "item": [
+        {
+            "name": "GET Requests",
+            "item": [
+                {
+                    "name": "Get All Episodes",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/episodes?page=1",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "episodes"
+                            ],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Episodes - Season Filter",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/episodes?season=S01&page=1",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "episodes"
+                            ],
+                            "query": [
+                                {
+                                    "key": "season",
+                                    "value": "S01"
+                                },
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Episode by ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/episodes/1",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "episodes",
+                                "1"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "POST - Create Episode",
+            "item": [
+                {
+                    "name": "Create Episode - Success",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/x-www-form-urlencoded"
+                            }
+                        ],
+                        "body": {
+                            "mode": "urlencoded",
+                            "urlencoded": [
+                                {
+                                    "key": "episodeId",
+                                    "value": "100",
+                                    "description": "Unique episode ID"
+                                },
+                                {
+                                    "key": "name",
+                                    "value": "Test Episode",
+                                    "description": "Episode name (min 2 chars)"
+                                },
+                                {
+                                    "key": "air_date",
+                                    "value": "December 1, 2024",
+                                    "description": "Air date (any string format)"
+                                },
+                                {
+                                    "key": "episode",
+                                    "value": "S06E01",
+                                    "description": "Episode code (S##E## format)"
+                                },
+                                {
+                                    "key": "characters",
+                                    "value": "1,2,3,4",
+                                    "description": "Comma-separated character IDs"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/episodes/create",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "episodes",
+                                "create"
+                            ]
+                        },
+                        "description": "Create a new episode with valid data"
+                    }
+                },
+                {
+                    "name": "Create Episode - Invalid Episode Code",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/x-www-form-urlencoded"
+                            }
+                        ],
+                        "body": {
+                            "mode": "urlencoded",
+                            "urlencoded": [
+                                {
+                                    "key": "episodeId",
+                                    "value": "101"
+                                },
+                                {
+                                    "key": "name",
+                                    "value": "Bad Episode"
+                                },
+                                {
+                                    "key": "air_date",
+                                    "value": "December 1, 2024"
+                                },
+                                {
+                                    "key": "episode",
+                                    "value": "Season1Episode1",
+                                    "description": "❌ Invalid format - should be S##E##"
+                                },
+                                {
+                                    "key": "characters",
+                                    "value": "1,2"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/episodes/create",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "episodes",
+                                "create"
+                            ]
+                        },
+                        "description": "Test validation error for invalid episode code pattern"
+                    }
+                },
+                {
+                    "name": "Create Episode - Missing Fields",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/x-www-form-urlencoded"
+                            }
+                        ],
+                        "body": {
+                            "mode": "urlencoded",
+                            "urlencoded": [
+                                {
+                                    "key": "episodeId",
+                                    "value": "102"
+                                },
+                                {
+                                    "key": "episode",
+                                    "value": "S06E02",
+                                    "description": "Missing name and air_date"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/episodes/create",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "episodes",
+                                "create"
+                            ]
+                        },
+                        "description": "Test validation errors for missing required fields"
+                    }
+                },
+                {
+                    "name": "Create Episode - Duplicate ID",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/x-www-form-urlencoded"
+                            }
+                        ],
+                        "body": {
+                            "mode": "urlencoded",
+                            "urlencoded": [
+                                {
+                                    "key": "episodeId",
+                                    "value": "1",
+                                    "description": "❌ Episode 1 already exists"
+                                },
+                                {
+                                    "key": "name",
+                                    "value": "Duplicate Episode"
+                                },
+                                {
+                                    "key": "air_date",
+                                    "value": "December 1, 2024"
+                                },
+                                {
+                                    "key": "episode",
+                                    "value": "S06E03"
+                                },
+                                {
+                                    "key": "characters",
+                                    "value": ""
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/episodes/create",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "episodes",
+                                "create"
+                            ]
+                        },
+                        "description": "Test error for duplicate episode ID"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "POST - Update Episode",
+            "item": [
+                {
+                    "name": "Update Episode - Success",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/x-www-form-urlencoded"
+                            }
+                        ],
+                        "body": {
+                            "mode": "urlencoded",
+                            "urlencoded": [
+                                {
+                                    "key": "name",
+                                    "value": "Updated Test Episode"
+                                },
+                                {
+                                    "key": "air_date",
+                                    "value": "January 1, 2025"
+                                },
+                                {
+                                    "key": "episode",
+                                    "value": "S06E02"
+                                },
+                                {
+                                    "key": "characters",
+                                    "value": "1,2,3,4,5"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/episodes/edit/100",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "episodes",
+                                "edit",
+                                "100"
+                            ]
+                        },
+                        "description": "Update episode 100 with new data"
+                    }
+                },
+                {
+                    "name": "Update Episode - Not Found",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/x-www-form-urlencoded"
+                            }
+                        ],
+                        "body": {
+                            "mode": "urlencoded",
+                            "urlencoded": [
+                                {
+                                    "key": "name",
+                                    "value": "Non-existent"
+                                },
+                                {
+                                    "key": "air_date",
+                                    "value": "January 1, 2025"
+                                },
+                                {
+                                    "key": "episode",
+                                    "value": "S06E99"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/episodes/edit/999",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "episodes",
+                                "edit",
+                                "999"
+                            ]
+                        },
+                        "description": "Test 404 error for non-existent episode"
+                    }
+                },
+                {
+                    "name": "Update Episode - Invalid Code",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/x-www-form-urlencoded"
+                            }
+                        ],
+                        "body": {
+                            "mode": "urlencoded",
+                            "urlencoded": [
+                                {
+                                    "key": "name",
+                                    "value": "Valid Name"
+                                },
+                                {
+                                    "key": "air_date",
+                                    "value": "January 1, 2025"
+                                },
+                                {
+                                    "key": "episode",
+                                    "value": "S1E1",
+                                    "description": "❌ Invalid - missing leading zeros"
+                                },
+                                {
+                                    "key": "characters",
+                                    "value": "1"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/episodes/edit/1",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "episodes",
+                                "edit",
+                                "1"
+                            ]
+                        },
+                        "description": "Test validation error for invalid episode code"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "POST - Delete Episode",
+            "item": [
+                {
+                    "name": "Delete Episode - Success",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/episodes/delete/100",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "episodes",
+                                "delete",
+                                "100"
+                            ]
+                        },
+                        "description": "Delete episode 100"
+                    }
+                },
+                {
+                    "name": "Delete Episode - Not Found",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/episodes/delete/999",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "episodes",
+                                "delete",
+                                "999"
+                            ]
+                        },
+                        "description": "Test error when deleting non-existent episode"
+                    }
+                }
+            ]
+        }
+    ]
+}
