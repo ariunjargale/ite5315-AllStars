@@ -5,14 +5,28 @@ const {
   searchValidationRules,
   characterValidationRules,
 } = require("../middlewares/characterValidators.js");
+const { requireLogin } = require("../middlewares/auth.js");
 
 // CREATE
-router.get("/create", controller.getCreateForm);
-router.post("/create", characterValidationRules, controller.createCharacter);
+router.get("/create", requireLogin, controller.getCreateForm);
+router.post(
+  "/create",
+  requireLogin,
+  characterValidationRules(),
+  controller.createCharacter
+);
 
 // UPDATE
-router.get("/edit/:id", controller.getEditForm);
-router.post("/edit/:id", characterValidationRules, controller.updateCharacter);
+router.get("/edit/:id", requireLogin, controller.getEditForm);
+router.post(
+  "/edit/:id",
+  requireLogin,
+  characterValidationRules(),
+  controller.updateCharacter
+);
+
+// DELETE
+router.post("/delete/:id", requireLogin, controller.deleteCharacter);
 
 // Get specific character by ID
 router.get("/:id", controller.getCharacterById);

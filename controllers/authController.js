@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 const { validationResult } = require("express-validator");
 
 // Register new user (Scarlett's task)
@@ -60,10 +61,54 @@ exports.register = async (req, res) => {
   }
 };
 
-// Login user (Ari's task - placeholder)
+// Login user (Ari's task)
 exports.login = async (req, res) => {
-  // Ari will implement this
-  res.status(501).send("Login not implemented yet");
+  const errors = validationResult(req);
+  console.log("Login attempt:", req.body);
+
+  if (!errors.isEmpty()) {
+    return res.status(400).render("auth/login", {
+      errors: errors.array(),
+      oldInput: req.body,
+    });
+  }
+
+  try {
+    const { username, password } = req.body;
+
+    // Find user ONLY by username
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      return res.status(400).render("auth/login", {
+        errors: [{ msg: "Invalid username or password" }],
+        oldInput: req.body,
+      });
+    }
+
+    // Check password
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.status(400).render("auth/login", {
+        errors: [{ msg: "Invalid username or password" }],
+        oldInput: req.body,
+      });
+    }
+
+    // Set session
+    req.session.userId = user._id;
+    req.session.username = user.username;
+    req.session.role = user.role;
+
+    res.redirect("/");
+  } catch (error) {
+    console.error("Login error:", error);
+    return res.status(500).render("error", {
+      title: "Login Error",
+      message: "Server error during login",
+    });
+  }
 };
 
 // Logout user (Samuel's task - placeholder)

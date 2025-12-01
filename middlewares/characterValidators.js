@@ -47,12 +47,6 @@ exports.characterValidationRules = () => {
       .withMessage("Image URL is required")
       .isURL()
       .withMessage("Must be a valid URL"),
-    body("location.name")
-      .trim()
-      .notEmpty()
-      .withMessage("Location Name is required")
-      .escape(),
-    body("origin.name").optional().trim().escape(),
     body("episode")
       .trim()
       .matches(/^[\d,\s]*$/)

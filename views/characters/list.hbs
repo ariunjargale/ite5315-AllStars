@@ -1,7 +1,9 @@
 <div class="list-container">
  <div class="character-page-actions">
   <h1>{{title}}</h1>
-  <a href="/characters/create" class="character-btn-create">+ New Character</a>
+  {{#if session.userId}}
+    <a href="/characters/create" class="character-btn-create">+ New Character</a>
+  {{/if}}
 </div>
 
   <form action="/characters" method="GET" class="advanced-filter-box">
@@ -109,8 +111,25 @@
           </div>
 
           <div class="list-actions">
-            <a href="/characters/edit/{{this.characterId}}" class="character-btn-edit">Edit</a>
+            {{#if ../session.userId}}
+              <a href="/characters/edit/{{this.characterId}}" class="character-btn-edit">Edit</a>
+            {{/if}}
             <a href="/characters/{{this.characterId}}" class="btn-view">View Profile</a>
+
+            {{#if ../session.userId}}
+              <form 
+                action="/characters/delete/{{this.characterId}}" 
+                method="POST" 
+                onsubmit="return confirm('Are you sure you want to delete this character?')"
+              >
+                <button class="character-delete-btn">
+                  <svg width="16" height="16" fill="white" viewBox="0 0 16 16">
+                    <path d="M5.5 5.5v7h1v-7h-1zm3 0v7h1v-7h-1z"/>
+                    <path fill-rule="evenodd" d="M14 3h-3V2H5v1H2v1h12V3zM4.118 4L4 4.059V14h8V4.059L11.882 4H4.118z"/>
+                  </svg>
+                </button>
+              </form>
+            {{/if}}
           </div>          
         </div>
       {{/each}}

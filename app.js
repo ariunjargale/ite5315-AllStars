@@ -72,6 +72,22 @@ app.use(
   })
 );
 
+app.use((req, res, next) => {
+  res.locals.session = req.session;
+  next();
+});
+
+// for messages
+app.use((req, res, next) => {
+  res.locals.success = req.session.success;
+  res.locals.error = req.session.error;
+
+  delete req.session.success;
+  delete req.session.error;
+
+  next();
+});
+
 // Graceful shutdown
 process.on("SIGINT", async () => {
   await db.close();

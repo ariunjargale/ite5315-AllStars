@@ -19,7 +19,7 @@ exports.getAllCharacters = async (req, res) => {
     const skip = (page - 1) * pageLimit;
 
     // Filters
-    const { name, species, status, gender } = req.query;
+    const { name, species, status, gender, location, origin } = req.query;
     let dbQuery = {};
 
     // Case-insensitive partial match for text fields
@@ -33,6 +33,14 @@ exports.getAllCharacters = async (req, res) => {
     if (status) {
       if (status === "alive") dbQuery.isAlive = true;
       else if (status === "dead") dbQuery.isAlive = false;
+    }
+
+    if (location) {
+      dbQuery["location.name"] = { $regex: location, $options: "i" };
+    }
+
+    if (origin) {
+      dbQuery["origin.name"] = { $regex: origin, $options: "i" };
     }
 
     // Fetch characters with pagination
@@ -113,31 +121,29 @@ exports.createCharacter = async (req, res) => {
   const errors = validationResult(req);
   console.log(errors);
   if (!errors.isEmpty()) {
+    const locations = await Location.find({}, "locationId name")
+      .sort({ name: 1 })
+      .lean();
+
     return res.render("characters/form", {
       title: "Add New Character",
       action: "/characters/create",
       errors: errors.array(),
       character: req.body,
+      locations: locations,
     });
   }
 
   try {
-    // Check locatino and origin are exist
-    // const locationObj = await Location.findOne({ id: req.body.locationId });
-    // if (!locationObj) {
-    //   return res.status(404).render("error", {
-    //     title: "Not Found",
-    //     message: "Location not found",
-    //   });
-    // }
+    // Check location is exist
+    const locationObj = await Location.findOne({
+      locationId: +req.body.locationId,
+    });
 
-    // const originObj = await Location.findOne({ id: req.body.originId });
-    // if (!originObj) {
-    //   return res.status(404).render("error", {
-    //     title: "Not Found",
-    //     message: "Origin not found",
-    //   });
-    // }
+    // Check origin is exist
+    const originObj = await Location.findOne({
+      locationId: +req.body.originId,
+    });
 
     // New ID
     const lastChar = await Character.findOne().sort({ characterId: -1 });
@@ -146,8 +152,10 @@ exports.createCharacter = async (req, res) => {
     // Convert episodes from comma-separated string to array of integers
     const episodeArray = req.body.episode
       .split(",")
-      .map((num) => parseInt(num.trim()))
-      .filter((num) => !isNaN(num));
+      .map((e) => e.trim())
+      .filter((e) => e !== "")
+      .map(Number)
+      .filter((n) => !isNaN(n));
 
     // Create new object
     const newCharacter = new Character({
@@ -160,21 +168,23 @@ exports.createCharacter = async (req, res) => {
       image: req.body.image,
       location: {
         name: locationObj ? locationObj.name : "Unknown",
-        id: locationObj ? locationObj.id : 0,
+        id: locationObj ? locationObj.locationId : 0,
       },
       origin: {
         name: originObj ? originObj.name : "Unknown",
-        id: originObj ? originObj.id : 0,
+        id: originObj ? originObj.locationId : 0,
       },
       episode: episodeArray,
       created: new Date(),
     });
 
     await newCharacter.save();
+    req.session.success = "Character created successfully!";
     res.redirect("/characters");
   } catch (error) {
     console.error(error);
-    res.status(500).render("error", { message: "Database Error" });
+    req.session.error = "Failed to create character.";
+    res.redirect("/characters");
   }
 };
 
@@ -205,41 +215,47 @@ exports.getEditForm = async (req, res) => {
 
 // Update Character
 exports.updateCharacter = async (req, res) => {
+  console.log("Update Character Req Body:", req.body);
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
+    const character = await Character.findOne({
+      characterId: req.params.id,
+    }).lean();
+    if (!character) return res.status(404).send("Character not found");
+
+    const locations = await Location.find({}, "locationId name")
+      .sort({ name: 1 })
+      .lean();
+
     // Redirect back to form with errors
     return res.render("characters/form", {
       title: `Edit Character`,
       action: `/characters/edit/${req.params.id}`,
       errors: errors.array(),
-      character: { ...req.body, characterId: req.params.id }, // retain ID
+      character: character, // retain ID
+      locations: locations,
       isEdit: true,
     });
   }
 
   try {
-    // Check locatino and origin are exist
-    // const locationObj = await Location.findOne({ id: req.body.locationId });
-    // if (!locationObj) {
-    //   return res.status(404).render("error", {
-    //     title: "Not Found",
-    //     message: "Location not found",
-    //   });
-    // }
+    // Check location is exist
+    const locationObj = await Location.findOne({
+      locationId: +req.body.locationId,
+    });
 
-    // const originObj = await Location.findOne({ id: req.body.originId });
-    // if (!originObj) {
-    //   return res.status(404).render("error", {
-    //     title: "Not Found",
-    //     message: "Origin not found",
-    //   });
-    // }
+    // Check origin is exist
+    const originObj = await Location.findOne({
+      locationId: +req.body.originId,
+    });
 
     // Convert episodes from comma-separated string to array of integers
     const episodeArray = req.body.episode
-      .toString()
       .split(",")
-      .map((num) => parseInt(num.trim()));
+      .map((e) => e.trim())
+      .filter((e) => e !== "")
+      .map(Number)
+      .filter((n) => !isNaN(n));
 
     const updateData = {
       name: req.body.name,
@@ -249,12 +265,12 @@ exports.updateCharacter = async (req, res) => {
       gender: req.body.gender,
       image: req.body.image,
       location: {
-        name: locationObj ? locationObj.name : "Unknown",
-        id: locationObj ? locationObj.id : 0,
+        id: locationObj ? locationObj.locationId : 0,
+        name: locationObj.name ? locationObj.name : "Unknown",
       },
       origin: {
-        name: originObj ? originObj.name : "Unknown",
-        id: originObj ? originObj.id : 0,
+        id: originObj ? originObj.locationId : 0,
+        name: originObj.name ? originObj.name : "Unknown",
       },
       episode: episodeArray,
       updated: new Date(),
@@ -265,9 +281,24 @@ exports.updateCharacter = async (req, res) => {
       updateData
     );
 
+    req.session.success = "Character updated successfully!";
     res.redirect(`/characters/${req.params.id}`);
   } catch (error) {
     console.error(error);
-    res.status(500).send("Update failed");
+    req.session.error = "Failed to update character.";
+    res.redirect("/characters");
+  }
+};
+
+exports.deleteCharacter = async (req, res) => {
+  try {
+    await Character.deleteOne({ characterId: req.params.id });
+
+    req.session.success = "Character deleted successfully!";
+    res.redirect("/characters");
+  } catch (error) {
+    console.error(error);
+    req.session.error = "Failed to deleted character.";
+    res.redirect("/characters");
   }
 };
