@@ -1,9 +1,9 @@
 <div class="list-container">
  <div class="character-page-actions">
   <h1>{{title}}</h1>
-  {{#if session.userId}}
+  {{!-- {{#if session.userId}} --}}
     <a href="/characters/create" class="character-btn-create">+ New Character</a>
-  {{/if}}
+  {{!-- {{/if}} --}}
 </div>
 
   <form action="/characters" method="GET" class="advanced-filter-box">
@@ -111,12 +111,12 @@
           </div>
 
           <div class="list-actions">
-            {{#if ../session.userId}}
+            {{!-- {{#if ../session.userId}} --}}
               <a href="/characters/edit/{{this.characterId}}" class="character-btn-edit">Edit</a>
-            {{/if}}
+            {{!-- {{/if}} --}}
             <a href="/characters/{{this.characterId}}" class="btn-view">View Profile</a>
 
-            {{#if ../session.userId}}
+            {{!-- {{#if ../session.userId}} --}}
               <form 
                 action="/characters/delete/{{this.characterId}}" 
                 method="POST" 
@@ -129,7 +129,7 @@
                   </svg>
                 </button>
               </form>
-            {{/if}}
+            {{!-- {{/if}} --}}
           </div>          
         </div>
       {{/each}}
