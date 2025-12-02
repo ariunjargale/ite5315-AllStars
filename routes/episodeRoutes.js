@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { body } = require("express-validator");
 const controller = require("../controllers/episodeController.js");
+const { requireLogin } = require("../middlewares/auth.js");
 
 // Validation rules for episode data
 const validateEpisode = [
@@ -39,15 +40,15 @@ const validateEpisode = [
 ];
 
 // CREATE
-router.get("/create", controller.showCreateForm);
-router.post("/create", validateEpisode, controller.createEpisode);
+router.get("/create", requireLogin, controller.showCreateForm);
+router.post("/create", requireLogin, validateEpisode, controller.createEpisode);
 
 // EDIT
-router.get("/edit/:id", controller.showEditForm);
-router.post("/edit/:id", validateEpisode, controller.updateEpisode);
+router.get("/edit/:id", requireLogin, controller.showEditForm);
+router.post("/edit/:id", requireLogin, validateEpisode, controller.updateEpisode);
 
 // DELETE
-router.post("/delete/:id", controller.deleteEpisode);
+router.post("/delete/:id", requireLogin, controller.deleteEpisode);
 
 // LIST (must be before the ID route)
 router.get("/", controller.getAllEpisodes);

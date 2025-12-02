@@ -55,7 +55,8 @@ router.post("/register", registerValidation, authController.register);
 // Login user
 router.post("/login", loginValidation, authController.login);
 
-// Logout user
+// Logout user (support both GET and POST)
+router.get("/logout", authController.logout);
 router.post("/logout", authController.logout);
 
 module.exports = router;

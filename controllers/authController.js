@@ -111,8 +111,19 @@ exports.login = async (req, res) => {
   }
 };
 
-// Logout user (Samuel's task - placeholder)
+// Logout user (Samuel)
 exports.logout = (req, res) => {
-  // Samuel will implement this
-  res.status(501).send("Logout not implemented yet");
+  req.session.destroy((err) => {
+    if (err) {
+      console.error("Error destroying session:", err);
+      return res.status(500).render("error", {
+        title: "Logout Error",
+        message: "Unable to logout. Please try again.",
+      });
+    }
+    // Clear the session cookie
+    res.clearCookie("connect.sid");
+    // Redirect to home page
+    res.redirect("/");
+  });
 };
