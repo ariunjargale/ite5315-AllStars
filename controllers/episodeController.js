@@ -152,6 +152,8 @@ exports.createEpisode = async (req, res) => {
             });
         }
 
+        // Set success message in session for HTML redirect
+        req.session.success = `Episode "${newEpisode.name}" has been created successfully.`;
         // Redirect for browser requests
         res.redirect("/episodes");
     } catch (err) {
@@ -272,6 +274,8 @@ exports.updateEpisode = async (req, res) => {
             });
         }
 
+        // Set success message in session for HTML redirect
+        req.session.success = `Episode "${updatedEpisode.name}" has been updated successfully.`;
         res.redirect(`/episodes/${req.params.id}`);
     } catch (err) {
         console.error(err);
@@ -315,6 +319,8 @@ exports.deleteEpisode = async (req, res) => {
             });
         }
 
+        // Set success message in session for HTML redirect
+        req.session.success = `Episode "${deletedEpisode.name}" has been deleted successfully.`;
         res.redirect("/episodes");
     } catch (err) {
         console.error(err);
