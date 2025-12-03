@@ -38,7 +38,7 @@
   </div>
 
 <div class="detail-actions">
-
+{{#if session.userId}}
   <a href="/locations" class="btn-back">← Back to Locations</a>
 
   <a href="/locations/edit/{{location.locationId}}" class="btn-view">
@@ -52,5 +52,5 @@
 
     <button class="btn-delete">🗑 Delete</button>
   </form>
-
+{{/if}}
 </div>
