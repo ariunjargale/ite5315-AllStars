@@ -103,28 +103,22 @@ main {
   width: 100%;
 }
 
-/* Auth Buttons (Login + Logout) */
+/* Login Button Style */
 .auth-nav .btn-login {
   background: transparent;
-  border: 2px solid #39ff14; /* portal green */
-  color: #39ff14;
+  border: 2px solid var(--accent-purple);
+  color: var(--accent-purple);
   padding: 8px 20px;
   border-radius: 20px;
   text-decoration: none;
   font-weight: bold;
-  letter-spacing: 0.5px;
-  transition: all 0.25s ease-in-out;
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  transition: all 0.3s ease;
 }
 
 .auth-nav .btn-login:hover {
-  background: #39ff14;
-  color: #000;
-  box-shadow: 0 0 10px #39ff14, 0 0 20px #2aff0b;
-  transform: translateY(-1px);
+  background: var(--accent-purple);
+  color: white;
+  box-shadow: 0 0 15px rgba(155, 89, 182, 0.4);
 }
 
 /* Responsive Nav */
@@ -1513,23 +1507,4 @@ footer h2 {
 .flash-error {
   background: #f8d7da;
   color: #721c24;
-}
-
-.username-label {
-  color: #00eaff; /* Rick blue */
-  font-weight: 700;
-  font-size: 16px;
-  letter-spacing: 0.5px;
-  margin-right: 12px;
-
-  text-shadow: 0 0 6px #00eaff, 0 0 12px #00bcd4, 0 0 18px #0099cc,
-    0 0 25px #0077aa;
-
-  transition: 0.2s ease-in-out;
-}
-
-.username-label:hover {
-  transform: scale(1.05);
-  text-shadow: 0 0 10px #00eaff, 0 0 20px #00bcd4, 0 0 30px #0099cc,
-    0 0 40px #0077aa;
 }

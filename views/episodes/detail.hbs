@@ -149,5 +149,10 @@
 
   <div class="detail-actions">
     <a href="/episodes" class="btn-back">← Back to Episodes</a>
+    {{#if session.userId}}
+      <a href="/episodes/edit/{{episode.episodeId}}" class="btn-edit" style="margin-left: 15px;">
+        Edit Episode
+      </a>
+    {{/if}}
   </div>
 </div>

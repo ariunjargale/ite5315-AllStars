@@ -59,6 +59,14 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Validate SESSION_SECRET exists
+if (!process.env.SESSION_SECRET) {
+  console.error("❌ ERROR: SESSION_SECRET is not defined in .env file");
+  console.error("Please add SESSION_SECRET to your .env file");
+  console.error("You can generate one with: node -e \"console.log(require('crypto').randomBytes(32).toString('hex'))\"");
+  process.exit(1);
+}
+
 // Session middleware
 app.use(
   session({

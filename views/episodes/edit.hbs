@@ -25,11 +25,20 @@
         <input type="text" name="characters" value="{{episode.characters}}" placeholder="e.g., 1, 2, 3">
         <small style="display: block; margin-bottom: 15px; color: #888;">Comma-separated character IDs</small>
 
-        <button type="submit" class="btn-view">Save Changes</button>
+        <div style="display: flex; gap: 10px; align-items: stretch;">
+            <button type="submit" class="btn-view"
+                style="padding: 14px 20px; flex: 1; height: 50px; border: none; font-size: 14px; font-weight: bold; box-shadow: none; margin: 0; display: flex; align-items: center; justify-content: center;">Save
+                Changes</button>
+            <a href="/episodes/{{episode.episodeId}}" class="btn-back"
+                style="padding: 14px 20px; flex: 1; height: 50px; text-align: center; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 14px; font-weight: bold; border: none; box-shadow: none; margin: 0; box-sizing: border-box;">Cancel</a>
+            <button type="button" class="btn-delete"
+                style="padding: 14px 20px; flex: 1; height: 50px; font-size: 14px; font-weight: bold; border: none; box-shadow: none; margin: 0; display: flex; align-items: center; justify-content: center;"
+                onclick="if(confirm('Are you sure you want to delete this episode? This action cannot be undone.')) { document.getElementById('deleteForm').submit(); }">Delete
+                Episode</button>
+        </div>
     </form>
 
-    <form action="/episodes/delete/{{episode.episodeId}}" method="POST" style="margin-top:20px;">
-        <button class="btn-delete">Delete</button>
+    <form id="deleteForm" action="/episodes/delete/{{episode.episodeId}}" method="POST" style="display: none;">
     </form>
 
 </div>
