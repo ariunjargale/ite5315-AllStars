@@ -1,4 +1,3 @@
 .env
 .DS_Store
 node_modules
-postman_collection_episodes.json

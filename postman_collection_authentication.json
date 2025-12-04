@@ -1,0 +1,503 @@
+{
+    "info": {
+        "name": "Rick and Morty - Authentication API",
+        "_postman_id": "auth-api-collection-001",
+        "description": "Complete API collection for Authentication endpoints (register, login, logout)",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Get Register Page",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/auth/register",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "auth",
+                        "register"
+                    ]
+                },
+                "description": "Display the user registration form."
+            },
+            "response": [
+                {
+                    "name": "Success Response",
+                    "status": "OK",
+                    "code": 200,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "text/html; charset=utf-8"
+                        }
+                    ],
+                    "body": "<!-- HTML registration form -->",
+                    "_postman_previewlanguage": "html"
+                }
+            ]
+        },
+        {
+            "name": "Register User",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/x-www-form-urlencoded"
+                    }
+                ],
+                "body": {
+                    "mode": "urlencoded",
+                    "urlencoded": [
+                        {
+                            "key": "username",
+                            "value": "testuser123",
+                            "description": "Username (required, min 3 characters, alphanumeric + underscore only)"
+                        },
+                        {
+                            "key": "email",
+                            "value": "testuser@example.com",
+                            "description": "Email address (required, must be valid email)"
+                        },
+                        {
+                            "key": "password",
+                            "value": "password123",
+                            "description": "Password (required, min 6 characters)"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/auth/register",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "auth",
+                        "register"
+                    ]
+                },
+                "description": "Register a new user account. Creates a new user and automatically logs them in."
+            },
+            "response": [
+                {
+                    "name": "Success - User Registered",
+                    "status": "Found",
+                    "code": 302,
+                    "header": [
+                        {
+                            "key": "Location",
+                            "value": "/characters"
+                        },
+                        {
+                            "key": "Set-Cookie",
+                            "value": "connect.sid=s%3A...; Path=/; HttpOnly"
+                        }
+                    ],
+                    "_postman_previewlanguage": "html"
+                },
+                {
+                    "name": "Validation Error - Username Too Short",
+                    "status": "Bad Request",
+                    "code": 400,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "text/html; charset=utf-8"
+                        }
+                    ],
+                    "body": "<!-- Registration form with error: Username must be at least 3 characters -->",
+                    "_postman_previewlanguage": "html"
+                },
+                {
+                    "name": "Validation Error - Invalid Characters",
+                    "status": "Bad Request",
+                    "code": 400,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "text/html; charset=utf-8"
+                        }
+                    ],
+                    "body": "<!-- Registration form with error: Username can only contain letters, numbers, and underscores -->",
+                    "_postman_previewlanguage": "html"
+                },
+                {
+                    "name": "Validation Error - Invalid Email",
+                    "status": "Bad Request",
+                    "code": 400,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "text/html; charset=utf-8"
+                        }
+                    ],
+                    "body": "<!-- Registration form with error: Must be a valid email address -->",
+                    "_postman_previewlanguage": "html"
+                },
+                {
+                    "name": "Validation Error - Password Too Short",
+                    "status": "Bad Request",
+                    "code": 400,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "text/html; charset=utf-8"
+                        }
+                    ],
+                    "body": "<!-- Registration form with error: Password must be at least 6 characters -->",
+                    "_postman_previewlanguage": "html"
+                },
+                {
+                    "name": "Username Already Exists",
+                    "status": "Bad Request",
+                    "code": 400,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "text/html; charset=utf-8"
+                        }
+                    ],
+                    "body": "<!-- Registration form with error: Username already exists -->",
+                    "_postman_previewlanguage": "html"
+                },
+                {
+                    "name": "Email Already Exists",
+                    "status": "Bad Request",
+                    "code": 400,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "text/html; charset=utf-8"
+                        }
+                    ],
+                    "body": "<!-- Registration form with error: Email already exists -->",
+                    "_postman_previewlanguage": "html"
+                }
+            ]
+        },
+        {
+            "name": "Get Login Page",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/auth/login",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "auth",
+                        "login"
+                    ]
+                },
+                "description": "Display the user login form."
+            },
+            "response": [
+                {
+                    "name": "Success Response",
+                    "status": "OK",
+                    "code": 200,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "text/html; charset=utf-8"
+                        }
+                    ],
+                    "body": "<!-- HTML login form -->",
+                    "_postman_previewlanguage": "html"
+                }
+            ]
+        },
+        {
+            "name": "Login User",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/x-www-form-urlencoded"
+                    }
+                ],
+                "body": {
+                    "mode": "urlencoded",
+                    "urlencoded": [
+                        {
+                            "key": "username",
+                            "value": "testuser123",
+                            "description": "Username (required)"
+                        },
+                        {
+                            "key": "password",
+                            "value": "password123",
+                            "description": "Password (required)"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/auth/login",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "auth",
+                        "login"
+                    ]
+                },
+                "description": "Login with existing user credentials. Creates a session."
+            },
+            "response": [
+                {
+                    "name": "Success - User Logged In",
+                    "status": "Found",
+                    "code": 302,
+                    "header": [
+                        {
+                            "key": "Location",
+                            "value": "/characters"
+                        },
+                        {
+                            "key": "Set-Cookie",
+                            "value": "connect.sid=s%3A...; Path=/; HttpOnly"
+                        }
+                    ],
+                    "_postman_previewlanguage": "html"
+                },
+                {
+                    "name": "Invalid Credentials",
+                    "status": "Unauthorized",
+                    "code": 401,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "text/html; charset=utf-8"
+                        }
+                    ],
+                    "body": "<!-- Login form with error: Invalid credentials -->",
+                    "_postman_previewlanguage": "html"
+                },
+                {
+                    "name": "Validation Error - Missing Username",
+                    "status": "Bad Request",
+                    "code": 400,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "text/html; charset=utf-8"
+                        }
+                    ],
+                    "body": "<!-- Login form with error: Username is required -->",
+                    "_postman_previewlanguage": "html"
+                },
+                {
+                    "name": "Validation Error - Missing Password",
+                    "status": "Bad Request",
+                    "code": 400,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "text/html; charset=utf-8"
+                        }
+                    ],
+                    "body": "<!-- Login form with error: Password is required -->",
+                    "_postman_previewlanguage": "html"
+                }
+            ]
+        },
+        {
+            "name": "Logout (GET)",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/auth/logout",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "auth",
+                        "logout"
+                    ]
+                },
+                "description": "Logout the current user (GET method). Destroys the session and clears the cookie."
+            },
+            "response": [
+                {
+                    "name": "Success - User Logged Out",
+                    "status": "Found",
+                    "code": 302,
+                    "header": [
+                        {
+                            "key": "Location",
+                            "value": "/characters"
+                        },
+                        {
+                            "key": "Set-Cookie",
+                            "value": "connect.sid=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT"
+                        }
+                    ],
+                    "_postman_previewlanguage": "html"
+                }
+            ]
+        },
+        {
+            "name": "Logout (POST)",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/auth/logout",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "auth",
+                        "logout"
+                    ]
+                },
+                "description": "Logout the current user (POST method). Destroys the session and clears the cookie."
+            },
+            "response": [
+                {
+                    "name": "Success - User Logged Out",
+                    "status": "Found",
+                    "code": 302,
+                    "header": [
+                        {
+                            "key": "Location",
+                            "value": "/characters"
+                        },
+                        {
+                            "key": "Set-Cookie",
+                            "value": "connect.sid=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT"
+                        }
+                    ],
+                    "_postman_previewlanguage": "html"
+                }
+            ]
+        },
+        {
+            "name": "Test Registration - Duplicate Username",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            "pm.test(\"Status code is 400\", function () {",
+                            "    pm.response.to.have.status(400);",
+                            "});",
+                            "",
+                            "pm.test(\"Error message contains 'already exists'\", function () {",
+                            "    pm.expect(pm.response.text()).to.include('already');",
+                            "});"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/x-www-form-urlencoded"
+                    }
+                ],
+                "body": {
+                    "mode": "urlencoded",
+                    "urlencoded": [
+                        {
+                            "key": "username",
+                            "value": "testuser123",
+                            "description": "Existing username"
+                        },
+                        {
+                            "key": "email",
+                            "value": "newemail@example.com",
+                            "description": "Different email"
+                        },
+                        {
+                            "key": "password",
+                            "value": "password123"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/auth/register",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "auth",
+                        "register"
+                    ]
+                },
+                "description": "Test that registering with an existing username returns an error."
+            },
+            "response": []
+        },
+        {
+            "name": "Test Login - Invalid Credentials",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            "pm.test(\"Status code is 401\", function () {",
+                            "    pm.response.to.have.status(401);",
+                            "});",
+                            "",
+                            "pm.test(\"Error message shows invalid credentials\", function () {",
+                            "    pm.expect(pm.response.text()).to.include('Invalid');",
+                            "});"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/x-www-form-urlencoded"
+                    }
+                ],
+                "body": {
+                    "mode": "urlencoded",
+                    "urlencoded": [
+                        {
+                            "key": "username",
+                            "value": "wronguser"
+                        },
+                        {
+                            "key": "password",
+                            "value": "wrongpassword"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/auth/login",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "auth",
+                        "login"
+                    ]
+                },
+                "description": "Test that login with wrong credentials returns 401 Unauthorized."
+            },
+            "response": []
+        }
+    ],
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "http://localhost:3000",
+            "type": "string"
+        }
+    ]
+}

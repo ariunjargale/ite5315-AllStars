@@ -1,0 +1,451 @@
+{
+    "info": {
+        "name": "Rick and Morty - Locations API",
+        "_postman_id": "loc-api-collection-001",
+        "description": "Complete API collection for Location management endpoints",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "List All Locations",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/locations?page=1&limit=20",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "locations"
+                    ],
+                    "query": [
+                        {
+                            "key": "page",
+                            "value": "1",
+                            "description": "Page number (optional)"
+                        },
+                        {
+                            "key": "limit",
+                            "value": "20",
+                            "description": "Number of results per page (optional)"
+                        },
+                        {
+                            "key": "name",
+                            "value": "",
+                            "description": "Filter by location name (optional)",
+                            "disabled": true
+                        },
+                        {
+                            "key": "type",
+                            "value": "",
+                            "description": "Filter by type (optional)",
+                            "disabled": true
+                        },
+                        {
+                            "key": "dimension",
+                            "value": "",
+                            "description": "Filter by dimension (optional)",
+                            "disabled": true
+                        }
+                    ]
+                },
+                "description": "Retrieve a paginated list of all locations. Supports filtering by name, type, and dimension."
+            },
+            "response": [
+                {
+                    "name": "Success Response",
+                    "status": "OK",
+                    "code": 200,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "text/html; charset=utf-8"
+                        }
+                    ],
+                    "body": "<!-- HTML view with location cards -->",
+                    "_postman_previewlanguage": "html"
+                }
+            ]
+        },
+        {
+            "name": "Get Location by ID",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/locations/:id",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "locations",
+                        ":id"
+                    ],
+                    "variable": [
+                        {
+                            "key": "id",
+                            "value": "1",
+                            "description": "Location ID"
+                        }
+                    ]
+                },
+                "description": "Get detailed information about a specific location by ID."
+            },
+            "response": [
+                {
+                    "name": "Success Response",
+                    "status": "OK",
+                    "code": 200,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "text/html; charset=utf-8"
+                        }
+                    ],
+                    "body": "<!-- HTML view with location details -->",
+                    "_postman_previewlanguage": "html"
+                },
+                {
+                    "name": "Location Not Found",
+                    "status": "Not Found",
+                    "code": 404,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "text/html; charset=utf-8"
+                        }
+                    ],
+                    "body": "<!-- Error page -->",
+                    "_postman_previewlanguage": "html"
+                }
+            ]
+        },
+        {
+            "name": "Get Create Form",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/locations/create",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "locations",
+                        "create"
+                    ]
+                },
+                "description": "Display the form to create a new location."
+            },
+            "response": []
+        },
+        {
+            "name": "Create Location",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/x-www-form-urlencoded"
+                    }
+                ],
+                "body": {
+                    "mode": "urlencoded",
+                    "urlencoded": [
+                        {
+                            "key": "locationId",
+                            "value": "999",
+                            "description": "Unique location ID (required, must be positive number)"
+                        },
+                        {
+                            "key": "name",
+                            "value": "Test Location",
+                            "description": "Location name (required, min 2 characters)"
+                        },
+                        {
+                            "key": "type",
+                            "value": "Planet",
+                            "description": "Location type (optional)"
+                        },
+                        {
+                            "key": "dimension",
+                            "value": "Dimension C-137",
+                            "description": "Dimension (optional)"
+                        },
+                        {
+                            "key": "residents",
+                            "value": "1,2,3",
+                            "description": "Comma-separated character IDs (optional)"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/locations/create",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "locations",
+                        "create"
+                    ]
+                },
+                "description": "Create a new location."
+            },
+            "response": [
+                {
+                    "name": "Success - Location Created",
+                    "status": "Found",
+                    "code": 302,
+                    "header": [
+                        {
+                            "key": "Location",
+                            "value": "/locations"
+                        }
+                    ],
+                    "_postman_previewlanguage": "html"
+                },
+                {
+                    "name": "Validation Error - Missing Name",
+                    "status": "Bad Request",
+                    "code": 400,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        }
+                    ],
+                    "body": "{\n  \"message\": \"Validation Error\",\n  \"errors\": [\n    {\n      \"field\": \"name\",\n      \"message\": \"Name is required\"\n    }\n  ]\n}",
+                    "_postman_previewlanguage": "json"
+                },
+                {
+                    "name": "Validation Error - Invalid Location ID",
+                    "status": "Bad Request",
+                    "code": 400,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        }
+                    ],
+                    "body": "{\n  \"message\": \"Validation Error\",\n  \"errors\": [\n    {\n      \"field\": \"locationId\",\n      \"message\": \"Location ID must be a positive number\"\n    }\n  ]\n}",
+                    "_postman_previewlanguage": "json"
+                },
+                {
+                    "name": "Duplicate Location ID",
+                    "status": "Internal Server Error",
+                    "code": 500,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        }
+                    ],
+                    "body": "{\n  \"message\": \"Location ID already exists\"\n}",
+                    "_postman_previewlanguage": "json"
+                }
+            ]
+        },
+        {
+            "name": "Get Edit Form",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/locations/edit/:id",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "locations",
+                        "edit",
+                        ":id"
+                    ],
+                    "variable": [
+                        {
+                            "key": "id",
+                            "value": "1",
+                            "description": "Location ID to edit"
+                        }
+                    ]
+                },
+                "description": "Display the form to edit an existing location."
+            },
+            "response": []
+        },
+        {
+            "name": "Update Location",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/x-www-form-urlencoded"
+                    }
+                ],
+                "body": {
+                    "mode": "urlencoded",
+                    "urlencoded": [
+                        {
+                            "key": "name",
+                            "value": "Updated Location Name",
+                            "description": "Location name (required, min 2 characters)"
+                        },
+                        {
+                            "key": "type",
+                            "value": "Space Station",
+                            "description": "Location type (optional)"
+                        },
+                        {
+                            "key": "dimension",
+                            "value": "Unknown",
+                            "description": "Dimension (optional)"
+                        },
+                        {
+                            "key": "residents",
+                            "value": "1,2,3,4,5",
+                            "description": "Comma-separated character IDs (optional)"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/locations/edit/:id",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "locations",
+                        "edit",
+                        ":id"
+                    ],
+                    "variable": [
+                        {
+                            "key": "id",
+                            "value": "1",
+                            "description": "Location ID to update"
+                        }
+                    ]
+                },
+                "description": "Update an existing location by ID. Note: locationId cannot be updated."
+            },
+            "response": [
+                {
+                    "name": "Success - Location Updated",
+                    "status": "Found",
+                    "code": 302,
+                    "header": [
+                        {
+                            "key": "Location",
+                            "value": "/locations/1"
+                        }
+                    ],
+                    "_postman_previewlanguage": "html"
+                },
+                {
+                    "name": "Validation Error",
+                    "status": "Bad Request",
+                    "code": 400,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        }
+                    ],
+                    "body": "{\n  \"message\": \"Validation Error\",\n  \"errors\": [\n    {\n      \"field\": \"name\",\n      \"message\": \"Name must be at least 2 characters\"\n    }\n  ]\n}",
+                    "_postman_previewlanguage": "json"
+                }
+            ]
+        },
+        {
+            "name": "Delete Location",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/locations/delete/:id",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "locations",
+                        "delete",
+                        ":id"
+                    ],
+                    "variable": [
+                        {
+                            "key": "id",
+                            "value": "999",
+                            "description": "Location ID to delete"
+                        }
+                    ]
+                },
+                "description": "Delete a location by ID."
+            },
+            "response": [
+                {
+                    "name": "Success - Location Deleted",
+                    "status": "Found",
+                    "code": 302,
+                    "header": [
+                        {
+                            "key": "Location",
+                            "value": "/locations"
+                        }
+                    ],
+                    "_postman_previewlanguage": "html"
+                },
+                {
+                    "name": "Location Not Found",
+                    "status": "Not Found",
+                    "code": 404,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        }
+                    ],
+                    "body": "{\n  \"message\": \"Location not found\"\n}",
+                    "_postman_previewlanguage": "json"
+                }
+            ]
+        },
+        {
+            "name": "Security Test - Read Routes Work Without Auth",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/locations",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "locations"
+                    ]
+                },
+                "description": "Test that read-only GET routes work without authentication."
+            },
+            "response": [
+                {
+                    "name": "Expected: 200 OK",
+                    "status": "OK",
+                    "code": 200,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "text/html; charset=utf-8"
+                        }
+                    ],
+                    "_postman_previewlanguage": "html"
+                }
+            ]
+        }
+    ],
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "http://localhost:3000",
+            "type": "string"
+        }
+    ]
+}
