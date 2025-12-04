@@ -6,6 +6,7 @@ const {
   characterValidationRules,
 } = require("../middlewares/characterValidators.js");
 const { requireLogin } = require("../middlewares/auth.js");
+const { verifyToken } = require("../middlewares/verifyToken.js");
 
 // CREATE
 router.get("/create", requireLogin, controller.getCreateForm);
@@ -27,6 +28,11 @@ router.post(
 
 // DELETE
 router.post("/delete/:id", requireLogin, controller.deleteCharacter);
+
+// API - Protected routes
+router.post("/api", verifyToken, controller.createCharacter);
+router.put("/api/:id", verifyToken, controller.updateCharacter);
+router.delete("/api/:id", verifyToken, controller.deleteCharacter);
 
 // Get specific character by ID
 router.get("/:id", controller.getCharacterById);

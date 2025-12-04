@@ -1,6 +1,18 @@
 const Character = require("../models/Character");
 const Location = require("../models/Location");
 const { validationResult, query } = require("express-validator");
+
+// Helper function to determine if request expects JSON response
+const expectsJson = (req) => {
+  // Check if Accept header prefers JSON
+  const acceptHeader = req.get("Accept") || "";
+  // Check if it's an explicit JSON request or not a browser form submission
+  return (
+    acceptHeader.includes("application/json") ||
+    (!acceptHeader.includes("text/html") && req.method === "POST")
+  );
+};
+
 // Get all characters
 exports.getAllCharacters = async (req, res) => {
   try {
@@ -119,8 +131,21 @@ exports.getCreateForm = async (req, res) => {
 // Create Character
 exports.createCharacter = async (req, res) => {
   const errors = validationResult(req);
-  console.log(errors);
+
   if (!errors.isEmpty()) {
+    // Return JSON error for API requests
+    if (expectsJson(req)) {
+      return res.status(400).json({
+        success: false,
+        error: "Validation failed",
+        errors: errors.array().map((err) => ({
+          field: err.path || err.param,
+          message: err.msg,
+          value: err.value,
+        })),
+      });
+    }
+
     const locations = await Location.find({}, "locationId name")
       .sort({ name: 1 })
       .lean();
@@ -179,11 +204,32 @@ exports.createCharacter = async (req, res) => {
     });
 
     await newCharacter.save();
+
+    // Return JSON success for API requests
+    if (expectsJson(req)) {
+      return res.status(201).json({
+        success: true,
+        message: "Character created successfully",
+        data: newCharacter,
+      });
+    }
+
     req.session.success = "Character created successfully!";
     res.redirect("/characters");
   } catch (error) {
     console.error(error);
-    req.session.error = "Failed to create character.";
+    errorMessage = "Failed to create character.";
+    req.session.error = errorMessage;
+
+    // Return JSON error for API requests
+    if (expectsJson(req)) {
+      return res.status(statusCode).json({
+        success: false,
+        error: errorMessage,
+        details: err.message,
+      });
+    }
+
     res.redirect("/characters");
   }
 };
@@ -218,6 +264,19 @@ exports.updateCharacter = async (req, res) => {
   console.log("Update Character Req Body:", req.body);
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
+    // Return JSON error for API requests
+    if (expectsJson(req)) {
+      return res.status(400).json({
+        success: false,
+        error: "Validation failed",
+        errors: errors.array().map((err) => ({
+          field: err.path || err.param,
+          message: err.msg,
+          value: err.value,
+        })),
+      });
+    }
+
     const character = await Character.findOne({
       characterId: req.params.id,
     }).lean();
@@ -281,10 +340,27 @@ exports.updateCharacter = async (req, res) => {
       updateData
     );
 
+    // Return JSON success for API requests
+    if (expectsJson(req)) {
+      return res.status(200).json({
+        success: true,
+        message: "Character updated successfully",
+        data: updateData,
+      });
+    }
+
     req.session.success = "Character updated successfully!";
     res.redirect(`/characters/${req.params.id}`);
   } catch (error) {
     console.error(error);
+
+    if (expectsJson(req)) {
+      return res.status(500).json({
+        success: false,
+        error: "Failed to update character",
+        details: err.message,
+      });
+    }
     req.session.error = "Failed to update character.";
     res.redirect("/characters");
   }
@@ -294,10 +370,28 @@ exports.deleteCharacter = async (req, res) => {
   try {
     await Character.deleteOne({ characterId: req.params.id });
 
+    // Return JSON success for API requests
+    if (expectsJson(req)) {
+      return res.status(200).json({
+        success: true,
+        message: "Character deleted successfully",
+        data: req.params.id,
+      });
+    }
+
     req.session.success = "Character deleted successfully!";
     res.redirect("/characters");
   } catch (error) {
     console.error(error);
+
+    if (expectsJson(req)) {
+      return res.status(500).json({
+        success: false,
+        error: "Failed to delete character",
+        details: err.message,
+      });
+    }
+
     req.session.error = "Failed to deleted character.";
     res.redirect("/characters");
   }

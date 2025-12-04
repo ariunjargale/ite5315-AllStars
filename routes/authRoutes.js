@@ -59,4 +59,9 @@ router.post("/login", loginValidation, authController.login);
 router.get("/logout", authController.logout);
 router.post("/logout", authController.logout);
 
+// For API calls
+router.post("/api/register", authController.apiRegister);
+router.post("/api/login", authController.apiLogin);
+router.post("/api/logout", authController.apiLogout);
+
 module.exports = router;

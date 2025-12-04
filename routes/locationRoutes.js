@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { body } = require("express-validator");
 const controller = require("../controllers/locationController.js");
+const { verifyToken } = require("../middlewares/verifyToken.js");
 
 /* ============================================================
    VALIDATION RULES
@@ -56,6 +57,11 @@ router.post("/edit/:id", validateLocationUpdate, controller.updateLocation);
 
 // DELETE
 router.post("/delete/:id", controller.deleteLocation);
+
+// API - Protected routes
+router.post("/api/", verifyToken, controller.createLocation);
+router.put("/api/:id", verifyToken, controller.updateLocation);
+router.delete("/api/:id", verifyToken, controller.deleteLocation);
 
 // LIST ALL (must be before /:id)
 router.get("/", controller.getAllLocations);
