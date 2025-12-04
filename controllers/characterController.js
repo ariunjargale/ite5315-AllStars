@@ -223,7 +223,7 @@ exports.createCharacter = async (req, res) => {
 
     // Return JSON error for API requests
     if (expectsJson(req)) {
-      return res.status(statusCode).json({
+      return res.status(400).json({
         success: false,
         error: errorMessage,
         details: err.message,
