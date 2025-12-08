@@ -38,16 +38,12 @@ exports.register = async (req, res) => {
 
     await user.save();
 
-    // Create JWT token
+    // Create JWT token (but don't set session)
     const token = jwt.sign(
       { id: user._id, username: user.username, role: user.role },
       process.env.JWT_SECRET,
       { expiresIn: "24h" }
     );
-
-    // Set session
-    req.session.userId = user._id;
-    req.session.username = user.username;
 
     return res.render("auth/register-success", {
       username: user.username,
