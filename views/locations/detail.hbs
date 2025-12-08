@@ -1,9 +1,12 @@
 <div class="detail-container">
+
+  <!-- HEADER -->
   <div class="detail-header">
     <h1>{{location.name}}</h1>
     <span class="code-large">{{location.type}}</span>
   </div>
 
+  <!-- MAIN INFO BOX -->
   <div class="info">
     <div class="info-row">
       <span class="info-label">Dimension:</span>
@@ -21,15 +24,16 @@
     </div>
   </div>
 
+  <!-- RESIDENTS -->
   <div class="sub-section">
     <h2>Residents</h2>
 
     <div class="sub-ids">
       {{#if residents.length}}
         {{#each residents}}
-          <a href="/characters/{{this.characterId}}"><span
-              class="sub-id-badge"
-            >{{this.name}}</span></a>
+          <a href="/characters/{{this.characterId}}">
+            <span class="sub-id-badge">{{this.name}}</span>
+          </a>
         {{/each}}
       {{else}}
         <p>No known residents.</p>
@@ -37,20 +41,27 @@
     </div>
   </div>
 
-<div class="detail-actions">
-{{#if session.userId}}
-  <a href="/locations" class="btn-back">← Back to Locations</a>
+  <!-- ACTION BUTTONS -->
+  <div class="detail-actions">
+    {{#if session.userId}}
 
-  <a href="/locations/edit/{{location.locationId}}" class="btn-view">
-    ✏️ Edit
-  </a>
+      <a href="/locations" class="btn-back pill-btn">
+        ← Back to Locations
+      </a>
 
-  <form action="/locations/delete/{{location.locationId}}" 
-        method="POST" 
-        style="display:inline-block;"
-        onsubmit="return confirm('Are you sure you want to delete this location? This action cannot be undone.')">
+      <a href="/locations/edit/{{location.locationId}}" class="btn-edit pill-btn">
+         Edit
+      </a>
 
-    <button class="btn-delete">🗑 Delete</button>
-  </form>
-{{/if}}
+      <form action="/locations/delete/{{location.locationId}}"
+            method="POST"
+            onsubmit="return confirm('Are you sure you want to delete this location?');">
+        <button class="btn-delete pill-btn">
+           Delete
+        </button>
+      </form>
+
+    {{/if}}
+  </div>
+
 </div>

@@ -471,11 +471,6 @@ footer h2 {
   box-shadow: 0 4px 15px rgba(68, 214, 44, 0.5);
 }
 
-.detail-actions {
-  text-align: center;
-  margin-top: 30px;
-}
-
 .btn-back {
   display: inline-block;
   background: linear-gradient(135deg, #555, #666);
@@ -1610,4 +1605,80 @@ footer h2 {
 .list-actions form {
   position: relative;
   z-index: 2;
+}
+
+/* --- Make the 3 detail page buttons perfectly aligned --- */
+
+.detail-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px; /* spacing between buttons */
+  margin-top: 30px;
+}
+
+/* remove form spacing so Delete aligns horizontally */
+.detail-actions form {
+  margin: 0;
+  padding: 0;
+}
+
+/* make all buttons identical */
+.pill-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 180px; /* consistent width */
+  padding: 14px 26px;
+
+  border-radius: 50px; /* FULL pill shape */
+  font-weight: bold;
+  font-size: 1em;
+
+  text-decoration: none;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: 0.25s ease;
+}
+
+/* Back Button */
+.btn-back {
+  background: #555;
+  color: white;
+  border-color: #777;
+  box-shadow: 0 0 10px rgba(100, 255, 100, 0.4);
+}
+.btn-back:hover {
+  background: #666;
+  box-shadow: 0 0 16px rgba(100, 255, 100, 0.7);
+  transform: translateY(-2px);
+}
+
+/* Edit Button */
+.btn-edit {
+  background: #00b5cc;
+  color: black;
+  border-color: #00eaff;
+  box-shadow: 0 0 10px rgba(0, 234, 255, 0.6);
+}
+.btn-edit:hover {
+  background: #00eaff;
+  transform: translateY(-2px);
+  box-shadow: 0 0 18px rgba(0, 234, 255, 1);
+}
+
+/* Delete Button */
+.btn-delete {
+  background: #c0392b;
+  color: white;
+  border-color: #ff6b6b;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.4);
+  padding-top: 16px;
+  padding-bottom: 20px;
+}
+.btn-delete:hover {
+  background: #e91e63;
+  transform: translateY(-2px);
+  box-shadow: 0 0 18px rgba(255, 0, 0, 0.7);
 }
