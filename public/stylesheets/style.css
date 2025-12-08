@@ -105,20 +105,30 @@ main {
 
 /* Login Button Style */
 .auth-nav .btn-login {
-  background: transparent;
-  border: 2px solid var(--accent-purple);
-  color: var(--accent-purple);
-  padding: 8px 20px;
-  border-radius: 20px;
-  text-decoration: none;
+  background: rgba(0, 0, 0, 0.4);
+  border: 2px solid #00eaff;
+  color: #00eaff;
+  padding: 10px 28px;
+  border-radius: 50px; /* match sign-up roundness */
   font-weight: bold;
-  transition: all 0.3s ease;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  transition: all 0.25s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  /* base glow */
+  box-shadow: 0 0 6px rgba(0, 234, 255, 0.35); /* softer glow */
 }
 
+/* Hover Glow Boost */
 .auth-nav .btn-login:hover {
-  background: var(--accent-purple);
-  color: white;
-  box-shadow: 0 0 15px rgba(155, 89, 182, 0.4);
+  background: rgba(0, 234, 255, 0.1);
+  color: #00eaff;
+  box-shadow: 0 0 12px #00eaff, 0 0 22px #00eaff,
+    0 0 32px rgba(0, 234, 255, 0.7);
+  border-color: #00eaff;
 }
 
 /* Responsive Nav */
@@ -1419,33 +1429,32 @@ footer h2 {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
+/* Sign up Button */
 .btn-register-header {
-  background: linear-gradient(
-    135deg,
-    var(--portal-green),
-    var(--primary-green)
-  );
-  padding: 8px 20px;
-  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 2px solid #00eaff;
+  color: #00eaff;
+  padding: 10px 28px;
+  border-radius: 50px; /* same pill shape */
   font-weight: bold;
-  color: #111;
   text-decoration: none;
-  margin-left: 15px;
-  transition: 0.3s ease;
-  box-shadow: 0 0 10px rgba(68, 214, 44, 0.4);
+  letter-spacing: 0.5px;
+  transition: all 0.25s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  /* base glow */
+  box-shadow: 0 0 6px rgba(0, 234, 255, 0.35); /* softer glow */
 }
 
 .btn-register-header:hover {
-  background: linear-gradient(
-    135deg,
-    var(--primary-blue),
-    var(--accent-purple)
-  );
-  color: white;
-  transform: scale(1.05);
-  box-shadow: 0 0 20px rgba(0, 181, 204, 0.5);
+  background: rgba(0, 234, 255, 0.1); /* light tint */
+  color: #00eaff;
+  box-shadow: 0 0 12px #00eaff, 0 0 22px #00eaff,
+    0 0 32px rgba(0, 234, 255, 0.7);
+  border-color: #00eaff;
 }
-
 .character-cancel-btn {
   display: inline-flex;
   align-items: center;
