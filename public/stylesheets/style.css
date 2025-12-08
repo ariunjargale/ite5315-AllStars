@@ -1517,3 +1517,21 @@ footer h2 {
   background: #f8d7da;
   color: #721c24;
 }
+
+/* Portal Gun Greeting Styles - Evil Morty Yellow */
+.portal-greeting {
+  color: #00d9ff;
+  font-family: "Creepster", cursive;
+  font-weight: 600;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Make sure it aligns nicely in your auth-nav */
+.auth-nav {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
