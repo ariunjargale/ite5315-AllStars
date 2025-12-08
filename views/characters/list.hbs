@@ -1,13 +1,12 @@
 <div class="list-container">
- <div class="character-page-actions">
-  <h1>{{title}}</h1>
-  {{#if session.userId}}
-    <a href="/characters/create" class="character-btn-create">+ New Character</a>
-  {{/if}}
-</div>
+  <div class="character-page-actions">
+    <h1>{{title}}</h1>
+    {{#if session.userId}}
+      <a href="/characters/create" class="character-btn-create">+ New Character</a>
+    {{/if}}
+  </div>
 
   <form action="/characters" method="GET" class="advanced-filter-box">
-
     <div class="character-filter-grid">
       <div class="filter-item">
         <label>Name</label>
@@ -52,10 +51,7 @@
         <label>Status</label>
         <select name="status">
           <option value="">All Statuses</option>
-          <option
-            value="alive"
-            {{isSelected query.status "alive"}}
-          >Alive</option>
+          <option value="alive" {{isSelected query.status "alive"}}>Alive</option>
           <option value="dead" {{isSelected query.status "dead"}}>Dead</option>
         </select>
       </div>
@@ -63,19 +59,10 @@
         <label>Gender</label>
         <select name="gender">
           <option value="">All Genders</option>
-          <option
-            value="Female"
-            {{isSelected query.gender "Female"}}
-          >Female</option>
+          <option value="Female" {{isSelected query.gender "Female"}}>Female</option>
           <option value="Male" {{isSelected query.gender "Male"}}>Male</option>
-          <option
-            value="Genderless"
-            {{isSelected query.gender "Genderless"}}
-          >Genderless</option>
-          <option
-            value="unknown"
-            {{isSelected query.gender "unknown"}}
-          >unknown</option>
+          <option value="Genderless" {{isSelected query.gender "Genderless"}}>Genderless</option>
+          <option value="unknown" {{isSelected query.gender "unknown"}}>unknown</option>
         </select>
       </div>
     </div>
@@ -85,21 +72,22 @@
       <a href="/characters" class="character-filter-clear-btn">Clear</a>
     </div>
   </form>
-    <div class="list-stats">
+
+  <div class="list-stats">
     <p>Total Characters: <strong>{{totalCount}}</strong></p>
   </div>
+
   {{#if characters.length}}
     <div class="list">
       {{#each characters}}
-        <div class="list-card">
-
+        <div class="list-card" data-character-id="{{this.characterId}}">
           <div class="card-image-wrapper">
             <img src="{{this.image}}" alt="{{this.name}}" class="card-image" />
           </div>
 
-              <div class="list-header">
-            <h2 >{{this.name}}</h2>
-            <span class="list-code {{#if this.isAlive}} status-alive {{else}} status-dead {{/if}}">
+          <div class="list-header">
+            <h2>{{this.name}}</h2>
+            <span class="list-code {{#if this.isAlive}}status-alive{{else}}status-dead{{/if}}">
               {{#if this.isAlive}}Alive{{else}}Dead{{/if}}
             </span>
           </div>
@@ -111,78 +99,55 @@
           </div>
 
           <div class="list-actions">
-            {{#if ../session.userId}}
-              <a href="/characters/edit/{{this.characterId}}" class="character-btn-edit">Edit</a>
-            {{/if}}
+            <!-- VIEW PROFILE ALWAYS VISIBLE -->
             <a href="/characters/{{this.characterId}}" class="btn-view">View Profile</a>
-
+            
+            <!-- CRUD ACTIONS - HIDDEN BY DEFAULT -->
             {{#if ../session.userId}}
-              <form 
-                action="/characters/delete/{{this.characterId}}" 
-                method="POST" 
-                onsubmit="return confirm('Are you sure you want to delete this character?')"
-              >
-                <button class="character-delete-btn">
-                  <svg width="16" height="16" fill="white" viewBox="0 0 16 16">
-                    <path d="M5.5 5.5v7h1v-7h-1zm3 0v7h1v-7h-1z"/>
-                    <path fill-rule="evenodd" d="M14 3h-3V2H5v1H2v1h12V3zM4.118 4L4 4.059V14h8V4.059L11.882 4H4.118z"/>
-                  </svg>
-                </button>
-              </form>
+              <div class="crud-actions" style="display: none;">
+                <a href="/characters/edit/{{this.characterId}}" class="btn-edit">Edit</a>
+                <form 
+                  action="/characters/delete/{{this.characterId}}" 
+                  method="POST" 
+                  onsubmit="return confirm('Are you sure you want to delete this character?')"
+                  style="display: inline-block;"
+                >
+                  <button type="submit" class="btn-delete">Delete</button>
+                </form>
+              </div>
             {{/if}}
-          </div>          
+          </div>
         </div>
       {{/each}}
     </div>
+
     <div class="pagination-container">
+      {{#if (gt currentPage 1)}}
+        <a
+          href="/characters?page=1&name={{query.name}}&species={{query.species}}&status={{query.status}}&gender={{query.gender}}&location={{query.location}}&origin={{query.origin}}"
+          class="pagination-btn"
+        >« First</a>
+        <a
+          href="/characters?page={{subtract currentPage 1}}&name={{query.name}}&species={{query.species}}&status={{query.status}}&gender={{query.gender}}&location={{query.location}}&origin={{query.origin}}"
+          class="pagination-btn"
+        >‹ Prev</a>
+      {{/if}}
 
-  {{! FIRST PAGE }}
-  {{#if (gt currentPage 1)}}
-    <a
-      href="/characters?page=1&name={{query.name}}&species={{query.species}}&status={{query.status}}&gender={{query.gender}}&location={{query.location}}&origin={{query.origin}}"
-      class="pagination-btn"
-    >« First</a>
-  {{/if}}
+      <span class="pagination-info">
+        Page {{currentPage}} of {{totalPages}}
+      </span>
 
-  {{! PREVIOUS PAGE }}
-  {{#if (gt currentPage 1)}}
-    <a
-      href="/characters?page={{subtract
-        currentPage
-        1
-      }}&name={{query.name}}&species={{query.species}}&status={{query.status}}&gender={{query.gender}}&location={{query.location}}&origin={{query.origin}}"
-      class="pagination-btn"
-    >‹ Prev</a>
-  {{/if}}
-
-  {{! PAGE INFO }}
-  <span class="pagination-info">
-    Page
-    {{currentPage}}
-    of
-    {{totalPages}}
-  </span>
-
-  {{! NEXT PAGE }}
-  {{#if (lt currentPage totalPages)}}
-    <a
-      href="/characters?page={{add
-        currentPage
-        1
-      }}&name={{query.name}}&species={{query.species}}&status={{query.status}}&gender={{query.gender}}&location={{query.location}}&origin={{query.origin}}"
-      class="pagination-btn"
-    >Next ›</a>
-  {{/if}}
-
-  {{! LAST PAGE }}
-  {{#if (lt currentPage totalPages)}}
-    <a
-      href="/characters?page={{totalPages}}&name={{query.name}}&species={{query.species}}&status={{query.status}}&gender={{query.gender}}&location={{query.location}}&origin={{query.origin}}"
-      class="pagination-btn"
-    >Last »</a>
-  {{/if}}
-
-</div>
+      {{#if (lt currentPage totalPages)}}
+        <a
+          href="/characters?page={{add currentPage 1}}&name={{query.name}}&species={{query.species}}&status={{query.status}}&gender={{query.gender}}&location={{query.location}}&origin={{query.origin}}"
+          class="pagination-btn"
+        >Next ›</a>
+        <a
+          href="/characters?page={{totalPages}}&name={{query.name}}&species={{query.species}}&status={{query.status}}&gender={{query.gender}}&location={{query.location}}&origin={{query.origin}}"
+          class="pagination-btn"
+        >Last »</a>
+      {{/if}}
+    </div>
   {{else}}
     <div class="no-data-container">
       <div class="no-data-content">
@@ -193,3 +158,51 @@
     </div>
   {{/if}}
 </div>
+
+<script>
+  // Handle card click to expand/collapse CRUD actions
+  document.addEventListener('DOMContentLoaded', function() {
+    const cards = document.querySelectorAll('.list-card');
+    
+    cards.forEach(card => {
+      card.addEventListener('click', function(e) {
+        // Don't trigger if clicking on a button, link, or form
+        if (e.target.closest('a, button, form')) {
+          return;
+        }
+        
+        // Close all other cards
+        cards.forEach(c => {
+          if (c !== card) {
+            c.classList.remove('card-expanded');
+            const crudActions = c.querySelector('.crud-actions');
+            if (crudActions) {
+              crudActions.style.display = 'none';
+            }
+          }
+        });
+        
+        // Toggle this card
+        card.classList.toggle('card-expanded');
+        const crudActions = card.querySelector('.crud-actions');
+        if (crudActions) {
+          crudActions.style.display = 
+            card.classList.contains('card-expanded') ? 'inline-block' : 'none';
+        }
+      });
+    });
+    
+    // Close expanded card when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.list-card')) {
+        cards.forEach(card => {
+          card.classList.remove('card-expanded');
+          const crudActions = card.querySelector('.crud-actions');
+          if (crudActions) {
+            crudActions.style.display = 'none';
+          }
+        });
+      }
+    });
+  });
+</script>
