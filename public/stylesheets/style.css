@@ -1518,7 +1518,7 @@ footer h2 {
   color: #721c24;
 }
 
-/* Portal Gun Greeting Styles - Evil Morty Yellow */
+/* Portal Gun Greeting Styles */
 .portal-greeting {
   color: #00d9ff;
   font-family: "Creepster", cursive;
@@ -1534,4 +1534,80 @@ footer h2 {
   display: flex;
   align-items: center;
   gap: 15px;
+}
+
+/* Expandable Card Styles */
+.list-card {
+  cursor: pointer;
+  user-select: none;
+}
+
+.list-card.card-expanded {
+  border-color: var(--portal-green);
+  box-shadow: 0 10px 40px rgba(68, 214, 44, 0.5),
+    0 0 30px rgba(0, 181, 204, 0.4);
+  transform: translateY(-5px) scale(1.02);
+}
+
+.list-card.card-expanded::before {
+  height: 6px;
+  box-shadow: 0 0 15px rgba(68, 214, 44, 0.8);
+}
+
+/* CRUD Actions */
+.crud-actions {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 2px solid var(--portal-green);
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Adjust button spacing in crud-actions */
+.crud-actions .btn-edit {
+  margin-left: 0;
+  margin-right: 10px;
+}
+
+.crud-actions .btn-delete {
+  margin-left: 0;
+}
+
+/* Add a subtle hint that cards are clickable for LOCATIONS */
+.list-card::after {
+  content: "Click to expand";
+  position: absolute;
+  bottom: 10px;
+  right: 15px;
+  font-size: 0.75em;
+  color: rgba(255, 255, 255, 0.3);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.list-card:hover::after {
+  opacity: 1;
+}
+
+.list-card.card-expanded::after {
+  content: "Click to collapse";
+}
+
+/* Make sure buttons don't interfere with card click */
+.list-actions a,
+.list-actions button,
+.list-actions form {
+  position: relative;
+  z-index: 2;
 }

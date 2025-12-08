@@ -1,24 +1,19 @@
 <div class="list-container">
-
   <!-- HEADER + CREATE BUTTON -->
   <div class="list-header-row">
     <h1>{{title}}</h1>
-
     {{!-- Only show Create button if user is logged in --}}
     {{#if session.userId}}
       <a href="/locations/create" class="btn-create">+ Create New Location</a>
     {{/if}}
   </div>
-
   <!-- STATS -->
   <div class="list-stats">
     <p>Total Locations: <strong>{{totalLocations}}</strong></p>
   </div>
-
   <!-- FILTERS -->
   <div class="filter-section">
     <form method="GET" action="/locations" class="filter-form">
-
       <div class="filter-group">
         <label for="type">TYPE</label>
         <select name="type" id="type" class="filter-select">
@@ -30,7 +25,6 @@
           {{/each}}
         </select>
       </div>
-
       <div class="filter-group">
         <label for="dimension">DIMENSION</label>
         <select name="dimension" id="dimension" class="filter-select">
@@ -42,88 +36,116 @@
           {{/each}}
         </select>
       </div>
-
       <button type="submit" class="filter-apply-btn">Apply</button>
-
     </form>
   </div>
-
   <!-- LOCATION CARDS -->
   <div class="list">
-
     {{#each locations}}
-      <div class="list-card">
-
+      <div class="list-card" data-location-id="{{this.locationId}}">
         <div class="list-header">
           <h2>{{this.name}}</h2>
           <span class="list-code">{{this.type}}</span>
         </div>
-
         <div class="list-details">
           <p><strong>Dimension:</strong> {{this.dimension}}</p>
           <p><strong>Residents:</strong> {{this.residents.length}}</p>
           <p><strong>Location ID:</strong> {{this.locationId}}</p>
         </div>
-
         <div class="list-actions">
-
           <!-- VIEW DETAILS ALWAYS VISIBLE -->
           <a href="/locations/{{this.locationId}}" class="btn-view">View Details</a>
-
-          <!-- ONLY SHOW EDIT/DELETE IF LOGGED IN -->
+          
+          <!-- CRUD ACTIONS - HIDDEN BY DEFAULT, SHOWN WHEN CARD IS CLICKED -->
           {{#if ../session.userId}}
-
-            <a href="/locations/edit/{{this.locationId}}" class="btn-edit">Edit</a>
-
-            <form 
-              action="/locations/delete/{{this.locationId}}" 
-              method="POST"
-              onsubmit="return confirm('Are you sure you want to delete this location?')"
-              style="display: inline-block;"
-            >
-              <button class="btn-delete">Delete</button>
-            </form>
-
+            <div class="crud-actions" style="display: none;">
+              <a href="/locations/edit/{{this.locationId}}" class="btn-edit">Edit</a>
+              <form 
+                action="/locations/delete/{{this.locationId}}" 
+                method="POST"
+                onsubmit="return confirm('Are you sure you want to delete this location?')"
+                style="display: inline-block;"
+              >
+                <button type="button" class="btn-delete">Delete</button>
+              </form>
+            </div>
           {{/if}}
-
         </div>
-
       </div>
     {{/each}}
-
   </div>
-
 </div>
-
 <!-- PAGINATION -->
 <div class="pagination-container">
-
   {{#if (gt currentPage 1)}}
     <a 
       href="/locations?type={{selectedType}}&dimension={{selectedDimension}}&page=1"
       class="pagination-btn"
     >« First</a>
-
     <a 
       href="/locations?type={{selectedType}}&dimension={{selectedDimension}}&page={{subtract currentPage 1}}"
       class="pagination-btn"
     >‹ Prev</a>
   {{/if}}
-
   <span class="pagination-info">
     Page {{currentPage}} of {{totalPages}}
   </span>
-
   {{#if (lt currentPage totalPages)}}
     <a 
       href="/locations?type={{selectedType}}&dimension={{selectedDimension}}&page={{add currentPage 1}}"
       class="pagination-btn"
     >Next ›</a>
-
     <a 
       href="/locations?type={{selectedType}}&dimension={{selectedDimension}}&page={{totalPages}}"
       class="pagination-btn"
     >Last »</a>
   {{/if}}
-
 </div>
+
+<script>
+  // Handle card click to expand/collapse CRUD actions
+  document.addEventListener('DOMContentLoaded', function() {
+    const cards = document.querySelectorAll('.list-card');
+    
+    cards.forEach(card => {
+      card.addEventListener('click', function(e) {
+        // Don't trigger if clicking on a button or link
+        if (e.target.closest('a, button, form')) {
+          return;
+        }
+        
+        // Close all other cards
+        cards.forEach(c => {
+          if (c !== card) {
+            c.classList.remove('card-expanded');
+            const crudActions = c.querySelector('.crud-actions');
+            if (crudActions) {
+              crudActions.style.display = 'none';
+            }
+          }
+        });
+        
+        // Toggle this card
+        card.classList.toggle('card-expanded');
+        const crudActions = card.querySelector('.crud-actions');
+        if (crudActions) {
+          crudActions.style.display = 
+            card.classList.contains('card-expanded') ? 'inline-block' : 'none';
+        }
+      });
+    });
+    
+    // Close expanded card when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.list-card')) {
+        cards.forEach(card => {
+          card.classList.remove('card-expanded');
+          const crudActions = card.querySelector('.crud-actions');
+          if (crudActions) {
+            crudActions.style.display = 'none';
+          }
+        });
+      }
+    });
+  });
+</script>
