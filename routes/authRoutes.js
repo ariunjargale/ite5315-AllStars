@@ -3,23 +3,23 @@ const router = express.Router();
 const { body } = require("express-validator");
 const authController = require("../controllers/authController");
 
-// =========================
-// SHOW REGISTER PAGE (GET)
-// =========================
+// ==========================================
+// SHOW PAGES (GET)
+// ==========================================
+
+// Show register page
 router.get("/register", (req, res) => {
-  res.render("auth/register"); // views/auth/register.hbs
+  res.render("auth/register");
 });
 
-// =========================
-// SHOW LOGIN PAGE (GET)
-// =========================
+// Show login page
 router.get("/login", (req, res) => {
-  res.render("auth/login"); // views/auth/login.hbs (Ari will build)
+  res.render("auth/login");
 });
 
-// =========================
+// ==========================================
 // VALIDATION RULES
-// =========================
+// ==========================================
 
 // Registration validation
 const registerValidation = [
@@ -45,9 +45,9 @@ const loginValidation = [
   body("password").notEmpty().withMessage("Password is required"),
 ];
 
-// =========================
-// AUTH API ROUTES (POST)
-// =========================
+// ==========================================
+// AUTHENTICATION ROUTES (POST)
+// ==========================================
 
 // Register user
 router.post("/register", registerValidation, authController.register);
@@ -59,9 +59,33 @@ router.post("/login", loginValidation, authController.login);
 router.get("/logout", authController.logout);
 router.post("/logout", authController.logout);
 
-// For API calls
-router.post("/api/register", authController.apiRegister);
-router.post("/api/login", authController.apiLogin);
+// ==========================================
+// PASSWORD RESET ROUTES
+// ==========================================
+
+// Show forgot password form
+router.get("/forgot-password", authController.showForgotPassword);
+
+// Handle forgot password submission
+router.post("/forgot-password", authController.forgotPassword);
+
+// Show reset password form (with token)
+router.get("/reset-password/:token", authController.showResetPassword);
+
+// Handle reset password submission
+router.post("/reset-password/:token", authController.resetPassword);
+
+// ==========================================
+// API ROUTES
+// ==========================================
+
+// API Register
+router.post("/api/register", registerValidation, authController.apiRegister);
+
+// API Login
+router.post("/api/login", loginValidation, authController.apiLogin);
+
+// API Logout
 router.post("/api/logout", authController.apiLogout);
 
 module.exports = router;
