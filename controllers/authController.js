@@ -13,9 +13,9 @@ exports.register = async (req, res) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    return res.status(400).json({
-      success: false,
+    return res.status(400).render("auth/register", {
       errors: errors.array(),
+      oldInput: req.body,
     });
   }
 
@@ -27,9 +27,9 @@ exports.register = async (req, res) => {
     });
 
     if (existingUser) {
-      return res.status(400).json({
-        success: false,
-        message: "User with this email or username already exists",
+      return res.status(400).render("auth/register", {
+        errors: [{ msg: "User with this email or username already exists" }],
+        oldInput: req.body,
       });
     }
 
@@ -47,9 +47,9 @@ exports.register = async (req, res) => {
     });
   } catch (error) {
     console.error("Registration error:", error);
-    res.status(500).json({
-      success: false,
-      message: "Server error during registration",
+    res.status(500).render("auth/register", {
+      errors: [{ msg: "Server error during registration. Please try again." }],
+      oldInput: req.body,
     });
   }
 };
