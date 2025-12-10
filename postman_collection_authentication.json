@@ -491,6 +491,513 @@
                 "description": "Test that login with wrong credentials returns 401 Unauthorized."
             },
             "response": []
+        },
+        {
+            "name": "Get Forgot Password Page",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/auth/forgot-password",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "auth",
+                        "forgot-password"
+                    ]
+                },
+                "description": "Display the forgot password form where users can request a password reset link."
+            },
+            "response": [
+                {
+                    "name": "Success Response",
+                    "status": "OK",
+                    "code": 200,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "text/html; charset=utf-8"
+                        }
+                    ],
+                    "body": "<!-- HTML forgot password form -->",
+                    "_postman_previewlanguage": "html"
+                }
+            ]
+        },
+        {
+            "name": "Submit Forgot Password",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/x-www-form-urlencoded"
+                    }
+                ],
+                "body": {
+                    "mode": "urlencoded",
+                    "urlencoded": [
+                        {
+                            "key": "email",
+                            "value": "testuser@example.com",
+                            "description": "Email address to send password reset link"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/auth/forgot-password",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "auth",
+                        "forgot-password"
+                    ]
+                },
+                "description": "Submit email to receive password reset link. Sends an email with a reset token that expires in 1 hour."
+            },
+            "response": [
+                {
+                    "name": "Success - Email Sent",
+                    "status": "OK",
+                    "code": 200,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "text/html; charset=utf-8"
+                        }
+                    ],
+                    "body": "<!-- Forgot password form with success message: Password reset link sent! Check your email. -->",
+                    "_postman_previewlanguage": "html"
+                },
+                {
+                    "name": "Email Not Found (Still Shows Success)",
+                    "status": "OK",
+                    "code": 200,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "text/html; charset=utf-8"
+                        }
+                    ],
+                    "body": "<!-- Forgot password form with message: If that email exists, a reset link has been sent. -->",
+                    "_postman_previewlanguage": "html"
+                }
+            ]
+        },
+        {
+            "name": "Get Reset Password Page",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/auth/reset-password/:token",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "auth",
+                        "reset-password",
+                        ":token"
+                    ],
+                    "variable": [
+                        {
+                            "key": "token",
+                            "value": "your-reset-token-here",
+                            "description": "Password reset token from email"
+                        }
+                    ]
+                },
+                "description": "Display the password reset form using the token from the email link. Token expires after 1 hour."
+            },
+            "response": [
+                {
+                    "name": "Success - Valid Token",
+                    "status": "OK",
+                    "code": 200,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "text/html; charset=utf-8"
+                        }
+                    ],
+                    "body": "<!-- HTML reset password form -->",
+                    "_postman_previewlanguage": "html"
+                },
+                {
+                    "name": "Invalid or Expired Token",
+                    "status": "OK",
+                    "code": 200,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "text/html; charset=utf-8"
+                        }
+                    ],
+                    "body": "<!-- Forgot password form with error: Invalid or expired reset token. -->",
+                    "_postman_previewlanguage": "html"
+                }
+            ]
+        },
+        {
+            "name": "Submit Reset Password",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/x-www-form-urlencoded"
+                    }
+                ],
+                "body": {
+                    "mode": "urlencoded",
+                    "urlencoded": [
+                        {
+                            "key": "password",
+                            "value": "newpassword123",
+                            "description": "New password (min 6 characters)"
+                        },
+                        {
+                            "key": "confirmPassword",
+                            "value": "newpassword123",
+                            "description": "Confirm new password (must match)"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/auth/reset-password/:token",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "auth",
+                        "reset-password",
+                        ":token"
+                    ],
+                    "variable": [
+                        {
+                            "key": "token",
+                            "value": "your-reset-token-here",
+                            "description": "Password reset token from email"
+                        }
+                    ]
+                },
+                "description": "Reset password using the token. After successful reset, user is logged out and must login with new password."
+            },
+            "response": [
+                {
+                    "name": "Success - Password Reset",
+                    "status": "OK",
+                    "code": 200,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "text/html; charset=utf-8"
+                        }
+                    ],
+                    "body": "<!-- Reset success page with message to log in with new password -->",
+                    "_postman_previewlanguage": "html"
+                },
+                {
+                    "name": "Validation Error - Passwords Don't Match",
+                    "status": "OK",
+                    "code": 200,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "text/html; charset=utf-8"
+                        }
+                    ],
+                    "body": "<!-- Reset password form with error: Passwords do not match. -->",
+                    "_postman_previewlanguage": "html"
+                },
+                {
+                    "name": "Validation Error - Password Too Short",
+                    "status": "OK",
+                    "code": 200,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "text/html; charset=utf-8"
+                        }
+                    ],
+                    "body": "<!-- Reset password form with error: Password must be at least 6 characters. -->",
+                    "_postman_previewlanguage": "html"
+                },
+                {
+                    "name": "Invalid or Expired Token",
+                    "status": "OK",
+                    "code": 200,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "text/html; charset=utf-8"
+                        }
+                    ],
+                    "body": "<!-- Forgot password form with error: Invalid or expired reset token. -->",
+                    "_postman_previewlanguage": "html"
+                }
+            ]
+        },
+        {
+            "name": "Login - Blocked Account",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/x-www-form-urlencoded"
+                    }
+                ],
+                "body": {
+                    "mode": "urlencoded",
+                    "urlencoded": [
+                        {
+                            "key": "username",
+                            "value": "blockeduser",
+                            "description": "Username of blocked account"
+                        },
+                        {
+                            "key": "password",
+                            "value": "password123"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/auth/login",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "auth",
+                        "login"
+                    ]
+                },
+                "description": "Test login with a blocked account. Admin can block users from the admin dashboard."
+            },
+            "response": [
+                {
+                    "name": "Account Blocked",
+                    "status": "Forbidden",
+                    "code": 403,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "text/html; charset=utf-8"
+                        }
+                    ],
+                    "body": "<!-- Login form with error: Your account has been blocked. Please contact an administrator. -->",
+                    "_postman_previewlanguage": "html"
+                }
+            ]
+        },
+        {
+            "name": "Login - Force Password Reset",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/x-www-form-urlencoded"
+                    }
+                ],
+                "body": {
+                    "mode": "urlencoded",
+                    "urlencoded": [
+                        {
+                            "key": "username",
+                            "value": "testuser123",
+                            "description": "Username flagged for password reset"
+                        },
+                        {
+                            "key": "password",
+                            "value": "password123"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/auth/login",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "auth",
+                        "login"
+                    ]
+                },
+                "description": "Test login when admin has flagged account for forced password reset. User will be redirected to reset password page."
+            },
+            "response": [
+                {
+                    "name": "Redirect to Password Reset",
+                    "status": "Found",
+                    "code": 302,
+                    "header": [
+                        {
+                            "key": "Location",
+                            "value": "/auth/reset-password/:token"
+                        },
+                        {
+                            "key": "Set-Cookie",
+                            "value": "connect.sid=s%3A...; Path=/; HttpOnly"
+                        }
+                    ],
+                    "_postman_previewlanguage": "html"
+                }
+            ]
+        },
+        {
+            "name": "API - Register User",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"username\": \"apiuser123\",\n  \"email\": \"apiuser@example.com\",\n  \"password\": \"password123\"\n}"
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/auth/api/register",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "auth",
+                        "api",
+                        "register"
+                    ]
+                },
+                "description": "API endpoint for user registration. Returns JSON response instead of HTML."
+            },
+            "response": [
+                {
+                    "name": "Success - User Registered",
+                    "status": "Created",
+                    "code": 201,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        }
+                    ],
+                    "body": "{\n  \"success\": true,\n  \"message\": \"User registered successfully\",\n  \"token\": \"jwt-token-here\"\n}",
+                    "_postman_previewlanguage": "json"
+                },
+                {
+                    "name": "Validation Error",
+                    "status": "Bad Request",
+                    "code": 400,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        }
+                    ],
+                    "body": "{\n  \"success\": false,\n  \"errors\": [\n    {\n      \"msg\": \"Username must be at least 3 characters\"\n    }\n  ]\n}",
+                    "_postman_previewlanguage": "json"
+                }
+            ]
+        },
+        {
+            "name": "API - Login User",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"username\": \"apiuser123\",\n  \"password\": \"password123\"\n}"
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/auth/api/login",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "auth",
+                        "api",
+                        "login"
+                    ]
+                },
+                "description": "API endpoint for user login. Returns JSON response with JWT token."
+            },
+            "response": [
+                {
+                    "name": "Success - User Logged In",
+                    "status": "OK",
+                    "code": 200,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        }
+                    ],
+                    "body": "{\n  \"success\": true,\n  \"message\": \"Login successful\",\n  \"token\": \"jwt-token-here\",\n  \"user\": {\n    \"id\": \"user-id\",\n    \"username\": \"apiuser123\",\n    \"role\": \"user\"\n  }\n}",
+                    "_postman_previewlanguage": "json"
+                },
+                {
+                    "name": "Invalid Credentials",
+                    "status": "Unauthorized",
+                    "code": 401,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        }
+                    ],
+                    "body": "{\n  \"success\": false,\n  \"message\": \"Invalid credentials\"\n}",
+                    "_postman_previewlanguage": "json"
+                }
+            ]
+        },
+        {
+            "name": "API - Logout User",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "description": "JWT token from login"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/auth/api/logout",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "auth",
+                        "api",
+                        "logout"
+                    ]
+                },
+                "description": "API endpoint for user logout. Returns JSON response."
+            },
+            "response": [
+                {
+                    "name": "Success - User Logged Out",
+                    "status": "OK",
+                    "code": 200,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        }
+                    ],
+                    "body": "{\n  \"success\": true,\n  \"message\": \"Logout successful\"\n}",
+                    "_postman_previewlanguage": "json"
+                }
+            ]
         }
     ],
     "variable": [
@@ -498,6 +1005,12 @@
             "key": "baseUrl",
             "value": "http://localhost:3000",
             "type": "string"
+        },
+        {
+            "key": "token",
+            "value": "",
+            "type": "string",
+            "description": "JWT token for API authentication"
         }
     ]
 }
