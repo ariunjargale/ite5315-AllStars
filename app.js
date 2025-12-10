@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const exphbs = require("express-handlebars");
 const session = require("express-session");
-const MongoStore = require("connect-mongo");
+const MongoStore = require("connect-mongo").MongoStore;
 const config = require("./config/database");
 const path = require("path");
 const app = express();
@@ -73,14 +73,34 @@ if (!process.env.SESSION_SECRET) {
 }
 
 // Session middleware
+// app.use(
+//   session({
+//     secret: process.env.SESSION_SECRET,
+//     resave: false,
+//     saveUninitialized: false,
+//     cookie: {
+//       secure: false, // set to true in production with HTTPS
+//       maxAge: 24 * 60 * 60 * 1000, // 24 hours
+//     },
+//   })
+// );
+
+// Change to MongoStore to deploy on Vercel
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    // Save session in Mongo
+    store: new MongoStore({
+      mongoUrl: config.url,
+      ttl: 24 * 60 * 60 * 1000, // 24 hrs
+    }),
     cookie: {
-      secure: false, // set to true in production with HTTPS
-      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+      secure: process.env.NODE_ENV === "production",
+      httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000,
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // to avoid Cross-site
     },
   })
 );
