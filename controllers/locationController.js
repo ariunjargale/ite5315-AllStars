@@ -1,24 +1,24 @@
 const Location = require("../models/Location");
 const Character = require("../models/Character");
+const { validationResult } = require("express-validator");
 
 // Helper function to determine if request expects JSON response
 const expectsJson = (req) => {
-  // Check if Accept header prefers JSON
   const acceptHeader = req.get("Accept") || "";
-  // Check if it's an explicit JSON request or not a browser form submission
   return (
     acceptHeader.includes("application/json") ||
     (!acceptHeader.includes("text/html") && req.method === "POST")
   );
 };
 
-// Get all locations (with pagination)
+// ============================================================================
+// GET ALL LOCATIONS (LIST PAGE)
+// ============================================================================
 exports.getAllLocations = async (req, res) => {
   try {
     const perPage = 12;
     const page = parseInt(req.query.page) || 1;
 
-    // Build filters
     const filter = {};
 
     if (req.query.type && req.query.type !== "all") {
@@ -36,7 +36,6 @@ exports.getAllLocations = async (req, res) => {
       .skip((page - 1) * perPage)
       .limit(perPage);
 
-    // For blob filters
     const allTypes = await Location.distinct("type");
     const allDimensions = await Location.distinct("dimension");
 
@@ -46,10 +45,8 @@ exports.getAllLocations = async (req, res) => {
       totalLocations,
       currentPage: page,
       totalPages: Math.ceil(totalLocations / perPage),
-
       allTypes,
       allDimensions,
-
       selectedType: req.query.type || "all",
       selectedDimension: req.query.dimension || "all",
     });
@@ -59,7 +56,10 @@ exports.getAllLocations = async (req, res) => {
   }
 };
 
-// Get location by ID (with residents)
+// ============================================================================
+// GET LOCATION BY ID (DETAIL PAGE)
+// FIXED: Residents now load FULL Character objects
+// ============================================================================
 exports.getLocationById = async (req, res) => {
   try {
     const location = await Location.findOne({
@@ -70,10 +70,26 @@ exports.getLocationById = async (req, res) => {
       return res.status(404).send("Location not found");
     }
 
-    // Find all characters whose location.id matches this locationId
+    // Ensure resident IDs are numbers
+    const residentIds = (location.residents || []).map((id) => Number(id));
+
+    // Fetch full character documents for residents
     const residents = await Character.find({
-      "location.id": Number(req.params.id),
-    });
+      characterId: { $in: residentIds },
+    }).lean();
+
+    // Log missing residents for debugging
+    const missing = residentIds.filter(
+      (id) => !residents.some((c) => c.characterId === id)
+    );
+
+    if (missing.length > 0) {
+      console.warn(
+        "⚠ Missing character entries for these IDs in location:",
+        req.params.id,
+        missing
+      );
+    }
 
     res.render("locations/detail", {
       title: `${location.name} - Location Details`,
@@ -86,21 +102,19 @@ exports.getLocationById = async (req, res) => {
   }
 };
 
-const { validationResult } = require("express-validator");
-
-// Show create form
+// ============================================================================
+// CREATE
+// ============================================================================
 exports.showCreateForm = (req, res) => {
   res.render("locations/create", {
     title: "Create New Location",
   });
 };
 
-// Create
 exports.createLocation = async (req, res) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    // Return JSON error for API requests
     if (expectsJson(req)) {
       return res.status(400).json({
         success: false,
@@ -133,7 +147,6 @@ exports.createLocation = async (req, res) => {
 
     await newLocation.save();
 
-    // Return JSON success for API requests
     if (expectsJson(req)) {
       return res.status(201).json({
         success: true,
@@ -146,17 +159,15 @@ exports.createLocation = async (req, res) => {
   } catch (err) {
     console.error(err);
 
-    // Determine error type
     const isDuplicateError =
       err.code === 11000 || err.message.includes("duplicate");
-    const statusCode = isDuplicateError ? 409 : 400;
+
     const errorMessage = isDuplicateError
       ? "Location ID already exists"
       : "Invalid input data";
 
-    // Return JSON error for API requests
     if (expectsJson(req)) {
-      return res.status(statusCode).json({
+      return res.status(isDuplicateError ? 409 : 400).json({
         success: false,
         error: errorMessage,
         details: err.message,
@@ -165,13 +176,15 @@ exports.createLocation = async (req, res) => {
 
     res.status(400).render("locations/create", {
       title: "Create New Location",
-      error: "Location ID already exists or invalid input",
+      error: errorMessage,
       form: req.body,
     });
   }
 };
 
-// Show edit form
+// ============================================================================
+// EDIT
+// ============================================================================
 exports.showEditForm = async (req, res) => {
   try {
     const location = await Location.findOne({ locationId: req.params.id });
@@ -190,12 +203,13 @@ exports.showEditForm = async (req, res) => {
   }
 };
 
-// Update
+// ============================================================================
+// UPDATE
+// ============================================================================
 exports.updateLocation = async (req, res) => {
   try {
     const errors = validationResult(req);
 
-    // First, check if location exists
     const location = await Location.findOne({
       locationId: req.params.id,
     });
@@ -205,7 +219,6 @@ exports.updateLocation = async (req, res) => {
     }
 
     if (!errors.isEmpty()) {
-      // Return JSON error for API requests
       if (expectsJson(req)) {
         return res.status(400).json({
           success: false,
@@ -235,7 +248,6 @@ exports.updateLocation = async (req, res) => {
       }
     );
 
-    // Return JSON success for API requests
     if (expectsJson(req)) {
       return res.status(200).json({
         success: true,
@@ -251,7 +263,7 @@ exports.updateLocation = async (req, res) => {
     if (expectsJson(req)) {
       return res.status(500).json({
         success: false,
-        error: "Failed to update episode",
+        error: "Failed to update location",
         details: err.message,
       });
     }
@@ -260,7 +272,9 @@ exports.updateLocation = async (req, res) => {
   }
 };
 
-// Delete
+// ============================================================================
+// DELETE
+// ============================================================================
 exports.deleteLocation = async (req, res) => {
   try {
     const deletedLocation = await Location.findOneAndDelete({
@@ -278,7 +292,6 @@ exports.deleteLocation = async (req, res) => {
       return res.status(404).send("Location not found");
     }
 
-    // Return JSON success for API requests
     if (expectsJson(req)) {
       return res.status(200).json({
         success: true,
@@ -294,7 +307,7 @@ exports.deleteLocation = async (req, res) => {
     if (expectsJson(req)) {
       return res.status(500).json({
         success: false,
-        error: "Failed to delete episode",
+        error: "Failed to delete location",
         details: err.message,
       });
     }
