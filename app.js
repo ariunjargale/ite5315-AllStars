@@ -2,9 +2,12 @@ const express = require("express");
 const mongoose = require("mongoose");
 const exphbs = require("express-handlebars");
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const config = require("./config/database");
 const path = require("path");
 const app = express();
+
+app.set("trust proxy", 1);
 
 // MongoDB connection
 mongoose
