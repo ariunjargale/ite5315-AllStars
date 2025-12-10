@@ -5,7 +5,8 @@
     </div>
     <nav class="main-nav">
       <ul>
-        <li><a href="/" class="nav-link">Dashboard</a></li>
+        <li><a href="/" class="nav-link">Home</a></li>
+        <li><a href="/dashboard" class="nav-link">Dashboard</a></li>
         <li><a href="/characters" class="nav-link">Casting</a></li>
         <li><a href="/locations" class="nav-link">World Building</a></li>
         <li><a href="/episodes" class="nav-link">Storyline</a></li>
@@ -14,16 +15,16 @@
     <!-- AUTH BUTTONS -->
     <div class="auth-nav">
       {{#if session.userId}}
-        <!-- USER LOGGED IN -->
-        <span class="portal-greeting">
-          🌀 Portal Gun Ready,
-          <span class="username-highlight">{{session.username}}</span>!
-        </span>
-        <a href="/auth/logout" class="btn-login">Logout</a>
+      <!-- USER LOGGED IN -->
+      <span class="portal-greeting">
+        🌀 Portal Gun Ready,
+        <span class="username-highlight">{{session.username}}</span>!
+      </span>
+      <a href="/auth/logout" class="btn-login">Logout</a>
       {{else}}
-        <!-- USER LOGGED OUT -->
-        <a href="/auth/login" class="btn-login">Login</a>
-        <a href="/auth/register" class="btn-register-header">Sign Up</a>
+      <!-- USER LOGGED OUT -->
+      <a href="/auth/login" class="btn-login">Login</a>
+      <a href="/auth/register" class="btn-register-header">Sign Up</a>
       {{/if}}
     </div>
   </div>

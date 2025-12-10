@@ -1,0 +1,61 @@
+<div class="home-page">
+    <div class="hero-section">
+        <div class="portal-animation"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Welcome to the Multiverse</h1>
+            <p class="hero-subtitle">Showrunner's Content Management System</p>
+            <p class="hero-description">
+                Explore infinite dimensions, manage characters, locations, and episodes across the multiverse.
+                Your portal to creative control starts here.
+            </p>
+
+            <div class="hero-actions">
+                {{#if session.userId}}
+                <a href="/characters" class="btn-explore">Explore Multiverse</a>
+                {{else}}
+                <a href="/auth/login" class="btn-portal">Open Portal (Login)</a>
+                <a href="/characters" class="btn-browse">Continue Browsing</a>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+
+    <div class="features-section">
+        <h2 class="section-title">Multiverse Management</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <img src="/images/casting_icon.png" alt="Casting" class="feature-icon">
+                <h3>Casting</h3>
+                <p>Manage characters from across all dimensions. Track their origins, species, and adventures.</p>
+                <a href="/characters" class="feature-link">View Characters</a>
+            </div>
+
+            <div class="feature-card">
+                <img src="/images/world_icon.png" alt="World Building" class="feature-icon">
+                <h3>World Building</h3>
+                <p>Catalog locations throughout the multiverse. From Dimension C-137 to the Citadel of Ricks.</p>
+                <a href="/locations" class="feature-link">Explore Locations</a>
+            </div>
+
+            <div class="feature-card">
+                <img src="/images/story_icon.png" alt="Storyline" class="feature-icon">
+                <h3>Storyline</h3>
+                <p>Track episodes and story arcs. Keep your narrative organized across timelines.</p>
+                <a href="/episodes" class="feature-link">Browse Episodes</a>
+            </div>
+        </div>
+    </div>
+
+    {{#unless session.userId}}
+    <div class="cta-section">
+        <div class="cta-content">
+            <h2>Ready to Take Control?</h2>
+            <p>Login to unlock full access to the multiverse analytics and management tools.</p>
+            <div class="cta-buttons">
+                <a href="/auth/login" class="btn-cta-primary">Login</a>
+                <a href="/auth/register" class="btn-cta-secondary">Create Account</a>
+            </div>
+        </div>
+    </div>
+    {{/unless}}
+</div>
