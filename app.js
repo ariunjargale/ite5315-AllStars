@@ -63,7 +63,9 @@ app.use(express.urlencoded({ extended: true }));
 if (!process.env.SESSION_SECRET) {
   console.error("❌ ERROR: SESSION_SECRET is not defined in .env file");
   console.error("Please add SESSION_SECRET to your .env file");
-  console.error("You can generate one with: node -e \"console.log(require('crypto').randomBytes(32).toString('hex'))\"");
+  console.error(
+    "You can generate one with: node -e \"console.log(require('crypto').randomBytes(32).toString('hex'))\""
+  );
   process.exit(1);
 }
 
@@ -115,7 +117,7 @@ app.use("/auth", authRoutes);
 app.use("/characters", characterRoutes);
 app.use("/episodes", episodeRoutes);
 app.use("/locations", locationRoutes);
-app.use("/", mainRoutes); // "/" → redirects to /characters
+app.use("/", mainRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
@@ -127,6 +129,12 @@ app.use((err, req, res, next) => {
     });
   }
   res.status(500).json({ message: "Internal Server Error" });
+});
+
+app.use((req, res) => {
+  res.status(404).render("404", {
+    title: "404 - Dimension Not Found",
+  });
 });
 
 // Start server

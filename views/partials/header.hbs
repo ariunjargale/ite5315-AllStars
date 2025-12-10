@@ -5,12 +5,10 @@
     </div>
     <nav class="main-nav">
       <ul>
+        <li><a href="/" class="nav-link">Dashboard</a></li>
         <li><a href="/characters" class="nav-link">Casting</a></li>
         <li><a href="/locations" class="nav-link">World Building</a></li>
         <li><a href="/episodes" class="nav-link">Storyline</a></li>
-        {{#if session.userId}}
-        <li><a href="/dashboard" class="nav-link">Dashboard</a></li>
-        {{/if}}
       </ul>
     </nav>
     <!-- AUTH BUTTONS -->
@@ -18,7 +16,8 @@
       {{#if session.userId}}
         <!-- USER LOGGED IN -->
         <span class="portal-greeting">
-          🌀 Portal Gun Ready, <span class="username-highlight">{{session.username}}</span>!
+          🌀 Portal Gun Ready,
+          <span class="username-highlight">{{session.username}}</span>!
         </span>
         <a href="/auth/logout" class="btn-login">Logout</a>
       {{else}}

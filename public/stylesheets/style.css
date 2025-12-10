@@ -1776,3 +1776,52 @@ footer h2 {
     height: 450px;
   }
 }
+
+/* --- 404 Error Page Styling --- */
+.error-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 70vh;
+  color: #fff;
+}
+
+.error-content h1 {
+  font-size: 8rem;
+  margin: 0;
+  color: var(--portal-green);
+  text-shadow: 0 0 20px rgba(68, 214, 44, 0.6);
+  font-family: "Creepster", cursive, sans-serif;
+  letter-spacing: 5px;
+}
+
+.error-content h2 {
+  font-size: 2rem;
+  color: var(--primary-blue);
+  margin-top: -20px;
+  margin-bottom: 20px;
+}
+
+.error-content p {
+  font-size: 1.2rem;
+  color: #aaa;
+  margin-bottom: 30px;
+}
+
+.error-image {
+  width: 300px;
+  height: auto;
+  border-radius: 50%;
+  box-shadow: 0 0 50px rgba(68, 214, 44, 0.3);
+  margin-bottom: 30px;
+  transition: transform 0.5s ease;
+}
+
+.error-image:hover {
+  transform: rotate(180deg) scale(1.1);
+}
+
+.glitch-text {
+  position: relative;
+}
