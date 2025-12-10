@@ -6,6 +6,10 @@
     {{/if}}
   </div>
 
+    <div class="list-stats">
+      <p>Total Characters: <strong>{{totalCount}}</strong></p>
+    </div>
+
   <form action="/characters" method="GET" class="advanced-filter-box">
     <div class="character-filter-grid">
       <div class="filter-item">
@@ -72,10 +76,6 @@
       <a href="/characters" class="character-filter-clear-btn">Clear</a>
     </div>
   </form>
-
-  <div class="list-stats">
-    <p>Total Characters: <strong>{{totalCount}}</strong></p>
-  </div>
 
   {{#if characters.length}}
     <div class="list">

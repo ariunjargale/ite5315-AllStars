@@ -1384,6 +1384,12 @@ footer h2 {
   margin-bottom: 20px;
 }
 
+/* Fix oversized spacing before Character list heading */
+.character-page-actions h1 {
+  margin-top: 3px !important;
+  margin-bottom: 15px !important;
+}
+
 .character-btn-create {
   display: inline-block;
   background: linear-gradient(135deg, #44d62c, #97ce4c);
