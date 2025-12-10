@@ -723,17 +723,19 @@ footer h2 {
 }
 
 .filter-item label {
-  font-size: 0.9em;
-  color: var(--primary-blue);
+  font-family: "Creepster", cursive;
+  color: var(--portal-green);
+  font-size: 1.3em;
+  text-shadow: 0 0 10px var(--portal-green);
   margin-bottom: 5px;
-  font-weight: bold;
+  letter-spacing: 1px;
 }
 
 .filter-item input,
 .filter-item select {
   padding: 10px;
   background: #1a1a1a;
-  border: 1px solid #444;
+  border: 2px solid var(--primary-blue);
   color: white;
   border-radius: 6px;
   font-size: 0.95em;
@@ -742,7 +744,16 @@ footer h2 {
 .filter-item input:focus,
 .filter-item select:focus {
   border-color: var(--portal-green);
+  box-shadow: 0 0 12px rgba(68, 214, 44, 0.6);
   outline: none;
+}
+
+/* Hover glow for character filter fields */
+.filter-item input:hover,
+.filter-item select:hover {
+  border-color: var(--portal-green);
+  box-shadow: 0 0 10px rgba(68, 214, 44, 0.4);
+  transition: 0.2s ease;
 }
 
 .filter-actions {
