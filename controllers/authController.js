@@ -135,7 +135,7 @@ exports.showForgotPassword = (req, res) => {
 // ==========================================
 
 exports.forgotPassword = async (req, res) => {
-  console.log("🔥 FORGOT PASSWORD ROUTE HIT");
+  console.log("FORGOT PASSWORD ROUTE HIT");
 
   const { email } = req.body;
 
@@ -169,8 +169,8 @@ exports.forgotPassword = async (req, res) => {
 
     // TEST CONNECTION
     transporter.verify((err, success) => {
-      if (err) console.error("❌ Gmail Login Failed:", err);
-      else console.log("✅ Gmail Login Successful!");
+      if (err) console.error("Gmail Login Failed:", err);
+      else console.log("Gmail Login Successful!");
     });
 
     // Send email
@@ -196,7 +196,7 @@ exports.forgotPassword = async (req, res) => {
       `,
     });
 
-    console.log(`📬 Reset email SENT → ${user.email}`);
+    console.log(`Reset email SENT → ${user.email}`);
 
     return res.render("auth/forgot-password", {
       success: "Password reset link sent! Check your email.",
@@ -283,7 +283,7 @@ exports.resetPassword = async (req, res) => {
 
     await user.save();
 
-    console.log(`✅ Password reset successful → ${user.username}`);
+    console.log(`Password reset successful → ${user.username}`);
 
     res.render("auth/reset-success");
   } catch (err) {
