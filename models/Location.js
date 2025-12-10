@@ -32,6 +32,12 @@ const LocationSchema = new mongoose.Schema({
     default: [],
   },
 
+  //coordinates for MongoDB Atlas Charts
+  coordinates: {
+    lat: { type: Number, required: false },
+    lng: { type: Number, required: false },
+  },
+
   created: {
     type: Date,
     default: Date.now,

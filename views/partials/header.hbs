@@ -8,6 +8,9 @@
         <li><a href="/characters" class="nav-link">Casting</a></li>
         <li><a href="/locations" class="nav-link">World Building</a></li>
         <li><a href="/episodes" class="nav-link">Storyline</a></li>
+        {{#if session.userId}}
+        <li><a href="/dashboard" class="nav-link">Dashboard</a></li>
+        {{/if}}
       </ul>
     </nav>
     <!-- AUTH BUTTONS -->
