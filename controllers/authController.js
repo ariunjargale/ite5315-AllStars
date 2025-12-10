@@ -60,7 +60,6 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
   const errors = validationResult(req);
-  console.log("Login attempt:", req.body);
 
   if (!errors.isEmpty()) {
     return res.status(400).render("auth/login", {

@@ -23,15 +23,15 @@
       <span class="info-label">Coordinates:</span>
 
       {{#if location.coordinates}}
-        {{#if location.coordinates.lat}}
-          <span class="info-value">
-            ({{location.coordinates.lat}}, {{location.coordinates.lng}})
-          </span>
-        {{else}}
-          <span class="info-value">Not Assigned</span>
-        {{/if}}
+      {{#if location.coordinates.lat}}
+      <span class="info-value">
+        ({{location.coordinates.lat}}, {{location.coordinates.lng}})
+      </span>
       {{else}}
-        <span class="info-value">Not Assigned</span>
+      <span class="info-value">Not Assigned</span>
+      {{/if}}
+      {{else}}
+      <span class="info-value">Not Assigned</span>
       {{/if}}
     </div>
 
@@ -47,35 +47,32 @@
 
     <div class="sub-ids">
       {{#if residents.length}}
-        {{#each residents}}
-          <a href="/characters/{{this.characterId}}">
-            <span class="sub-id-badge">{{this.name}}</span>
-          </a>
-        {{/each}}
+      {{#each residents}}
+      <a href="/characters/{{this.characterId}}">
+        <span class="sub-id-badge">{{this.name}}</span>
+      </a>
+      {{/each}}
       {{else}}
-        <p>No known residents.</p>
+      <p>No known residents.</p>
       {{/if}}
     </div>
   </div>
 
   <!-- ACTION BUTTONS -->
   <div class="detail-actions">
-    {{#if session.userId}}
+    <a href="/locations" class="btn-back pill-btn">
+      ← Back to Locations
+    </a>
 
-      <a href="/locations" class="btn-back pill-btn">
-        ← Back to Locations
-      </a>
+    {{#if (eq session.role 'admin')}}
+    <a href="/locations/edit/{{location.locationId}}" class="btn-edit pill-btn">
+      Edit
+    </a>
 
-      <a href="/locations/edit/{{location.locationId}}" class="btn-edit pill-btn">
-        Edit
-      </a>
-
-      <form action="/locations/delete/{{location.locationId}}"
-            method="POST"
-            onsubmit="return confirm('Are you sure you want to delete this location?');">
-        <button class="btn-delete pill-btn">Delete</button>
-      </form>
-
+    <form action="/locations/delete/{{location.locationId}}" method="POST"
+      onsubmit="return confirm('Are you sure you want to delete this location?');">
+      <button class="btn-delete pill-btn">Delete</button>
+    </form>
     {{/if}}
   </div>
 

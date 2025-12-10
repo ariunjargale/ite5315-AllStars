@@ -1575,8 +1575,8 @@ footer h2 {
   margin-left: 0;
 }
 
-/* Add a subtle hint that cards are clickable for LOCATIONS */
-.list-card::after {
+/* Add a subtle hint that cards are clickable - ADMIN ONLY */
+body.is-admin .list-card::after {
   content: "Click to expand";
   position: absolute;
   bottom: 10px;
@@ -1588,11 +1588,11 @@ footer h2 {
   pointer-events: none;
 }
 
-.list-card:hover::after {
+body.is-admin .list-card:hover::after {
   opacity: 1;
 }
 
-.list-card.card-expanded::after {
+body.is-admin .list-card.card-expanded::after {
   content: "Click to collapse";
 }
 
