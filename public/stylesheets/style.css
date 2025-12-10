@@ -634,7 +634,11 @@ footer h2 {
 }
 
 .filter-apply-btn {
-  padding: 12px 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 22px;
   background: linear-gradient(
     135deg,
     var(--primary-blue),
@@ -646,7 +650,9 @@ footer h2 {
   border: none;
   cursor: pointer;
   transition: 0.3s ease;
-  margin-top: 22px;
+  text-decoration: none;
+  box-sizing: border-box;
+  line-height: 1;
 }
 
 .filter-apply-btn:hover {
@@ -760,7 +766,6 @@ footer h2 {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  border-top: 1px solid #333;
   padding-top: 15px;
 }
 
