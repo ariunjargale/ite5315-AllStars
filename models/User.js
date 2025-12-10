@@ -34,6 +34,15 @@ const userSchema = new mongoose.Schema({
   // Password reset fields
   resetPasswordToken: String,
   resetPasswordExpires: Date,
+  // Admin management fields
+  isBlocked: {
+    type: Boolean,
+    default: false,
+  },
+  requirePasswordReset: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 /* 

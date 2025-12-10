@@ -2170,3 +2170,294 @@ footer h2 {
     grid-template-columns: 1fr;
   }
 }
+
+/* ==========================================
+   ADMIN DASHBOARD STYLES
+   ========================================== */
+
+.admin-page {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.admin-title {
+  font-family: "Creepster", cursive;
+  color: var(--portal-green);
+  font-size: 3em;
+  text-align: center;
+  margin-bottom: 10px;
+  text-shadow: 0 0 20px rgba(68, 214, 44, 0.5);
+}
+
+.admin-subtitle {
+  text-align: center;
+  color: var(--text-light);
+  font-size: 1.2em;
+  margin-bottom: 40px;
+}
+
+.admin-table-wrapper {
+  overflow-x: auto;
+  background: var(--card-bg);
+  border: 2px solid var(--portal-green);
+  border-radius: 12px;
+  box-shadow: 0 5px 30px rgba(68, 214, 44, 0.2);
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-table thead {
+  background: linear-gradient(135deg, #333, #444);
+}
+
+.admin-table th {
+  padding: 18px 15px;
+  text-align: left;
+  color: var(--portal-green);
+  font-family: "Creepster", cursive;
+  font-size: 1.2em;
+  letter-spacing: 1px;
+  border-bottom: 2px solid var(--portal-green);
+}
+
+.admin-table td {
+  padding: 15px;
+  border-bottom: 1px solid #444;
+  color: var(--text-light);
+}
+
+.admin-table tbody tr:hover {
+  background: rgba(68, 214, 44, 0.05);
+}
+
+.admin-table tbody tr.blocked-row {
+  background: rgba(233, 30, 99, 0.1);
+}
+
+/* Role Badges */
+.role-badge {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.85em;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.role-admin {
+  background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+  color: white;
+}
+
+.role-user {
+  background: linear-gradient(135deg, var(--primary-blue), #0077b6);
+  color: white;
+}
+
+/* Status Badges */
+.status-badge {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.85em;
+  font-weight: bold;
+}
+
+.status-active {
+  background: linear-gradient(135deg, var(--portal-green), var(--primary-green));
+  color: var(--dark-bg);
+}
+
+.status-blocked {
+  background: linear-gradient(135deg, #e91e63, #c0392b);
+  color: white;
+}
+
+.status-reset {
+  background: linear-gradient(135deg, #f39c12, #e67e22);
+  color: var(--dark-bg);
+}
+
+/* Admin Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.btn-admin {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.85em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-block {
+  background: linear-gradient(135deg, #e91e63, #c0392b);
+  color: white;
+}
+
+.btn-block:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(233, 30, 99, 0.5);
+}
+
+.btn-unblock {
+  background: linear-gradient(135deg, var(--portal-green), var(--primary-green));
+  color: var(--dark-bg);
+}
+
+.btn-unblock:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(68, 214, 44, 0.5);
+}
+
+.btn-reset {
+  background: linear-gradient(135deg, #f39c12, #e67e22);
+  color: var(--dark-bg);
+}
+
+.btn-reset:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(243, 156, 18, 0.5);
+}
+
+.btn-delete {
+  background: linear-gradient(135deg, #8e44ad, #9b59b6);
+  color: white;
+}
+
+.btn-delete:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(155, 89, 182, 0.5);
+}
+
+.current-user-label {
+  color: #888;
+  font-style: italic;
+}
+
+/* Admin Nav Button */
+.btn-admin-nav {
+  background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+  color: white;
+  padding: 10px 20px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: bold;
+  margin-right: 15px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(155, 89, 182, 0.3);
+}
+
+.btn-admin-nav:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(155, 89, 182, 0.5);
+}
+
+/* Error Page Styles */
+.error-page {
+  max-width: 600px;
+  margin: 100px auto;
+  padding: 40px;
+  text-align: center;
+  background: var(--card-bg);
+  border: 2px solid var(--accent-pink);
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(233, 30, 99, 0.3);
+}
+
+.error-title {
+  font-family: "Creepster", cursive;
+  color: var(--accent-pink);
+  font-size: 2.5em;
+  margin-bottom: 20px;
+  text-shadow: 0 0 15px rgba(233, 30, 99, 0.5);
+}
+
+.error-message {
+  color: var(--text-light);
+  font-size: 1.2em;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+/* Responsive Admin Table */
+@media (max-width: 768px) {
+
+  .admin-table th,
+  .admin-table td {
+    padding: 10px 8px;
+    font-size: 0.9em;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .btn-admin {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* ==========================================
+   PREMIUM MESSAGE STYLES
+   ========================================== */
+
+.premium-message-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  padding: 40px 20px;
+}
+
+.premium-message-box {
+  background: linear-gradient(135deg, var(--card-bg), #333);
+  border: 2px solid var(--portal-green);
+  border-radius: 16px;
+  padding: 60px 50px;
+  text-align: center;
+  max-width: 600px;
+  box-shadow: 0 10px 50px rgba(68, 214, 44, 0.3);
+}
+
+.premium-icon {
+  font-size: 4em;
+  margin-bottom: 20px;
+}
+
+.premium-title {
+  font-family: "Creepster", cursive;
+  color: var(--portal-green);
+  font-size: 2.5em;
+  margin-bottom: 20px;
+  text-shadow: 0 0 15px rgba(68, 214, 44, 0.5);
+}
+
+.premium-text {
+  color: var(--text-light);
+  font-size: 1.2em;
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+
+.premium-subtext {
+  color: #888;
+  font-size: 1em;
+  margin-bottom: 30px;
+  line-height: 1.5;
+}
+
+.premium-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}

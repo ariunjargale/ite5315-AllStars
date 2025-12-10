@@ -81,6 +81,14 @@ exports.login = async (req, res) => {
       });
     }
 
+    // Check if user is blocked
+    if (user.isBlocked) {
+      return res.status(403).render("auth/login", {
+        errors: [{ msg: "Your account has been blocked. Please contact an administrator." }],
+        oldInput: req.body,
+      });
+    }
+
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
@@ -93,6 +101,19 @@ exports.login = async (req, res) => {
     req.session.userId = user._id;
     req.session.username = user.username;
     req.session.role = user.role;
+
+    // Check if password reset is required
+    if (user.requirePasswordReset) {
+      // Generate reset token and redirect to password reset page
+      const resetToken = user.createPasswordResetToken();
+      await user.save({ validateBeforeSave: false });
+
+      // Store flags in session so global middleware enforces this on all routes
+      req.session.mustResetPassword = true;
+      req.session.resetToken = resetToken;
+      req.session.success = "You are required to reset your password before continuing.";
+      return res.redirect(`/auth/reset-password/${resetToken}`);
+    }
 
     res.redirect("/");
   } catch (error) {
@@ -280,12 +301,23 @@ exports.resetPassword = async (req, res) => {
     user.password = password;
     user.resetPasswordToken = undefined;
     user.resetPasswordExpires = undefined;
+    user.requirePasswordReset = false;
 
     await user.save();
 
     console.log(`Password reset successful → ${user.username}`);
 
-    res.render("auth/reset-success");
+    // Destroy session to log out the user
+    req.session.destroy((err) => {
+      if (err) {
+        console.error("Error destroying session after password reset:", err);
+      }
+      res.clearCookie("connect.sid");
+      // Render success page with message to log in again
+      res.render("auth/reset-success", {
+        message: "Your password has been reset successfully. Please log in with your new password.",
+      });
+    });
   } catch (err) {
     console.error("Reset password error:", err);
     res.render("auth/reset-password", {

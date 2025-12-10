@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { body } = require("express-validator");
 const controller = require("../controllers/locationController.js");
+const { requireAdmin } = require("../middlewares/auth.js");
 const { verifyToken } = require("../middlewares/verifyToken.js");
 
 /* ============================================================
@@ -48,15 +49,15 @@ const validateLocationUpdate = [
    ============================================================ */
 
 // CREATE
-router.get("/create", controller.showCreateForm);
-router.post("/create", validateLocation, controller.createLocation);
+router.get("/create", requireAdmin, controller.showCreateForm);
+router.post("/create", requireAdmin, validateLocation, controller.createLocation);
 
 // UPDATE (must be above /:id)
-router.get("/edit/:id", controller.showEditForm);
-router.post("/edit/:id", validateLocationUpdate, controller.updateLocation);
+router.get("/edit/:id", requireAdmin, controller.showEditForm);
+router.post("/edit/:id", requireAdmin, validateLocationUpdate, controller.updateLocation);
 
 // DELETE
-router.post("/delete/:id", controller.deleteLocation);
+router.post("/delete/:id", requireAdmin, controller.deleteLocation);
 
 // API - Protected routes
 router.post("/api/", verifyToken, controller.createLocation);
