@@ -1,3 +1,12 @@
+/******************************************************************************
+ * ITE5315 – Project
+ * I declare that this project is my own work in accordance with Humber Academic Policy.
+ * No part of this project has been copied manually or electronically from any other source
+ * (including web sites) or distributed to other students.
+ * Group Member Names: Ariunjargal Erdenebaatar, Samuel Law, Scarlett Jet
+ * Student IDs: N01721372, N01699541, N01675129
+ * Date: 2025/12/10
+ ******************************************************************************/
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
@@ -83,7 +92,11 @@ exports.login = async (req, res) => {
     // Check if user is blocked
     if (user.isBlocked) {
       return res.status(403).render("auth/login", {
-        errors: [{ msg: "Your account has been blocked. Please contact an administrator." }],
+        errors: [
+          {
+            msg: "Your account has been blocked. Please contact an administrator.",
+          },
+        ],
         oldInput: req.body,
       });
     }
@@ -110,7 +123,8 @@ exports.login = async (req, res) => {
       // Store flags in session so global middleware enforces this on all routes
       req.session.mustResetPassword = true;
       req.session.resetToken = resetToken;
-      req.session.success = "You are required to reset your password before continuing.";
+      req.session.success =
+        "You are required to reset your password before continuing.";
       return res.redirect(`/auth/reset-password/${resetToken}`);
     }
 
@@ -314,7 +328,8 @@ exports.resetPassword = async (req, res) => {
       res.clearCookie("connect.sid");
       // Render success page with message to log in again
       res.render("auth/reset-success", {
-        message: "Your password has been reset successfully. Please log in with your new password.",
+        message:
+          "Your password has been reset successfully. Please log in with your new password.",
       });
     });
   } catch (err) {
