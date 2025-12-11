@@ -222,10 +222,12 @@ footer h2 {
   left: 0;
   width: 100%;
   height: 4px;
-  background: linear-gradient(90deg,
-      var(--portal-green),
-      var(--primary-blue),
-      var(--accent-purple));
+  background: linear-gradient(
+    90deg,
+    var(--portal-green),
+    var(--primary-blue),
+    var(--accent-purple)
+  );
 }
 
 .list-card:hover {
@@ -253,9 +255,11 @@ footer h2 {
 }
 
 .list-code {
-  background: linear-gradient(135deg,
-      var(--portal-green),
-      var(--primary-green));
+  background: linear-gradient(
+    135deg,
+    var(--portal-green),
+    var(--primary-green)
+  );
   color: var(--dark-bg);
   padding: 6px 14px;
   border-radius: 6px;
@@ -289,9 +293,11 @@ footer h2 {
 
 .btn-view {
   display: inline-block;
-  background: linear-gradient(135deg,
-      var(--primary-blue),
-      var(--accent-purple));
+  background: linear-gradient(
+    135deg,
+    var(--primary-blue),
+    var(--accent-purple)
+  );
   color: white;
   padding: 10px 20px;
   text-decoration: none;
@@ -302,9 +308,11 @@ footer h2 {
 }
 
 .btn-view:hover {
-  background: linear-gradient(135deg,
-      var(--portal-green),
-      var(--primary-green));
+  background: linear-gradient(
+    135deg,
+    var(--portal-green),
+    var(--primary-green)
+  );
   color: var(--dark-bg);
   transform: scale(1.05);
   box-shadow: 0 6px 20px rgba(68, 214, 44, 0.5);
@@ -318,9 +326,11 @@ footer h2 {
 }
 
 .detail-header {
-  background: linear-gradient(135deg,
-      var(--portal-green),
-      var(--primary-green));
+  background: linear-gradient(
+    135deg,
+    var(--portal-green),
+    var(--primary-green)
+  );
   color: var(--dark-bg);
   padding: 40px;
   border-radius: 16px;
@@ -433,6 +443,7 @@ footer h2 {
   flex-wrap: wrap;
   gap: 12px;
   margin-top: 25px;
+  row-gap: 20px;
 }
 
 .sub-ids a {
@@ -452,9 +463,11 @@ footer h2 {
 }
 
 .sub-id-badge:hover {
-  background: linear-gradient(135deg,
-      var(--portal-green),
-      var(--primary-green));
+  background: linear-gradient(
+    135deg,
+    var(--portal-green),
+    var(--primary-green)
+  );
   color: var(--dark-bg);
   border-color: var(--portal-green);
   transform: scale(1.1);
@@ -546,9 +559,11 @@ footer h2 {
 }
 
 .pagination-btn {
-  background: linear-gradient(135deg,
-      var(--primary-blue),
-      var(--accent-purple));
+  background: linear-gradient(
+    135deg,
+    var(--primary-blue),
+    var(--accent-purple)
+  );
   color: white;
   padding: 10px 22px;
   border-radius: 8px;
@@ -559,9 +574,11 @@ footer h2 {
 }
 
 .pagination-btn:hover {
-  background: linear-gradient(135deg,
-      var(--portal-green),
-      var(--primary-green));
+  background: linear-gradient(
+    135deg,
+    var(--portal-green),
+    var(--primary-green)
+  );
   color: var(--dark-bg);
   transform: scale(1.07);
   box-shadow: 0 6px 20px rgba(68, 214, 44, 0.5);
@@ -625,9 +642,11 @@ footer h2 {
   justify-content: center;
   height: 40px;
   padding: 0 22px;
-  background: linear-gradient(135deg,
-      var(--primary-blue),
-      var(--accent-purple));
+  background: linear-gradient(
+    135deg,
+    var(--primary-blue),
+    var(--accent-purple)
+  );
   color: white;
   font-weight: bold;
   border-radius: 8px;
@@ -640,9 +659,11 @@ footer h2 {
 }
 
 .filter-apply-btn:hover {
-  background: linear-gradient(135deg,
-      var(--portal-green),
-      var(--primary-green));
+  background: linear-gradient(
+    135deg,
+    var(--portal-green),
+    var(--primary-green)
+  );
   color: var(--dark-bg);
   transform: scale(1.05);
   box-shadow: 0 0 15px rgba(68, 214, 44, 0.6);
@@ -779,9 +800,11 @@ footer h2 {
 .character-filter-apply-btn {
   height: 40px;
   padding: 12px 22px;
-  background: linear-gradient(135deg,
-      var(--primary-blue),
-      var(--accent-purple));
+  background: linear-gradient(
+    135deg,
+    var(--primary-blue),
+    var(--accent-purple)
+  );
   color: white;
   font-weight: bold;
   border-radius: 8px;
@@ -791,9 +814,11 @@ footer h2 {
 }
 
 .character-filter-apply-btn:hover {
-  background: linear-gradient(135deg,
-      var(--portal-green),
-      var(--primary-green));
+  background: linear-gradient(
+    135deg,
+    var(--portal-green),
+    var(--primary-green)
+  );
   color: var(--dark-bg);
   transform: scale(1.05);
   box-shadow: 0 0 15px rgba(68, 214, 44, 0.6);
@@ -820,7 +845,6 @@ footer h2 {
 }
 
 @media (max-width: 900px) {
-
   .filter-grid,
   .character-filter-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -828,7 +852,6 @@ footer h2 {
 }
 
 @media (max-width: 600px) {
-
   .filter-grid,
   .character-filter-grid {
     grid-template-columns: 1fr;
@@ -885,9 +908,11 @@ footer h2 {
 /* --- Action Buttons --- */
 .btn-create {
   display: inline-block;
-  background: linear-gradient(135deg,
-      var(--portal-green),
-      var(--primary-green));
+  background: linear-gradient(
+    135deg,
+    var(--portal-green),
+    var(--primary-green)
+  );
   color: var(--dark-bg);
   padding: 12px 25px;
   text-decoration: none;
@@ -900,9 +925,11 @@ footer h2 {
 }
 
 .btn-create:hover {
-  background: linear-gradient(135deg,
-      var(--primary-blue),
-      var(--accent-purple));
+  background: linear-gradient(
+    135deg,
+    var(--primary-blue),
+    var(--accent-purple)
+  );
   color: white;
   transform: scale(1.05);
   box-shadow: 0 6px 20px rgba(0, 181, 204, 0.5);
@@ -1085,10 +1112,12 @@ footer h2 {
   left: 0;
   width: 100%;
   height: 3px;
-  background: linear-gradient(90deg,
-      var(--portal-green),
-      var(--primary-blue),
-      var(--accent-purple));
+  background: linear-gradient(
+    90deg,
+    var(--portal-green),
+    var(--primary-blue),
+    var(--accent-purple)
+  );
 }
 
 .character-thumbnail-card:hover {
@@ -1197,9 +1226,11 @@ footer h2 {
 }
 
 .carousel-btn {
-  background: linear-gradient(135deg,
-      var(--primary-blue),
-      var(--accent-purple));
+  background: linear-gradient(
+    135deg,
+    var(--primary-blue),
+    var(--accent-purple)
+  );
   color: white;
   border: none;
   width: 50px;
@@ -1217,9 +1248,11 @@ footer h2 {
 }
 
 .carousel-btn:hover:not(:disabled) {
-  background: linear-gradient(135deg,
-      var(--portal-green),
-      var(--primary-green));
+  background: linear-gradient(
+    135deg,
+    var(--portal-green),
+    var(--primary-green)
+  );
   transform: scale(1.1);
   box-shadow: 0 6px 20px rgba(68, 214, 44, 0.5);
 }
@@ -1459,7 +1492,6 @@ footer h2 {
   cursor: pointer;
   transition: 0.3s ease;
   text-decoration: none;
-  margin-top: 22px;
 }
 
 .character-cancel-btn:hover {
@@ -1825,7 +1857,11 @@ body.is-admin .list-card.card-expanded::after {
   justify-content: center;
   overflow: hidden;
   padding: 60px 20px;
-  background: radial-gradient(ellipse at center, #1a3a1a 0%, var(--dark-bg) 70%);
+  background: radial-gradient(
+    ellipse at center,
+    #1a3a1a 0%,
+    var(--dark-bg) 70%
+  );
 }
 
 .portal-animation {
@@ -1833,13 +1869,17 @@ body.is-admin .list-card.card-expanded::after {
   width: 500px;
   height: 500px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(68, 214, 44, 0.3) 0%, rgba(68, 214, 44, 0.1) 40%, transparent 70%);
+  background: radial-gradient(
+    circle,
+    rgba(68, 214, 44, 0.3) 0%,
+    rgba(68, 214, 44, 0.1) 40%,
+    transparent 70%
+  );
   animation: portalPulse 4s ease-in-out infinite;
   pointer-events: none;
 }
 
 @keyframes portalPulse {
-
   0%,
   100% {
     transform: scale(1);
@@ -1863,9 +1903,7 @@ body.is-admin .list-card.card-expanded::after {
   font-family: "Creepster", cursive;
   font-size: 4em;
   color: var(--portal-green);
-  text-shadow:
-    0 0 20px rgba(68, 214, 44, 0.8),
-    0 0 40px rgba(68, 214, 44, 0.5),
+  text-shadow: 0 0 20px rgba(68, 214, 44, 0.8), 0 0 40px rgba(68, 214, 44, 0.5),
     0 0 60px rgba(68, 214, 44, 0.3);
   margin: 0 0 10px 0;
   letter-spacing: 3px;
@@ -1874,15 +1912,12 @@ body.is-admin .list-card.card-expanded::after {
 
 @keyframes titleGlow {
   0% {
-    text-shadow:
-      0 0 20px rgba(68, 214, 44, 0.8),
+    text-shadow: 0 0 20px rgba(68, 214, 44, 0.8),
       0 0 40px rgba(68, 214, 44, 0.5);
   }
 
   100% {
-    text-shadow:
-      0 0 30px rgba(68, 214, 44, 1),
-      0 0 60px rgba(68, 214, 44, 0.8),
+    text-shadow: 0 0 30px rgba(68, 214, 44, 1), 0 0 60px rgba(68, 214, 44, 0.8),
       0 0 80px rgba(68, 214, 44, 0.5);
   }
 }
@@ -1914,7 +1949,11 @@ body.is-admin .list-card.card-expanded::after {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: linear-gradient(135deg, var(--portal-green), var(--primary-green));
+  background: linear-gradient(
+    135deg,
+    var(--portal-green),
+    var(--primary-green)
+  );
   color: var(--dark-bg);
   padding: 16px 40px;
   border-radius: 50px;
@@ -1922,16 +1961,12 @@ body.is-admin .list-card.card-expanded::after {
   font-weight: bold;
   font-size: 1.1em;
   transition: all 0.3s ease;
-  box-shadow:
-    0 4px 20px rgba(68, 214, 44, 0.4),
-    0 0 30px rgba(68, 214, 44, 0.2);
+  box-shadow: 0 4px 20px rgba(68, 214, 44, 0.4), 0 0 30px rgba(68, 214, 44, 0.2);
 }
 
 .btn-portal:hover {
   transform: scale(1.08);
-  box-shadow:
-    0 6px 30px rgba(68, 214, 44, 0.6),
-    0 0 50px rgba(68, 214, 44, 0.4);
+  box-shadow: 0 6px 30px rgba(68, 214, 44, 0.6), 0 0 50px rgba(68, 214, 44, 0.4);
 }
 
 .btn-browse {
@@ -1958,7 +1993,11 @@ body.is-admin .list-card.card-expanded::after {
 .btn-explore {
   display: inline-flex;
   align-items: center;
-  background: linear-gradient(135deg, var(--primary-blue), var(--accent-purple));
+  background: linear-gradient(
+    135deg,
+    var(--primary-blue),
+    var(--accent-purple)
+  );
   color: white;
   padding: 16px 50px;
   border-radius: 50px;
@@ -2014,14 +2053,18 @@ body.is-admin .list-card.card-expanded::after {
   left: 0;
   width: 100%;
   height: 4px;
-  background: linear-gradient(90deg, var(--portal-green), var(--primary-blue), var(--accent-purple));
+  background: linear-gradient(
+    90deg,
+    var(--portal-green),
+    var(--primary-blue),
+    var(--accent-purple)
+  );
 }
 
 .feature-card:hover {
   transform: translateY(-10px);
   border-color: var(--portal-green);
-  box-shadow:
-    0 15px 40px rgba(68, 214, 44, 0.3),
+  box-shadow: 0 15px 40px rgba(68, 214, 44, 0.3),
     0 0 30px rgba(68, 214, 44, 0.1);
 }
 
@@ -2058,7 +2101,11 @@ body.is-admin .list-card.card-expanded::after {
 
 .feature-link {
   display: inline-block;
-  background: linear-gradient(135deg, var(--primary-blue), var(--accent-purple));
+  background: linear-gradient(
+    135deg,
+    var(--primary-blue),
+    var(--accent-purple)
+  );
   color: white;
   padding: 12px 28px;
   border-radius: 8px;
@@ -2068,7 +2115,11 @@ body.is-admin .list-card.card-expanded::after {
 }
 
 .feature-link:hover {
-  background: linear-gradient(135deg, var(--portal-green), var(--primary-green));
+  background: linear-gradient(
+    135deg,
+    var(--portal-green),
+    var(--primary-green)
+  );
   color: var(--dark-bg);
   transform: scale(1.05);
 }
@@ -2076,7 +2127,11 @@ body.is-admin .list-card.card-expanded::after {
 /* CTA Section */
 .cta-section {
   padding: 80px 20px;
-  background: linear-gradient(135deg, rgba(68, 214, 44, 0.1), rgba(0, 181, 204, 0.1));
+  background: linear-gradient(
+    135deg,
+    rgba(68, 214, 44, 0.1),
+    rgba(0, 181, 204, 0.1)
+  );
   border-top: 2px solid var(--portal-green);
   border-bottom: 2px solid var(--portal-green);
 }
@@ -2109,7 +2164,11 @@ body.is-admin .list-card.card-expanded::after {
 }
 
 .btn-cta-primary {
-  background: linear-gradient(135deg, var(--portal-green), var(--primary-green));
+  background: linear-gradient(
+    135deg,
+    var(--portal-green),
+    var(--primary-green)
+  );
   color: var(--dark-bg);
   padding: 14px 40px;
   border-radius: 50px;
@@ -2172,7 +2231,7 @@ body.is-admin .list-card.card-expanded::after {
 }
 
 /* ==========================================
-   ADMIN DASHBOARD STYLES
+   ADMIN DASHBOARD STYLES - GOLDEN THEME
    ========================================== */
 
 .admin-page {
@@ -2183,16 +2242,16 @@ body.is-admin .list-card.card-expanded::after {
 
 .admin-title {
   font-family: "Creepster", cursive;
-  color: var(--portal-green);
+  color: #ffd700;
   font-size: 3em;
   text-align: center;
   margin-bottom: 10px;
-  text-shadow: 0 0 20px rgba(68, 214, 44, 0.5);
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
 }
 
 .admin-subtitle {
   text-align: center;
-  color: var(--text-light);
+  color: #d4af37;
   font-size: 1.2em;
   margin-bottom: 40px;
 }
@@ -2200,9 +2259,9 @@ body.is-admin .list-card.card-expanded::after {
 .admin-table-wrapper {
   overflow-x: auto;
   background: var(--card-bg);
-  border: 2px solid var(--portal-green);
+  border: 2px solid #ffd700;
   border-radius: 12px;
-  box-shadow: 0 5px 30px rgba(68, 214, 44, 0.2);
+  box-shadow: 0 5px 30px rgba(255, 215, 0, 0.2);
 }
 
 .admin-table {
@@ -2211,27 +2270,27 @@ body.is-admin .list-card.card-expanded::after {
 }
 
 .admin-table thead {
-  background: linear-gradient(135deg, #333, #444);
+  background: linear-gradient(135deg, #2a2a1a, #3d3d2a);
 }
 
 .admin-table th {
   padding: 18px 15px;
   text-align: left;
-  color: var(--portal-green);
+  color: #ffd700;
   font-family: "Creepster", cursive;
   font-size: 1.2em;
   letter-spacing: 1px;
-  border-bottom: 2px solid var(--portal-green);
+  border-bottom: 2px solid #ffd700;
 }
 
 .admin-table td {
   padding: 15px;
-  border-bottom: 1px solid #444;
+  border-bottom: 1px solid #4a4a3a;
   color: var(--text-light);
 }
 
 .admin-table tbody tr:hover {
-  background: rgba(68, 214, 44, 0.05);
+  background: rgba(255, 215, 0, 0.08);
 }
 
 .admin-table tbody tr.blocked-row {
@@ -2248,8 +2307,8 @@ body.is-admin .list-card.card-expanded::after {
 }
 
 .role-admin {
-  background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
-  color: white;
+  background: linear-gradient(135deg, #ffd700, #ffb700);
+  color: #1a1a1a;
 }
 
 .role-user {
@@ -2266,7 +2325,11 @@ body.is-admin .list-card.card-expanded::after {
 }
 
 .status-active {
-  background: linear-gradient(135deg, var(--portal-green), var(--primary-green));
+  background: linear-gradient(
+    135deg,
+    var(--portal-green),
+    var(--primary-green)
+  );
   color: var(--dark-bg);
 }
 
@@ -2308,7 +2371,11 @@ body.is-admin .list-card.card-expanded::after {
 }
 
 .btn-unblock {
-  background: linear-gradient(135deg, var(--portal-green), var(--primary-green));
+  background: linear-gradient(
+    135deg,
+    var(--portal-green),
+    var(--primary-green)
+  );
   color: var(--dark-bg);
 }
 
@@ -2344,20 +2411,27 @@ body.is-admin .list-card.card-expanded::after {
 
 /* Admin Nav Button */
 .btn-admin-nav {
-  background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
-  color: white;
+  background: linear-gradient(135deg, #ffd700, #ffb700);
+  color: #1a1a1a;
   padding: 10px 20px;
   border-radius: 50px;
   text-decoration: none;
   font-weight: bold;
   margin-right: 15px;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(155, 89, 182, 0.3);
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
 }
 
 .btn-admin-nav:hover {
   transform: scale(1.05);
-  box-shadow: 0 6px 20px rgba(155, 89, 182, 0.5);
+  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.6);
+}
+
+/* Golden styling for admin users */
+body.is-admin .portal-greeting,
+body.is-admin .username-highlight {
+  color: #ffd700;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
 }
 
 /* Error Page Styles */
@@ -2389,7 +2463,6 @@ body.is-admin .list-card.card-expanded::after {
 
 /* Responsive Admin Table */
 @media (max-width: 768px) {
-
   .admin-table th,
   .admin-table td {
     padding: 10px 8px;

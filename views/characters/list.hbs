@@ -1,7 +1,7 @@
 <div class="list-container">
   <div class="character-page-actions">
     <h1>{{title}}</h1>
-    {{#if session.userId}}
+    {{#if (eq session.role "admin")}}
     <a href="/characters/create" class="character-btn-create">+ New Character</a>
     {{/if}}
   </div>
