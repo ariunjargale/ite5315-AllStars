@@ -1,7 +1,7 @@
 <div class="list-container">
   <div class="list-header-row">
     <h1>{{title}}</h1>
-    {{#if session.userId}}
+    {{#if (eq session.role "admin")}}
     <a href="/episodes/create" class="btn-create">+ Create New Episode</a>
     {{/if}}
   </div>

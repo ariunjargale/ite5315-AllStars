@@ -2,8 +2,8 @@
   <!-- HEADER + CREATE BUTTON -->
   <div class="list-header-row">
     <h1>{{title}}</h1>
-    {{!-- Only show Create button if user is logged in --}}
-    {{#if session.userId}}
+    {{!-- Only show Create button if user is admin --}}
+    {{#if (eq session.role "admin")}}
     <a href="/locations/create" class="btn-create">+ Create New Location</a>
     {{/if}}
   </div>
