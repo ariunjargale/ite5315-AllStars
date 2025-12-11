@@ -1,21 +1,24 @@
 <html>
-  <head>
-    <title>{{title}}</title>
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-    <link rel="stylesheet" href="/stylesheets/style.css" />
-  </head>
-  <body>
-    {{> header}}
-    <main>
-      {{#if success}}
-        <div class="flash flash-success">{{success}}</div>
-      {{/if}}
 
-      {{#if error}}
-        <div class="flash flash-error">{{error}}</div>
-      {{/if}}
-      {{{body}}}
-    </main>
-    {{> footer}}
-  </body>
+<head>
+  <title>{{title}}</title>
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+</head>
+
+<body class="{{#if (eq session.role 'admin')}}is-admin{{/if}}">
+  {{> header}}
+  <main>
+    {{#if success}}
+    <div class="flash flash-success">{{success}}</div>
+    {{/if}}
+
+    {{#if error}}
+    <div class="flash flash-error">{{error}}</div>
+    {{/if}}
+    {{{body}}}
+  </main>
+  {{> footer}}
+</body>
+
 </html>

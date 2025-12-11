@@ -5,29 +5,29 @@ const {
   searchValidationRules,
   characterValidationRules,
 } = require("../middlewares/characterValidators.js");
-const { requireLogin } = require("../middlewares/auth.js");
+const { requireAdmin } = require("../middlewares/auth.js");
 const { verifyToken } = require("../middlewares/verifyToken.js");
 
 // CREATE
-router.get("/create", requireLogin, controller.getCreateForm);
+router.get("/create", requireAdmin, controller.getCreateForm);
 router.post(
   "/create",
-  requireLogin,
+  requireAdmin,
   characterValidationRules(),
   controller.createCharacter
 );
 
 // UPDATE
-router.get("/edit/:id", requireLogin, controller.getEditForm);
+router.get("/edit/:id", requireAdmin, controller.getEditForm);
 router.post(
   "/edit/:id",
-  requireLogin,
+  requireAdmin,
   characterValidationRules(),
   controller.updateCharacter
 );
 
 // DELETE
-router.post("/delete/:id", requireLogin, controller.deleteCharacter);
+router.post("/delete/:id", requireAdmin, controller.deleteCharacter);
 
 // API - Protected routes
 router.post("/api", verifyToken, controller.createCharacter);

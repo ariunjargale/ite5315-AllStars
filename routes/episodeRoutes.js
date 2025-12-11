@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { body } = require("express-validator");
 const controller = require("../controllers/episodeController.js");
-const { requireLogin } = require("../middlewares/auth.js");
+const { requireAdmin } = require("../middlewares/auth.js");
 const { verifyToken } = require("../middlewares/verifyToken.js");
 
 // Validation rules for episode data
@@ -43,20 +43,20 @@ const validateEpisode = [
 ];
 
 // CREATE
-router.get("/create", requireLogin, controller.showCreateForm);
-router.post("/create", requireLogin, validateEpisode, controller.createEpisode);
+router.get("/create", requireAdmin, controller.showCreateForm);
+router.post("/create", requireAdmin, validateEpisode, controller.createEpisode);
 
 // EDIT
-router.get("/edit/:id", requireLogin, controller.showEditForm);
+router.get("/edit/:id", requireAdmin, controller.showEditForm);
 router.post(
   "/edit/:id",
-  requireLogin,
+  requireAdmin,
   validateEpisode,
   controller.updateEpisode
 );
 
 // DELETE
-router.post("/delete/:id", requireLogin, controller.deleteEpisode);
+router.post("/delete/:id", requireAdmin, controller.deleteEpisode);
 
 // API PROTECTED ROUTES
 router.post("/api/", verifyToken, controller.createEpisode);

@@ -16,6 +16,9 @@
     <div class="auth-nav">
       {{#if session.userId}}
       <!-- USER LOGGED IN -->
+      {{#if (eq session.role "admin")}}
+      <a href="/admin" class="btn-admin-nav">Admin</a>
+      {{/if}}
       <span class="portal-greeting">
         🌀 Portal Gun Ready,
         <span class="username-highlight">{{session.username}}</span>!

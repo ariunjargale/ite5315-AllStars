@@ -121,6 +121,10 @@ app.use((req, res, next) => {
   next();
 });
 
+// Check if user needs to reset password (applied globally)
+const { checkPasswordReset } = require("./middlewares/auth");
+app.use(checkPasswordReset);
+
 // Graceful shutdown
 process.on("SIGINT", async () => {
   await db.close();
@@ -134,9 +138,11 @@ const characterRoutes = require("./routes/characterRoutes");
 const episodeRoutes = require("./routes/episodeRoutes");
 const locationRoutes = require("./routes/locationRoutes");
 const authRoutes = require("./routes/authRoutes");
+const adminRoutes = require("./routes/adminRoutes");
 
 // CORRECT ROUTING ORDER
 app.use("/auth", authRoutes);
+app.use("/admin", adminRoutes);
 app.use("/characters", characterRoutes);
 app.use("/episodes", episodeRoutes);
 app.use("/locations", locationRoutes);

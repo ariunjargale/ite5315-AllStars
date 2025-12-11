@@ -1,9 +1,9 @@
 <div class="detail-container">
   <div class="detail-header">
     <img class="detail-image" src="{{character.image}}" alt="{{character.name}}">
-    
+
     <h1>{{character.name}}</h1>
-    
+
     <span class="code-large" style="{{#if character.isAlive}}color: #44d62c;{{else}}color: #e91e63;{{/if}}">
       {{#if character.isAlive}}ALIVE{{else}}DEAD{{/if}}
     </span>
@@ -36,21 +36,21 @@
     <h2>Episodes Appeared In</h2>
     <div class="sub-ids">
       {{#each character.episode}}
-        <a href="/episodes/{{this}}">
-            <span class="sub-id-badge">Ep: {{this}}</span>
-        </a>
+      <a href="/episodes/{{this}}">
+        <span class="sub-id-badge">Ep: {{this}}</span>
+      </a>
       {{else}}
-        <p> No episodes recorded.</p>
+      <p> No episodes recorded.</p>
       {{/each}}
     </div>
   </div>
 
   <div class="detail-actions">
     <a href="/characters" class="character-cancel-btn">← Back to Casting</a>
-    {{#if session.userId}}
-      <a href="/characters/edit/{{character.characterId}}" class="btn-edit" style="margin-left: 15px;">
-        Edit Character
-      </a>
+    {{#if (eq session.role "admin")}}
+    <a href="/characters/edit/{{character.characterId}}" class="btn-edit" style="margin-left: 15px;">
+      Edit Character
+    </a>
     {{/if}}
   </div>
 </div>
