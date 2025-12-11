@@ -2172,7 +2172,7 @@ body.is-admin .list-card.card-expanded::after {
 }
 
 /* ==========================================
-   ADMIN DASHBOARD STYLES
+   ADMIN DASHBOARD STYLES - GOLDEN THEME
    ========================================== */
 
 .admin-page {
@@ -2183,16 +2183,16 @@ body.is-admin .list-card.card-expanded::after {
 
 .admin-title {
   font-family: "Creepster", cursive;
-  color: var(--portal-green);
+  color: #ffd700;
   font-size: 3em;
   text-align: center;
   margin-bottom: 10px;
-  text-shadow: 0 0 20px rgba(68, 214, 44, 0.5);
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
 }
 
 .admin-subtitle {
   text-align: center;
-  color: var(--text-light);
+  color: #d4af37;
   font-size: 1.2em;
   margin-bottom: 40px;
 }
@@ -2200,9 +2200,9 @@ body.is-admin .list-card.card-expanded::after {
 .admin-table-wrapper {
   overflow-x: auto;
   background: var(--card-bg);
-  border: 2px solid var(--portal-green);
+  border: 2px solid #ffd700;
   border-radius: 12px;
-  box-shadow: 0 5px 30px rgba(68, 214, 44, 0.2);
+  box-shadow: 0 5px 30px rgba(255, 215, 0, 0.2);
 }
 
 .admin-table {
@@ -2211,27 +2211,27 @@ body.is-admin .list-card.card-expanded::after {
 }
 
 .admin-table thead {
-  background: linear-gradient(135deg, #333, #444);
+  background: linear-gradient(135deg, #2a2a1a, #3d3d2a);
 }
 
 .admin-table th {
   padding: 18px 15px;
   text-align: left;
-  color: var(--portal-green);
+  color: #ffd700;
   font-family: "Creepster", cursive;
   font-size: 1.2em;
   letter-spacing: 1px;
-  border-bottom: 2px solid var(--portal-green);
+  border-bottom: 2px solid #ffd700;
 }
 
 .admin-table td {
   padding: 15px;
-  border-bottom: 1px solid #444;
+  border-bottom: 1px solid #4a4a3a;
   color: var(--text-light);
 }
 
 .admin-table tbody tr:hover {
-  background: rgba(68, 214, 44, 0.05);
+  background: rgba(255, 215, 0, 0.08);
 }
 
 .admin-table tbody tr.blocked-row {
@@ -2248,8 +2248,8 @@ body.is-admin .list-card.card-expanded::after {
 }
 
 .role-admin {
-  background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
-  color: white;
+  background: linear-gradient(135deg, #ffd700, #ffb700);
+  color: #1a1a1a;
 }
 
 .role-user {
@@ -2344,20 +2344,27 @@ body.is-admin .list-card.card-expanded::after {
 
 /* Admin Nav Button */
 .btn-admin-nav {
-  background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
-  color: white;
+  background: linear-gradient(135deg, #ffd700, #ffb700);
+  color: #1a1a1a;
   padding: 10px 20px;
   border-radius: 50px;
   text-decoration: none;
   font-weight: bold;
   margin-right: 15px;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(155, 89, 182, 0.3);
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
 }
 
 .btn-admin-nav:hover {
   transform: scale(1.05);
-  box-shadow: 0 6px 20px rgba(155, 89, 182, 0.5);
+  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.6);
+}
+
+/* Golden styling for admin users */
+body.is-admin .portal-greeting,
+body.is-admin .username-highlight {
+  color: #ffd700;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
 }
 
 /* Error Page Styles */
