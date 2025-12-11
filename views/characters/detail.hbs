@@ -45,12 +45,20 @@
     </div>
   </div>
 
-  <div class="detail-actions">
-    <a href="/characters" class="character-cancel-btn">← Back to Casting</a>
-    {{#if (eq session.role "admin")}}
-    <a href="/characters/edit/{{character.characterId}}" class="btn-edit" style="margin-left: 15px;">
-      Edit Character
+    <div class="detail-actions">
+    <a href="/characters" class="btn-back pill-btn">
+      ← Back to Casting
     </a>
+
+    {{#if (eq session.role 'admin')}}
+      <a href="/characters/edit/{{character.characterId}}" class="btn-edit pill-btn">Edit</a>
+
+      <form action="/characters/delete/{{character.characterId}}" 
+            method="POST"
+            onsubmit="return confirm('Are you sure you want to delete this character?');">
+        <button class="btn-delete pill-btn">Delete</button>
+      </form>
     {{/if}}
+
   </div>
 </div>
