@@ -23,15 +23,15 @@
       <span class="info-label">Coordinates:</span>
 
       {{#if location.coordinates}}
-      {{#if location.coordinates.lat}}
-      <span class="info-value">
-        ({{location.coordinates.lat}}, {{location.coordinates.lng}})
-      </span>
+        {{#if location.coordinates.lat}}
+          <span class="info-value">
+            ({{location.coordinates.lat}}, {{location.coordinates.lng}})
+          </span>
+        {{else}}
+          <span class="info-value">Not Assigned</span>
+        {{/if}}
       {{else}}
-      <span class="info-value">Not Assigned</span>
-      {{/if}}
-      {{else}}
-      <span class="info-value">Not Assigned</span>
+        <span class="info-value">Not Assigned</span>
       {{/if}}
     </div>
 
@@ -41,135 +41,133 @@
     </div>
   </div>
 
-  <!-- RESIDENTS CAROUSEL -->
+  <!-- RESIDENTS SECTION -->
   <div class="sub-section">
     <h2>Residents</h2>
 
-    <div class="sub-ids">
-      {{#if residents.length}}
-      {{#each residents}}
-      <a href="/characters/{{this.characterId}}">
-        <span class="sub-id-badge">{{this.name}}</span>
-      </a>
-      {{/each}}
-      {{else}}
-      <p>No known residents.</p>
-      {{/if}}
     {{#if residents.length}}
 
-    <div class="character-carousel-container" id="residentCarousel">
-      <div class="character-grid carousel-page" id="residentGrid">
-        {{#each residents}}
-        <a href="/characters/{{this.characterId}}" class="character-thumbnail-card" data-character-index="{{@index}}">
-          <div class="character-thumbnail-image-wrapper">
-            <img src="{{this.image}}" alt="{{this.name}}" class="character-thumbnail-image">
-          </div>
-          <div class="character-thumbnail-info">
-            <h3 class="character-thumbnail-name">{{this.name}}</h3>
-            <p class="character-thumbnail-species">{{this.species}}</p>
-          </div>
-        </a>
-        {{/each}}
+      <!-- CAROUSEL CONTAINER -->
+      <div class="character-carousel-container" id="residentCarousel">
+
+        <div class="character-grid carousel-page" id="residentGrid">
+          {{#each residents}}
+          <a href="/characters/{{this.characterId}}" class="character-thumbnail-card">
+            <div class="character-thumbnail-image-wrapper">
+              <img src="{{this.image}}" alt="{{this.name}}" class="character-thumbnail-image">
+            </div>
+
+            <div class="character-thumbnail-info">
+              <h3 class="character-thumbnail-name">{{this.name}}</h3>
+              <p class="character-thumbnail-species">{{this.species}}</p>
+            </div>
+          </a>
+          {{/each}}
+        </div>
+
+        <!-- CONTROLS -->
+        <div class="carousel-controls">
+          <button class="carousel-btn carousel-prev" id="resPrev" aria-label="Previous page">‹</button>
+
+          <div class="carousel-indicators" id="resIndicators"></div>
+
+          <button class="carousel-btn carousel-next" id="resNext" aria-label="Next page">›</button>
+        </div>
+
+        <!-- PAGE COUNTER -->
+        <div class="carousel-page-info" id="resPageInfo">
+          <span id="resPageCurrent">1</span> / <span id="resPageTotal">1</span>
+        </div>
+
       </div>
 
-      <!-- Carousel Controls -->
-      <div class="carousel-controls">
-        <button class="carousel-btn carousel-prev" id="resPrev" aria-label="Previous page">‹</button>
+      <!-- CAROUSEL SCRIPT -->
+      <script>
+        (function () {
+          const ITEMS_PER_PAGE = 15;
+          const cards = document.querySelectorAll('#residentGrid .character-thumbnail-card');
+          const totalCards = cards.length;
+          const totalPages = Math.ceil(totalCards / ITEMS_PER_PAGE);
+          let currentPage = 1;
 
-        <div class="carousel-indicators" id="resIndicators"></div>
+          const prevBtn = document.getElementById('resPrev');
+          const nextBtn = document.getElementById('resNext');
+          const indicatorsContainer = document.getElementById('resIndicators');
+          const currentPageDisplay = document.getElementById('resPageCurrent');
+          const totalPagesDisplay = document.getElementById('resPageTotal');
 
-        <button class="carousel-btn carousel-next" id="resNext" aria-label="Next page">›</button>
-      </div>
-
-      <div class="carousel-page-info" id="resPageInfo">
-        <span id="resPageCurrent">1</span> / <span id="resPageTotal">1</span>
-      </div>
-    </div>
-
-    <script>
-      (function () {
-        const ITEMS_PER_PAGE = 15;
-        const cards = document.querySelectorAll('#residentGrid .character-thumbnail-card');
-        const totalCards = cards.length;
-        const totalPages = Math.ceil(totalCards / ITEMS_PER_PAGE);
-        let currentPage = 1;
-
-        const prevBtn = document.getElementById('resPrev');
-        const nextBtn = document.getElementById('resNext');
-        const indicatorsContainer = document.getElementById('resIndicators');
-        const currentPageDisplay = document.getElementById('resPageCurrent');
-        const totalPagesDisplay = document.getElementById('resPageTotal');
-
-        function init() {
-          totalPagesDisplay.textContent = totalPages;
-          createIndicators();
-          showPage(1);
-        }
-
-        function createIndicators() {
-          indicatorsContainer.innerHTML = '';
-          for (let i = 1; i <= totalPages; i++) {
-            const indicator = document.createElement('button');
-            indicator.className = 'carousel-indicator';
-            indicator.addEventListener('click', () => showPage(i));
-            indicatorsContainer.appendChild(indicator);
-          }
-        }
-
-        function showPage(page) {
-          if (page < 1 || page > totalPages) return;
-
-          currentPage = page;
-          currentPageDisplay.textContent = currentPage;
-
-          cards.forEach(card => { card.style.display = 'none'; });
-
-          const startIndex = (page - 1) * ITEMS_PER_PAGE;
-          const endIndex = Math.min(startIndex + ITEMS_PER_PAGE, totalCards);
-
-          for (let i = startIndex; i < endIndex; i++) {
-            cards[i].style.display = 'flex';
+          function init() {
+            totalPagesDisplay.textContent = totalPages;
+            createIndicators();
+            showPage(1);
           }
 
-          const indicators = indicatorsContainer.querySelectorAll('.carousel-indicator');
-          indicators.forEach((indicator, index) => {
-            indicator.classList.toggle('active', index + 1 === currentPage);
-          });
+          function createIndicators() {
+            indicatorsContainer.innerHTML = '';
+            for (let i = 1; i <= totalPages; i++) {
+              const indicator = document.createElement('button');
+              indicator.className = 'carousel-indicator';
+              indicator.addEventListener('click', () => showPage(i));
+              indicatorsContainer.appendChild(indicator);
+            }
+          }
 
-          prevBtn.disabled = currentPage === 1;
-          nextBtn.disabled = currentPage === totalPages;
-        }
+          function showPage(page) {
+            if (page < 1 || page > totalPages) return;
 
-        prevBtn.addEventListener('click', () => showPage(currentPage - 1));
-        nextBtn.addEventListener('click', () => showPage(currentPage + 1));
+            currentPage = page;
+            currentPageDisplay.textContent = currentPage;
 
-        init();
-      })();
-    </script>
+            cards.forEach(card => { card.style.display = 'none'; });
+
+            const startIndex = (page - 1) * ITEMS_PER_PAGE;
+            const endIndex = Math.min(startIndex + ITEMS_PER_PAGE, totalCards);
+
+            for (let i = startIndex; i < endIndex; i++) {
+              cards[i].style.display = 'flex';
+            }
+
+            const indicators = indicatorsContainer.querySelectorAll('.carousel-indicator');
+            indicators.forEach((indicator, index) => {
+              indicator.classList.toggle('active', index + 1 === currentPage);
+            });
+
+            prevBtn.disabled = currentPage === 1;
+            nextBtn.disabled = currentPage === totalPages;
+          }
+
+          prevBtn.addEventListener('click', () => showPage(currentPage - 1));
+          nextBtn.addEventListener('click', () => showPage(currentPage + 1));
+
+          init();
+        })();
+      </script>
 
     {{else}}
 
       <p>No known residents.</p>
 
     {{/if}}
+
   </div>
 
   <!-- ACTION BUTTONS -->
   <div class="detail-actions">
+
     <a href="/locations" class="btn-back pill-btn">
       ← Back to Locations
     </a>
 
     {{#if (eq session.role 'admin')}}
-    <a href="/locations/edit/{{location.locationId}}" class="btn-edit pill-btn">
-      Edit
-    </a>
+      <a href="/locations/edit/{{location.locationId}}" class="btn-edit pill-btn">Edit</a>
 
-    <form action="/locations/delete/{{location.locationId}}" method="POST"
-      onsubmit="return confirm('Are you sure you want to delete this location?');">
-      <button class="btn-delete pill-btn">Delete</button>
-    </form>
+      <form action="/locations/delete/{{location.locationId}}" 
+            method="POST"
+            onsubmit="return confirm('Are you sure you want to delete this location?');">
+        <button class="btn-delete pill-btn">Delete</button>
+      </form>
     {{/if}}
+
   </div>
 
 </div>
